@@ -198,7 +198,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-e1000-ich9-montevina.patch
 
 # crypto/
-	epatch "${FILESDIR}"/"${PVR}"/modsign-20111207.patch
+	#epatch "${FILESDIR}"/"${PVR}"/modsign-20111207.patch # Failed
 
 # Assorted Virt Fixes
 	epatch "${FILESDIR}"/"${PVR}"/fix_xen_guest_on_old_EC2.patch

@@ -17,7 +17,7 @@ CKV="${PVR/-r/-git}"
 inherit kernel-2
 detect_version
 
-grsecurity_version="201204222117"
+grsecurity_version="201204272006"
 grsecurity_src="http://grsecurity.net/test/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
 grsecurity_url="http://grsecurity.net"
 css_version="1.8.3-20120401"
@@ -26,7 +26,7 @@ css_url="http://tomoyo.sourceforge.jp"
 ck_version="3.3"
 ck_src="http://ck.kolivas.org/patches/3.0/3.3/3.3-ck1/patch-${ck_version}-ck1.bz2"
 ck_url="http://ck-hack.blogspot.com"
-fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.3/4200_fbcondecor-0.9.6.patch"
+fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4200_fbcondecor-0.9.6.patch"
 fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
 bld_version="3.3-rc3"
 bld_src="http://bld.googlecode.com/files/bld-${bld_version}.tar.bz2"
@@ -222,7 +222,7 @@ src_unpack() {
 # Media (V4L/DVB/IR) updates/fixes/experimental drivers
 #  apply if non-empty
 	epatch "${FILESDIR}"/"${PVR}"/add-poll-requested-events.patch
-	epatch "${FILESDIR}"/"${PVR}"/dvb_frontend_switch_regression_fix.patch
+	epatch "${FILESDIR}"/"${PVR}"/drivers-media-update.patch
 
 # Patches headed upstream
 
@@ -282,9 +282,6 @@ src_unpack() {
 #rhbz 808207 CVE-2012-1601
 	epatch "${FILESDIR}"/"${PVR}"/KVM-Ensure-all-vcpus-are-consistent-with-in-kernel-i.patch
 
-#rhbz 808603
-	epatch "${FILESDIR}"/"${PVR}"/wimax-i2400m-prevent-a-possible-kernel-bug-due-to-mi.patch
-
 #rhbz 807632
 	epatch "${FILESDIR}"/"${PVR}"/libata-forbid-port-runtime-pm-by-default.patch
 
@@ -295,17 +292,13 @@ src_unpack() {
 #rhbz 806295
 	epatch "${FILESDIR}"/"${PVR}"/disable-hid-battery.patch
 
-#rhbz 814149 814155 CVE-2012-2121
-	epatch "${FILESDIR}"/"${PVR}"/KVM-unmap-pages-from-the-iommu-when-slots-are-removed.patch
-
 #rhbz 814278 814289 CVE-2012-2119
-	epatch "${FILESDIR}"/"${PVR}"/macvtap-zerocopy-validate-vector-length.patch
-
-#rhbz 811225
-	epatch "${FILESDIR}"/"${PVR}"/memblock-memblock-should-be-able-to-handle-zero-leng.patch
+	use grsecurity || epatch "${FILESDIR}"/"${PVR}"/macvtap-zerocopy-validate-vector-length.patch
 
 	epatch "${FILESDIR}"/"${PVR}"/input-synaptics-fix-regression-with-image-sensor-trackpads.patch
 
+#rhbz 783708
+	epatch "${FILESDIR}"/"${PVR}"/ipw2200-Fix-race-condition-in-the-command-completion-acknowledge.patch
 
 ### END OF PATCH APPLICATIONS ###
 
