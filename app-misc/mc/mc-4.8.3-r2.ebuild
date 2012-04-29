@@ -43,6 +43,7 @@ src_prepare() {
 
 	# bug #413259
 	epatch "${FILESDIR}"/${P}-fix-chown-crash.patch
+	epatch "${FILESDIR}"/${P}-fix-relative-symlink-creation-crash.patch #413691
 }
 
 src_configure() {
