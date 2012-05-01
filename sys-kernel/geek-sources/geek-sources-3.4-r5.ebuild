@@ -12,7 +12,7 @@ ETYPE="sources"
 #CKV="${PVR/-r/-git}"
 # only use this if it's not an _rc/_pre release
 #[ "${PV/_pre}" == "${PV}" ] && [ "${PV/_rc}" == "${PV}" ] && OKV="${PV}"
-CKV="3.4-rc4"
+CKV="3.4-rc5"
 
 inherit kernel-2
 detect_version
@@ -31,7 +31,7 @@ fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
 #bld_version="3.3-rc3"
 #bld_src="http://bld.googlecode.com/files/bld-${bld_version}.tar.bz2"
 #bld_url="http://code.google.com/p/bld"
-rt_version="3.4-rc3-rt5"
+rt_version="3.4-rc5-rt6"
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_version}.patch.xz"
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 
@@ -198,7 +198,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-e1000-ich9-montevina.patch
 
 # crypto/
-	#epatch "${FILESDIR}"/"${PVR}"/modsign-20111207.patch # Failed
+#	epatch "${FILESDIR}"/"${PVR}"/modsign-20111207.patch # Failed
 
 # Assorted Virt Fixes
 	epatch "${FILESDIR}"/"${PVR}"/fix_xen_guest_on_old_EC2.patch
@@ -228,7 +228,6 @@ src_unpack() {
 
 # FIXME: REBASE
 #	epatch "${FILESDIR}"/"${PVR}"/hibernate-freeze-filesystems.patch
-	epatch "${FILESDIR}"/"${PVR}"/hibernate-watermark.patch
 
 	epatch "${FILESDIR}"/"${PVR}"/lis3-improve-handling-of-null-rate.patch
 
@@ -255,12 +254,16 @@ src_unpack() {
 #vgaarb patches.  blame mjg59
 	epatch "${FILESDIR}"/"${PVR}"/vgaarb-vga_default_device.patch
 
-#rhbz 797559
-	epatch "${FILESDIR}"/"${PVR}"/x86-microcode-Fix-sysfs-warning-during-module-unload-on-unsupported-CPUs.patch
-	epatch "${FILESDIR}"/"${PVR}"/x86-microcode-Ensure-that-module-is-only-loaded-for-supported-AMD-CPUs.patch
-
 #rhbz 814278 814289 CVE-2012-2119
 	epatch "${FILESDIR}"/"${PVR}"/macvtap-zerocopy-validate-vector-length.patch
+
+	epatch "${FILESDIR}"/"${PVR}"/input-synaptics-fix-regression-with-image-sensor-trackpads.patch
+
+#rhbz 802106
+	epatch "${FILESDIR}"/"${PVR}"/ipw2200-Fix-race-condition-in-the-command-completion-acknowledge.patch
+
+#rhbz 817298
+	epatch "${FILESDIR}"/"${PVR}"/ipw2x00-add-supported-cipher-suites-to-wiphy-initialization.patch
 
 ### END OF PATCH APPLICATIONS ###
 
