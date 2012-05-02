@@ -123,21 +123,25 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-1.1.15-winegcc.patch #260726
-	epatch "${FILESDIR}"/${PN}-1.4_rc2-multilib-portage.patch #395615
+	epatch "${FILESDIR}/${PN}-1.1.15-winegcc.patch" #260726
+	epatch "${FILESDIR}/${PN}-1.4_rc2-multilib-portage.patch" #395615
 
 	# WinePulse – PulseAudio for Wine
 	# http://art.ified.ca/?page_id=40
 	# git://repo.or.cz/wine/multimedia.git
-	epatch "${FILESDIR}"/${PN}-1.5.3-multimedia.patch
+	epatch "${FILESDIR}/${P}-multimedia.patch"
 
 	# Fix EAX sound in GTA San Andreas
 	# http://bugs.winehq.org/show_bug.cgi?id=14896
-	epatch "${FILESDIR}"/${PN}-disables-DS3DMODE_NORMAL.patch
+	epatch "${FILESDIR}/${PN}-disables-DS3DMODE_NORMAL.patch"
 
 	# Wine doublebuffer patch - http://bugs2.winehq.org/attachment.cgi?id=27310
 	# Need for Crysis
-	epatch "${FILESDIR}"/${PN}-doublebuffer.patch
+	epatch "${FILESDIR}/${PN}-doublebuffer.patch"
+
+	# Diablo3 beta fixes
+	# http://bugs.winehq.org/show_bug.cgi?id=28898
+	epatch "${FILESDIR}/AcceptEX.patch"
 
 	epatch_user #282735
 	eautoreconf
