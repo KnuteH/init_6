@@ -102,6 +102,7 @@ src_unpack() {
 
 ### BRANCH APPLY ###
 
+
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-makefile-after_link.patch
 
 # Architecture patches
@@ -140,6 +141,10 @@ src_unpack() {
 	epatch "${FILESDIR}"/"${PVR}"/NFSv4-Reduce-the-footprint-of-the-idmapper.patch
 	epatch "${FILESDIR}"/"${PVR}"/NFSv4-Further-reduce-the-footprint-of-the-idmapper.patch
 	epatch "${FILESDIR}"/"${PVR}"/NFSv4-Minor-cleanups-for-nfs4_handle_exception-and-n.patch
+
+# NFS Client Patch set from Upstream
+	epatch "${FILESDIR}"/"${PVR}"/NFS-optimise-away-unnecessary-setattrs-for-open-O_TRUNC.patch
+	epatch "${FILESDIR}"/"${PVR}"/NFSv4-fix-open-O_TRUNC-and-ftruncate-error-handling.patch
 
 # USB
 
@@ -285,20 +290,23 @@ src_unpack() {
 #rhbz 807632
 	epatch "${FILESDIR}"/"${PVR}"/libata-forbid-port-runtime-pm-by-default.patch
 
-#rhbz 797559
-	epatch "${FILESDIR}"/"${PVR}"/x86-microcode-Fix-sysfs-warning-during-module-unload-on-unsupported-CPUs.patch
-	epatch "${FILESDIR}"/"${PVR}"/x86-microcode-Ensure-that-module-is-only-loaded-for-supported-AMD-CPUs.patch
-
 #rhbz 806295
 	epatch "${FILESDIR}"/"${PVR}"/disable-hid-battery.patch
 
 #rhbz 814278 814289 CVE-2012-2119
 	use grsecurity || epatch "${FILESDIR}"/"${PVR}"/macvtap-zerocopy-validate-vector-length.patch
 
-	epatch "${FILESDIR}"/"${PVR}"/input-synaptics-fix-regression-with-image-sensor-trackpads.patch
-
 #rhbz 783708
 	epatch "${FILESDIR}"/"${PVR}"/ipw2200-Fix-race-condition-in-the-command-completion-acknowledge.patch
+
+#rhbz 817298
+	epatch "${FILESDIR}"/"${PVR}"/ipw2x00-add-supported-cipher-suites-to-wiphy-initialization.patch
+
+#Lots of fixes from 3.3.5 stable queue
+#	epatch "${FILESDIR}"/"${PVR}"/stable-queue-3.3.5-0502.patch # Failed
+
+#rhbz 818820
+	epatch "${FILESDIR}"/"${PVR}"/dl2k-Clean-up-rio_ioctl.patch
 
 ### END OF PATCH APPLICATIONS ###
 

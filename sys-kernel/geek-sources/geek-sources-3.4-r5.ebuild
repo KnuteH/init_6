@@ -131,6 +131,7 @@ src_unpack() {
 #	epatch "${FILESDIR}"/"${PVR}"/arm-omap-dt-compat.patch
 #	epatch "${FILESDIR}"/"${PVR}"/arm-smsc-support-reading-mac-address-from-device-tree.patch
 	epatch "${FILESDIR}"/"${PVR}"/arm-tegra-nvec-kconfig.patch
+	epatch "${FILESDIR}"/"${PVR}"/arm-tegra-usb-no-reset-linux33.patch
 
 #
 # bugfixes to drivers and filesystems
@@ -256,11 +257,6 @@ src_unpack() {
 
 #rhbz 814278 814289 CVE-2012-2119
 	epatch "${FILESDIR}"/"${PVR}"/macvtap-zerocopy-validate-vector-length.patch
-
-	epatch "${FILESDIR}"/"${PVR}"/input-synaptics-fix-regression-with-image-sensor-trackpads.patch
-
-#rhbz 802106
-	epatch "${FILESDIR}"/"${PVR}"/ipw2200-Fix-race-condition-in-the-command-completion-acknowledge.patch
 
 #rhbz 817298
 	epatch "${FILESDIR}"/"${PVR}"/ipw2x00-add-supported-cipher-suites-to-wiphy-initialization.patch
