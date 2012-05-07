@@ -31,26 +31,31 @@ fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
 bld_version="3.3-rc3"
 bld_src="http://bld.googlecode.com/files/bld-${bld_version}.tar.bz2"
 bld_url="http://code.google.com/p/bld"
+bfq_src_1="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.3.0-v3r3/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch"
+bfq_src_2="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.3.0-v3r3/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch"
+bfq_url="http://algo.ing.unimo.it/people/paolo/disk_sched/"
 
 KEYWORDS="~amd64 ~x86"
 RDEPEND=">=sys-devel/gcc-4.5 \
 	grsecurity?	( >=sys-apps/gradm-2.2.2 )
 	tomoyo?		( sys-apps/ccs-tools )"
 
-IUSE="bld branding ck deblob fbcondecor grsecurity tomoyo"
+IUSE="bld bfq branding ck deblob fbcondecor grsecurity tomoyo"
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, tomoyo and other patches"
-HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${grsecurity_url} ${css_url} ${ck_url} ${fbcondecor_url}"
+HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${bfq_url} ${grsecurity_url} ${css_url} ${ck_url} ${fbcondecor_url}"
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
 	tomoyo?		( ${css_src} )
-	bld?		( ${bld_src} )"
+	bld?		( ${bld_src} )
+	bfq?		( ${bfq_src_1} ${bfq_src_2} )"
 
 REQUIRED_USE="grsecurity? ( !tomoyo ) tomoyo? ( !grsecurity )
-	ck? ( !grsecurity ) ck? ( !tomoyo )
+	ck? ( !bld ) ck? ( !grsecurity ) ck? ( !tomoyo )
 	fbcondecor? ( !grsecurity ) fbcondecor? ( !tomoyo )
-	bld? ( !grsecurity ) bld? ( !tomoyo ) bld? ( !ck )"
+	bld? ( !ck ) bld? ( !grsecurity ) bld? ( !tomoyo )
+	bfq? ( !grsecurity ) bfq? ( !tomoyo )"
 
 KV_FULL="${PVR}-geek"
 EXTRAVERSION="${RELEASE}-geek"
@@ -98,6 +103,13 @@ src_unpack() {
 		EPATCH_OPTS="-p1" epatch "${S}/BLD_${bld_version}-feb12.patch"
 		rm -f "${S}/BLD_${bld_version}-feb12.patch"
 		rm -r "${T}/bld-${bld_version}" # Clean temp
+	fi
+
+	if use bfq; then
+		EPATCH_OPTS="-p1 -F1 -s" \
+		epatch ${DISTDIR}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch
+		EPATCH_OPTS="-p1 -F1 -s" \
+		epatch ${DISTDIR}/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch
 	fi
 
 ### BRANCH APPLY ###
@@ -363,9 +375,10 @@ pkg_postinst() {
 		einfo "font - CONFIG_FONT_ISO_LATIN_1_8x16 http://sudormrf.wordpress.com/2010/10/23/ka-ping-yee-iso-latin-1%c2%a0font-in-linux-kernel/"
 		einfo "logo - CONFIG_LOGO_LARRY_CLUT224 http://www.gentoo.org/proj/en/desktop/artwork/artwork.xml"
 	fi
-	use ck && einfo "ck enable ${ck_url} patches"
+	use ck && einfo "ck enable ${ck_url} patches for CPU scheduler"
 	use fbcondecor && einfo "fbcondecor enable ${fbcondecor_url} patches"
-	use grsecurity && einfo "grsecurity enable ${grsecurity_url} patches"
-	use tomoyo && einfo "tomoyo enable ${css_url} patches"
-	use bld && einfo "bld enable ${bld_url} patches"
+	use grsecurity && einfo "grsecurity enable ${grsecurity_url} security patches"
+	use tomoyo && einfo "tomoyo enable ${css_url} security patches"
+	use bld && einfo "bld enable ${bld_url} patches for CPU scheduler"
+	use bfq && einfo "bfq enable ${bfq_url} patches for I/O scheduler"
 }
