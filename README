@@ -9,7 +9,7 @@ For add overlay install layman and run
 If you've never worked with a overlay, please read http://www.gentoo.org/proj/en/overlays/userguide.xml
 
 In this overlay you will find:
-	app-emulation/wine with desktop and icon files
+	app-emulation/wine with desktop and icon files and with pulsaudio support
 	app-misc/mc with desktop and icon files
 	dev-util/metro live 9999 git ebuild
 	media-video/mplayer with desktop and icon files
