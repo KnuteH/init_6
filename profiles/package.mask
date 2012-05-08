@@ -6,10 +6,7 @@
 
 # Andrey Ovcharov <sudormrfhalt@gmail.com>
 # kernel mainline
-=sys-kernel/geek-sources-3.4-r3
-
-# Gnome 3.4
-=net-libs/webkit-gtk-1.8.0
+=sys-kernel/geek-sources-3.4-r6
 
 # performance regression
 =x11-drivers/nvidia-drivers-295.40

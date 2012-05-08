@@ -7,15 +7,15 @@
     <name>Andrey Ovcharov</name>
   </maintainer>
   <use>
-    <flag name='branding'>Enable Gentoo specific branding.</flag>
-    <flag name='backports'>Use backports patches.</flag>
-    <flag name='bld'>Alternate CPU load distribution technique for Linux kernel scheduler.</flag>
     <flag name='bfq'>Budget Fair Queueing Budget I/O Scheduler.</flag>
-    <flag name='ck'>Use Con Kolivas Brain Fuck CPU Scheduler.</flag>
+    <flag name='bfs'>Use Con Kolivas Brain Fuck CPU Scheduler.</flag>
+    <flag name='bld'>Alternate CPU load distribution technique for Linux kernel scheduler.</flag>
+    <flag name='backports'>Use backports patches.</flag>
+    <flag name='branding'>Enable Gentoo specific branding.</flag>
     <flag name='deblob'>Remove binary blobs from kernel sources to provide libre license compliance.</flag>
     <flag name='fbcondecor'>Use Spock's fbsplash patch.</flag>
     <flag name='grsecurity'>Use grsecurity patches.</flag>
-    <flag name='rt'>Use real-time patchset for the Linux Kernel.</flag>
-    <flag name='tomoyo'>Use tomoyo patches.</flag>
+    <flag name='rt'>Use Ingo Molnar's realtime preempt patches.</flag>
+    <flag name='tomoyo'>Use tomoyo security patches.</flag>
   </use>
 </pkgmetadata>

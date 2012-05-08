@@ -16,15 +16,16 @@ In this overlay you will find:
 	net-irc/irssi with desktop and icon files
 	sys-kernel/vanilla-sources live 9999 git ebuild
 	sys-kernel/geek-sources Full sources for the Linux kernel including fedora, grsecurity, tomoyo patches
-		backports - compat-wireless patches.
-		bld - alternate CPU load distribution technique for Linux kernel scheduler.
-		bfq - bfq I/O scheduler.
-		branding - enable Gentoo specific branding.
-		ck - use Con Kolivas BFS CPU scheduler patches.
-		fbcondecor - use Spock's fbsplash patch.
-		grsecurity - grsecurity patches.
-		rt - real-time patchset.
-		tomoyo - tomoyo patches.
+		bfq - Budget Fair Queueing Budget I/O Scheduler.
+		bfs - Use Con Kolivas Brain Fuck CPU Scheduler.
+		bld - Alternate CPU load distribution technique for Linux kernel scheduler.
+		backports - Use backports patches.
+		branding - Enable Gentoo specific branding.
+		deblob - Remove binary blobs from kernel sources to provide libre license compliance.
+		fbcondecor - Use Spock's fbsplash patch.
+		grsecurity - Use grsecurity patches.
+		rt - Use Ingo Molnar's realtime preempt patches.
+		tomoyo - Use tomoyo security patches.
 	sys-kernel/rh-sources Full sources including the Red Hat Enterprise Linux sources patchset for the 2.6 kernel tree
 and many fixes and patches…
 
