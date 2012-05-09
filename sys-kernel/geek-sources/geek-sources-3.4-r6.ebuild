@@ -92,14 +92,17 @@ EXTRAVERSION="${RELEASE}-geek"
 SLOT="${PV}"
 S="${WORKDIR}/linux-${KV_FULL}"
 
-src_prepare() {
+src_unpack() {
 	kernel-2_src_unpack
 	cd "${S}"
 
 	einfo "Make kernel default configs"
-	cp "${FILESDIR}/${PVR}/config-*" . || die "cannot copy kernel config";
-	cp "${FILESDIR}/${PVR}/merge.pl" "${FILESDIR}/${PVR}/Makefile.config" . &>/dev/null || die "cannot copy kernel files";
+	cp "${FILESDIR}"/"${PVR}"/config-* . || die "cannot copy kernel config";
+	cp "${FILESDIR}"/"${PVR}"/merge.pl "${FILESDIR}"/"${PVR}"/Makefile.config . &>/dev/null || die "cannot copy kernel files";
 	make -f Makefile.config VERSION=${PVR} configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
+}
+
+src_prepare() {
 
 ### PREPARE ###
 

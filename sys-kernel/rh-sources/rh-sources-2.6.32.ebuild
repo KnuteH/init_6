@@ -42,8 +42,8 @@ src_prepare() {
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile
 
 	einfo "Make kernel default configs"
-	cp "${FILESDIR}/${PVR}/config-*" . || die "cannot copy kernel config";
-	cp "${FILESDIR}/${PVR}/merge.pl" "${FILESDIR}/${PVR}/Makefile.config" . &>/dev/null || die "cannot copy kernel files";
+	cp "${FILESDIR}"/"${PVR}"/config-* . || die "cannot copy kernel config";
+	cp "${FILESDIR}"/"${PVR}"/merge.pl "${FILESDIR}"/"${PVR}"/Makefile.config . &>/dev/null || die "cannot copy kernel files";
 	make -f Makefile.config VERSION=${PVR}-fc configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
 
 	einfo "Delete temp files"
