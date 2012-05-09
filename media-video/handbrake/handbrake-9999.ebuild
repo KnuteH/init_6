@@ -36,12 +36,12 @@ DEPEND="=sys-devel/automake-1.11*
 	dev-lang/yasm
 	dev-libs/fribidi
 	>=dev-lang/python-2.4.6
-	|| ( >=net-misc/wget-1.11.4 >=net-misc/curl-7.19.4 ) 
+	|| ( >=net-misc/wget-1.11.4 >=net-misc/curl-7.19.4 )
 	$RDEPEND"
 
 src_configure() {
 	./configure --prefix=/usr $(use_enable gtk) \
-    --disable-gtk-update || die "configure failed"
+	--disable-gtk-update || die "configure failed"
 }
 
 src_compile() {

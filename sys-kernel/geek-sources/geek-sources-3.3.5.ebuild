@@ -96,14 +96,13 @@ EXTRAVERSION="${RELEASE}-geek"
 SLOT="${PV}"
 S="${WORKDIR}/linux-${KV_FULL}"
 
-src_unpack() {
-
+src_prepare() {
 	kernel-2_src_unpack
 	cd "${S}"
 
 	einfo "Make kernel default configs"
-	cp ${FILESDIR}/${PVR}/config-* . || die "cannot copy kernel config";
-	cp ${FILESDIR}/${PVR}/merge.pl ${FILESDIR}/${PVR}/Makefile.config . &>/dev/null || die "cannot copy kernel files";
+	cp "${FILESDIR}/${PVR}/config-*" . || die "cannot copy kernel config";
+	cp "${FILESDIR}/${PVR}/merge.pl" "${FILESDIR}/${PVR}/Makefile.config" . &>/dev/null || die "cannot copy kernel files";
 	make -f Makefile.config VERSION=${PVR} configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
 
 ### PREPARE ###
@@ -111,20 +110,20 @@ src_unpack() {
 	# Budget Fair Queueing Budget I/O Scheduler
 	if use bfq; then
 		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch ${DISTDIR}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch
+		epatch "${DISTDIR}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch"
 		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch ${DISTDIR}/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch
+		epatch "${DISTDIR}/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch"
 	fi
 
 	# Con Kolivas Brain Fuck CPU Scheduler
 	if use bfs; then
 		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch ${DISTDIR}/patch-${bfs_version}-ck1.bz2
+		epatch "${DISTDIR}/patch-${bfs_version}-ck1.bz2"
 	fi
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
-		cd ${T}
+		cd "${T}"
 		unpack "bld-${bld_version}.tar.bz2"
 		cp "${T}/bld-${bld_version}/BLD_${bld_version}-feb12.patch" "${S}/BLD_${bld_version}-feb12.patch"
 		cd "${S}"
@@ -135,11 +134,11 @@ src_unpack() {
 
 	# Spock's fbsplash patch
 	if use fbcondecor; then
-		epatch ${DISTDIR}/4200_fbcondecor-0.9.6.patch
+		epatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
 	fi
 
 	# grsecurity security patches
-	use grsecurity && epatch ${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch
+	use grsecurity && epatch "${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
 
 #	# Ingo Molnar's realtime preempt patches
 #	if use rt; then
@@ -148,7 +147,7 @@ src_unpack() {
 
 	# tomoyo security patches
 	if use tomoyo; then
-		cd ${T}
+		cd "${T}"
 		unpack "ccs-patch-${css_version}.tar.gz"
 		cp "${T}/patches/ccs-patch-3.3.diff" "${S}/ccs-patch-3.3.diff"
 		cd "${S}"
@@ -194,7 +193,6 @@ src_unpack() {
 
 # btrfs
 
-
 # eCryptfs
 
 # NFSv4
@@ -236,7 +234,6 @@ src_unpack() {
 
 # Networking
 
-
 # Misc fixes
 # The input layer spews crap no-one cares about.
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-input-kill-stupid-messages.patch
@@ -259,7 +256,6 @@ src_unpack() {
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-silence-fbcon-logo.patch
 
 # Changes to upstream defaults.
-
 
 # /dev/crash driver.
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-crash-driver.patch
@@ -404,7 +400,6 @@ src_install() {
 }
 
 pkg_postinst() {
-
 	#if [ ! -e ${ROOT}usr/src/linux ]
 	#then
 	#	ln -sf linux-${P} ${ROOT}usr/src/linux

@@ -140,7 +140,7 @@ src_prepare() {
 	# Wine doublebuffer patch - http://bugs2.winehq.org/attachment.cgi?id=27310
 	# Need for Crysis
 	epatch "${FILESDIR}"/${PN}-doublebuffer.patch
-	    
+
 	# WinePulse – PulseAudio for Wine http://art.ified.ca/?page_id=40
 	#epatch "${FILESDIR}"/${PN}pulse-0.40.patch
 	#epatch "${FILESDIR}"/${PN}pulse-configure.ac-1.3.22.patch

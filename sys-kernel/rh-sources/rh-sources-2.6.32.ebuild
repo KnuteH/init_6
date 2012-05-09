@@ -22,7 +22,7 @@ RESTRICT="nomirror"
 IUSE="reiser4"
 UNIPATCH_STRICTORDER="yes"
 KEYWORDS="~amd64 ~x86"
-HOMEPAGE=""
+HOMEPAGE="http://www.redhat.com/"
 SRC_URI="${KERNEL_URI} ${ARCH_URI} http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-${KV_MAJOR}.${KV_MINOR}/reiser4-for-${PV}.patch.bz2"
 
 KV_FULL=${KV_FULL/linux/rh}
@@ -32,7 +32,7 @@ S="${WORKDIR}/linux-${KV_FULL}"
 
 EPATCH_OPTS="-p1 -F1 -s"
 
-src_unpack() {
+src_prepare() {
 
 	kernel-2_src_unpack
 	cd "${S}"
@@ -42,8 +42,8 @@ src_unpack() {
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile
 
 	einfo "Make kernel default configs"
-	cp ${FILESDIR}/${PVR}/config-* . || die "cannot copy kernel config";
-	cp ${FILESDIR}/${PVR}/merge.pl ${FILESDIR}/${PVR}/Makefile.config . &>/dev/null || die "cannot copy kernel files";
+	cp "${FILESDIR}/${PVR}/config-*" . || die "cannot copy kernel config";
+	cp "${FILESDIR}/${PVR}/merge.pl" "${FILESDIR}/${PVR}/Makefile.config" . &>/dev/null || die "cannot copy kernel files";
 	make -f Makefile.config VERSION=${PVR}-fc configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
 
 	einfo "Delete temp files"
@@ -1170,8 +1170,8 @@ src_unpack() {
 
 # END OF PATCH APPLICATIONS
 
-	use reiser4 && epatch ${DISTDIR}/reiser4-for-${PV}.patch.bz2
-	use reiser4 && epatch "${FILESDIR}"/4515_reiser4-grsec.patch
+	use reiser4 && epatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
+	use reiser4 && epatch "${FILESDIR}/4515_reiser4-grsec.patch"
 	epatch "${FILESDIR}"/4000_sierra_wireless_usbid_addition.patch
 	epatch "${FILESDIR}"/4305_sqlzma.patch
 	epatch "${FILESDIR}"/4400_logo_larry_the_cow.patch

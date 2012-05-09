@@ -92,14 +92,13 @@ EXTRAVERSION="${RELEASE}-geek"
 SLOT="${PV}"
 S="${WORKDIR}/linux-${KV_FULL}"
 
-src_unpack() {
-
+src_prepare() {
 	kernel-2_src_unpack
 	cd "${S}"
 
 	einfo "Make kernel default configs"
-	cp ${FILESDIR}/${PVR}/config-* . || die "cannot copy kernel config";
-	cp ${FILESDIR}/${PVR}/merge.pl ${FILESDIR}/${PVR}/Makefile.config . &>/dev/null || die "cannot copy kernel files";
+	cp "${FILESDIR}/${PVR}/config-*" . || die "cannot copy kernel config";
+	cp "${FILESDIR}/${PVR}/merge.pl" "${FILESDIR}/${PVR}/Makefile.config" . &>/dev/null || die "cannot copy kernel files";
 	make -f Makefile.config VERSION=${PVR} configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
 
 ### PREPARE ###
@@ -235,7 +234,6 @@ src_unpack() {
 
 # Changes to upstream defaults.
 
-
 # /dev/crash driver.
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-crash-driver.patch
 
@@ -296,7 +294,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/"${PVR}"/selinux-apply-different-permission-to-ptrace-child.patch
 
 #Highbank clock functions
-	epatch "${FILESDIR}"/"${PVR}"/highbank-export-clock-functions.patch 
+	epatch "${FILESDIR}"/"${PVR}"/highbank-export-clock-functions.patch
 
 #vgaarb patches.  blame mjg59
 	epatch "${FILESDIR}"/"${PVR}"/vgaarb-vga_default_device.patch
@@ -354,7 +352,6 @@ src_install() {
 }
 
 pkg_postinst() {
-
 	#if [ ! -e ${ROOT}usr/src/linux ]
 	#then
 	#	ln -sf linux-${P} ${ROOT}usr/src/linux

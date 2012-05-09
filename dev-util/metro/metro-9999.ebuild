@@ -6,7 +6,6 @@ EAPI="2"
 
 inherit git-2
 
-
 DESCRIPTION="release metatool used for creating Gentoo and Funtoo releases"
 HOMEPAGE="http://www.github.com/funtoo/metro"
 EGIT_REPO_URI="git://github.com/funtoo/${PN}.git"

@@ -76,7 +76,6 @@ src_install() {
 	gnome2_src_install
 }
 
-
 pkg_postinst() {
 	gnome2_pkg_postinst
 	python_mod_optimize caribou
