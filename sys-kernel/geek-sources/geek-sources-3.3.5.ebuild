@@ -53,6 +53,10 @@ css_version="1.8.3-20120401"
 css_src="http://sourceforge.jp/frs/redir.php?m=jaist&f=/tomoyo/49684/ccs-patch-${css_version}.tar.gz"
 css_url="http://tomoyo.sourceforge.jp"
 
+imq_version="3.3"
+imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_version}.diff.xz"
+imq_url="http://www.linuximq.net"
+
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 
 ### END OF PATCH LIST ###
@@ -67,10 +71,10 @@ RDEPEND=">=sys-devel/gcc-4.5 \
 	tomoyo?		( sys-apps/ccs-tools )"
 
 #IUSE="bfq bfs bld branding deblob fbcondecor grsecurity rt tomoyo"
-IUSE="bfq bfs bld branding deblob fbcondecor grsecurity tomoyo"
+IUSE="bfq bfs bld branding deblob fbcondecor grsecurity imq tomoyo"
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, tomoyo and other patches"
 #HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${bfq_url} ${grsecurity_url} ${css_url} ${bfs_url} ${fbcondecor_url} ${rt_url}"
-HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${bfq_url} ${grsecurity_url} ${css_url} ${bfs_url} ${fbcondecor_url}"
+HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${bfq_url} ${grsecurity_url} ${css_url} ${bfs_url} ${fbcondecor_url} ${imq_url}"
 #SRC_URI="${KERNEL_URI} ${ARCH_URI}
 #	bfq?		( ${bfq_src_1} ${bfq_src_2} )
 #	bfs?		( ${bfs_src} )
@@ -85,6 +89,7 @@ SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bld?		( ${bld_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
+	imq?		( ${imq_src} )
 	tomoyo?		( ${css_src} )"
 REQUIRED_USE="bfs? ( !bld )
 	bld? ( !bfs )
@@ -142,6 +147,9 @@ src_prepare() {
 
 	# grsecurity security patches
 	use grsecurity && epatch "${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
+
+	# Linux IMQ - Intermediate Queueing Device patches
+	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_version}.diff.xz"
 
 #	# Ingo Molnar's realtime preempt patches
 #	if use rt; then
@@ -403,11 +411,10 @@ src_install() {
 }
 
 pkg_postinst() {
-	#if [ ! -e ${ROOT}usr/src/linux ]
-	#then
-	#	ln -sf linux-${P} ${ROOT}usr/src/linux
-	#fi
-# todo: fix that ^
+	if [ ! -e ${ROOT}usr/src/linux ]
+	then
+		ln -sf "${ROOT}usr/src/linux" "${ROOT}usr/src/linux-${KV_FULL}"
+	fi
 
 	einfo "Now is the time to configure and build the kernel."
 	use bfq && einfo "bfq enable Budget Fair Queueing Budget I/O Scheduler patches - ${bfq_url}"
@@ -420,6 +427,7 @@ pkg_postinst() {
 	fi
 	use fbcondecor && einfo "fbcondecor enable Spock's fbsplash patch - ${fbcondecor_url}"
 	use grsecurity && einfo "grsecurity enable grsecurity security patches - ${grsecurity_url}"
+	use imq && einfo "imq enable Linux Intermediate Queueing Device patches - ${imq_url}"
 #	use rt && einfo "rt enable Ingo Molnar's realtime preempt patches - ${rt_url}"
 	use tomoyo && einfo "tomoyo enable tomoyo security patches - ${css_url}"
 }
