@@ -4,7 +4,8 @@
 
 EAPI="2"
 
-inherit git-2
+inherit git
+
 
 DESCRIPTION="release metatool used for creating Gentoo and Funtoo releases"
 HOMEPAGE="http://www.github.com/funtoo/metro"
