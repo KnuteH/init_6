@@ -13,8 +13,9 @@ if [[ ${PV} == "9999" ]] ; then
 	#KEYWORDS=""
 else
 	MY_P="${PN}-${PV/_/-}"
-	SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
-	KEYWORDS="-* ~amd64 ~x86 ~x86-fbsd"
+	SRC_URI="mirror://sourceforge/${PN}/Source/${MY_P}.tar.bz2"
+	#KEYWORDS="-* ~amd64 ~x86 ~x86-fbsd"
+	KEYWORDS=""
 	S=${WORKDIR}/${MY_P}
 fi
 
@@ -29,7 +30,7 @@ SRC_URI="${SRC_URI}
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png pulseaudio samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
+IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
 REQUIRED_USE="elibc_glibc? ( threads )" #286560
 RESTRICT="test" #72375
 
@@ -88,7 +89,6 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	ssl? ( dev-libs/openssl )
 	png? ( media-libs/libpng )
 	v4l? ( media-libs/libv4l )
-	pulseaudio? ( media-sound/pulseaudio )
 	!win64? ( ${MLIB_DEPS} )
 	win32? ( ${MLIB_DEPS} )
 	xcomposite? ( x11-libs/libXcomposite )"
@@ -100,7 +100,7 @@ DEPEND="${RDEPEND}
 	)
 	xinerama? ( x11-proto/xineramaproto )
 	!hardened? ( sys-devel/prelink )
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	virtual/yacc
 	sys-devel/flex"
 
@@ -123,8 +123,8 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-1.1.15-winegcc.patch" #260726
-	epatch "${FILESDIR}/${PN}-1.4_rc2-multilib-portage.patch" #395615
+	epatch "${FILESDIR}"/${PN}-1.1.15-winegcc.patch #260726
+	epatch "${FILESDIR}"/${PN}-1.4_rc2-multilib-portage.patch #395615
 
 	# WinePulse – PulseAudio for Wine
 	# http://art.ified.ca/?page_id=40
@@ -179,7 +179,6 @@ do_configure() {
 		$(use_with ssl openssl) \
 		$(use_with oss) \
 		$(use_with png) \
-		$(use pulseaudio && use_with pulseaudio pulse) \
 		$(use_with threads pthread) \
 		$(use_with scanner sane) \
 		$(use_enable test tests) \

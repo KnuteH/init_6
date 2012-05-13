@@ -81,9 +81,9 @@ src_install() {
 	fi
 
 	insinto /usr/share/pixmaps
-	doins "${FILESDIR}"/*.svg || die "doins failed"
+	doins "${FILESDIR}"/icons/*.svg || die "doins pixmaps failed"
 	insinto /usr/share/applications
-	doins "${FILESDIR}"/*.desktop || die "doins failed"
+	doins "${FILESDIR}"/applications/*.desktop || die "domenu *.desktop failed"
 }
 
 pkg_postinst() {

@@ -57,7 +57,7 @@ src_install() {
 	dodoc AUTHORS ChangeLog README TODO NEWS || die "dodoc failed"
 
 	insinto /usr/share/pixmaps
-	doins "${FILESDIR}"/*.svg || die "doins failed"
+	doins "${FILESDIR}"/icons/*.svg || die "doins pixmaps failed"
 	insinto /usr/share/applications
-	doins "${FILESDIR}"/*.desktop || die "doins failed"
+	doins "${FILESDIR}"/applications/*.desktop || die "domenu *.desktop failed"
 }
