@@ -38,9 +38,10 @@ RDEPEND="${COMMON_DEPEND}
 	gnome-base/librsvg:2
 	sys-apps/dbus"
 DEPEND="${COMMON_DEPEND}
+	app-text/gnome-doc-utils
 	dev-libs/libxslt
 	>=dev-util/intltool-0.35.5
-	app-text/gnome-doc-utils"
+	virtual/pkgconfig"
 
 DOCS="AUTHORS ChangeLog NEWS README"
 
@@ -51,7 +52,7 @@ pkg_setup() {
 		--enable-gtk3-module
 		--enable-gtk2-module
 		PYTHON=${EPREFIX}/usr/bin/python2
-		VALAC=$(type -P true)"
+		VALAC=$(type -P valac-0.14)" # harmless even if valac-0.14 not found
 	# PYTHON is substituted into several installed shell scripts
 	# vala is not needed for tarball builds, but configure checks for it...
 	python_set_active_version 2
@@ -71,7 +72,7 @@ src_prepare() {
 
 src_install() {
 	# Add NoDisplay=true to caribou.desktop file
-	epatch "${FILESDIR}"/caribou-0.4.1-fix-desktop.patch
+	epatch "${FILESDIR}/${P}-fix-desktop.patch"
 
 	gnome2_src_install
 }
