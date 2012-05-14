@@ -30,7 +30,7 @@ SRC_URI="${SRC_URI}
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
+IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png pulseaudio samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
 REQUIRED_USE="elibc_glibc? ( threads )" #286560
 RESTRICT="test" #72375
 
@@ -72,6 +72,7 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	)
 	xinerama? ( x11-libs/libXinerama )
 	alsa? ( media-libs/alsa-lib )
+	pulseaudio? ( media-sound/pulseaudio )
 	cups? ( net-print/cups )
 	opencl? ( virtual/opencl )
 	opengl? ( virtual/opengl )
@@ -141,7 +142,7 @@ src_prepare() {
 
 	# Diablo3 beta fixes
 	# http://bugs.winehq.org/show_bug.cgi?id=28898
-#	epatch "${FILESDIR}/AcceptEX.patch"
+	epatch "${FILESDIR}/AcceptEX.patch"
 
 	epatch_user #282735
 	eautoreconf
@@ -158,6 +159,7 @@ do_configure() {
 	econf \
 		--sysconfdir=/etc/wine \
 		$(use_with alsa) \
+		$(use pulseaudio && use_with pulseaudio pulse) \
 		$(use_with capi) \
 		$(use_with lcms cms) \
 		$(use_with cups) \

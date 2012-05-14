@@ -12,7 +12,7 @@ ETYPE="sources"
 #CKV="${PVR/-r/-git}"
 ## only use this if it's not an _rc/_pre release
 #[ "${PV/_pre}" == "${PV}" ] && [ "${PV/_rc}" == "${PV}" ] && OKV="${PV}"
-CKV="3.4-rc6"
+CKV="3.4-rc7"
 
 inherit kernel-2
 detect_version
@@ -39,7 +39,7 @@ detect_version
 #fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
 
 ## grsecurity security patches
-#grsecurity_version="201205071839"
+#grsecurity_version="201205130001"
 #grsecurity_src="http://grsecurity.net/test/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
 #grsecurity_url="http://grsecurity.net"
 
@@ -53,7 +53,19 @@ rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 #css_src="http://sourceforge.jp/frs/redir.php?m=jaist&f=/tomoyo/49684/ccs-patch-${css_version}.tar.gz"
 #css_url="http://tomoyo.sourceforge.jp"
 
+## TuxOnIce
+#ice_url="http://tuxonice.net"
+
+## Intermediate Queueing Device patches
+#imq_version="3.3"
+#imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_version}.diff.xz"
+#imq_url="http://www.linuximq.net"
+
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
+# Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
+#xenomai_ver="2.6.0" 
+#xenomai_src="http://download.gna.org/xenomai/stable/xenomai-${xenomai_ver}.tar.bz2"
+#xenomai_url="http://www.xenomai.org"
 
 ### END OF PATCH LIST ###
 
@@ -61,12 +73,13 @@ rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 KEYWORDS=""
 #RDEPEND=">=sys-devel/gcc-4.5 \
 #	grsecurity?	( >=sys-apps/gradm-2.2.2 )
-#	rt?		( x11-drivers/nvidia-drivers[rt(+)] )
-#	tomoyo?		( sys-apps/ccs-tools )"
+#	tomoyo?		( sys-apps/ccs-tools )
+#	ice? ( >=sys-apps/tuxonice-userui-1.0 )
+#	ice? ( || ( >=sys-power/hibernate-script-2.0 sys-power/pm-utils ) )"
 RDEPEND=">=sys-devel/gcc-4.5 \
 	rt?		( x11-drivers/nvidia-drivers[rt(+)] )"
 
-#IUSE="bfq bfs bld branding deblob fbcondecor grsecurity rt tomoyo"
+#IUSE="bfq bfs bld branding deblob fbcondecor grsecurity ice imq tomoyo"
 IUSE="branding deblob rt"
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, tomoyo and other patches"
 #HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary ${bld_url} ${bfq_url} ${grsecurity_url} ${css_url} ${bfs_url} ${fbcondecor_url} ${rt_url}"
@@ -77,11 +90,10 @@ HOMEPAGE="http://www.kernel.org http://pkgs.fedoraproject.org/gitweb/?p=kernel.g
 #	bld?		( ${bld_src} )
 #	fbcondecor?	( ${fbcondecor_src} )
 #	grsecurity?	( ${grsecurity_src} )
-#	rt?		( ${rt_src} )
+#	imq?		( ${imq_src} )
 #	tomoyo?		( ${css_src} )"
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	rt?		( ${rt_src} )"
-
 #REQUIRED_USE="bfs? ( !bld )
 #	bld? ( !bfs )
 #	fbcondecor? ( !grsecurity ) fbcondecor? ( !tomoyo )
@@ -109,20 +121,20 @@ src_prepare() {
 #	# Budget Fair Queueing Budget I/O Scheduler
 #	if use bfq; then
 #		EPATCH_OPTS="-p1 -F1 -s" \
-#		epatch ${DISTDIR}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch
+#		epatch "${DISTDIR}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v3r3-3.3.patch"
 #		EPATCH_OPTS="-p1 -F1 -s" \
-#		epatch ${DISTDIR}/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch
+#		epatch "${DISTDIR}/0002-block-introduce-the-BFQ-v3r3-I-O-sched-for-3.3.patch"
 #	fi
 
 #	# Con Kolivas Brain Fuck CPU Scheduler
 #	if use bfs; then
 #		EPATCH_OPTS="-p1 -F1 -s" \
-#		epatch ${DISTDIR}/patch-${bfs_version}-ck1.bz2
+#		epatch "${DISTDIR}/patch-${bfs_version}-ck1.bz2"
 #	fi
 
 #	# Alternate CPU load distribution technique for Linux kernel scheduler
 #	if use bld; then
-#		cd ${T}
+#		cd "${T}"
 #		unpack "bld-${bld_version}.tar.bz2"
 #		cp "${T}/bld-${bld_version}/BLD_${bld_version}-feb12.patch" "${S}/BLD_${bld_version}-feb12.patch"
 #		cd "${S}"
@@ -133,11 +145,18 @@ src_prepare() {
 
 #	# Spock's fbsplash patch
 #	if use fbcondecor; then
-#		epatch ${DISTDIR}/4200_fbcondecor-0.9.6.patch
+#		epatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
 #	fi
 
 #	# grsecurity security patches
-#	use grsecurity && epatch ${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch
+#	use grsecurity && epatch "${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
+
+#	# TuxOnIce
+##	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+#	use ice && epatch "${FILESDIR}/tuxonice-kernel-3.3.5.patch.xz"
+
+#	# Intermediate Queueing Device patches
+#	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_version}.diff.xz"
 
 	# Ingo Molnar's realtime preempt patches
 	if use rt; then
@@ -146,7 +165,7 @@ src_prepare() {
 
 #	# tomoyo security patches
 #	if use tomoyo; then
-#		cd ${T}
+#		cd "${T}"
 #		unpack "ccs-patch-${css_version}.tar.gz"
 #		cp "${T}/patches/ccs-patch-3.3.diff" "${S}/ccs-patch-3.3.diff"
 #		cd "${S}"
@@ -155,6 +174,19 @@ src_prepare() {
 #		# Clean temp
 #		rm -rf "${T}/config.ccs" "${T}/COPYING.ccs" "${T}/README.ccs"
 #		rm -r "${T}/include" "${T}/patches" "${T}/security" "${T}/specs"
+#	fi
+
+#	if use xenomai; then
+#		# Portage's ``unpack'' macro unpacks to the current directory. 
+#		# Unpack to the work directory.  Afterwards, ``work'' contains: 
+#		#   linux-2.6.29-xenomai-r5 
+#		#   xenomai-2.4.9 
+#		cd ${WORKDIR} 
+#		unpack ${XENO_TAR} || die "unpack failed" 
+#		cd ${WORKDIR}/${XENO_SRC} 
+#		epatch ${FILESDIR}/prepare-kernel.patch || die "patch failed" 
+
+#		scripts/prepare-kernel.sh --linux=${S} || die "prepare kernel failed" 
 #	fi
 
 ### END OF PREPARE ###
@@ -237,6 +269,7 @@ src_prepare() {
 
 # Changes to upstream defaults.
 
+
 # /dev/crash driver.
 	epatch "${FILESDIR}"/"${PVR}"/linux-2.6-crash-driver.patch
 
@@ -297,7 +330,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/"${PVR}"/selinux-apply-different-permission-to-ptrace-child.patch
 
 #Highbank clock functions
-	epatch "${FILESDIR}"/"${PVR}"/highbank-export-clock-functions.patch
+	epatch "${FILESDIR}"/"${PVR}"/highbank-export-clock-functions.patch 
 
 #vgaarb patches.  blame mjg59
 	epatch "${FILESDIR}"/"${PVR}"/vgaarb-vga_default_device.patch
@@ -372,6 +405,8 @@ pkg_postinst() {
 	fi
 #	use fbcondecor && einfo "fbcondecor enable Spock's fbsplash patch - ${fbcondecor_url}"
 #	use grsecurity && einfo "grsecurity enable grsecurity security patches - ${grsecurity_url}"
+#	use ice && einfo "ice enable TuxOnIce patches - ${ice_url}"
+#	use imq && einfo "imq enable Intermediate Queueing Device patches - ${imq_url}"
 	use rt && einfo "rt enable Ingo Molnar's realtime preempt patches - ${rt_url}"
 #	use tomoyo && einfo "tomoyo enable tomoyo security patches - ${css_url}"
 }

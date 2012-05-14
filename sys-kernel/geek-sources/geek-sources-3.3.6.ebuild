@@ -69,8 +69,7 @@ imq_url="http://www.linuximq.net"
 
 ### END OF PATCH LIST ###
 
-#KEYWORDS="~amd64 ~x86"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 #RDEPEND=">=sys-devel/gcc-4.5 \
 #	grsecurity?	( >=sys-apps/gradm-2.2.2 )
 #	rt?		( x11-drivers/nvidia-drivers[rt(+)] )

@@ -141,7 +141,7 @@ src_prepare() {
 
 	# Diablo3 beta fixes
 	# http://bugs.winehq.org/show_bug.cgi?id=28898
-#	epatch "${FILESDIR}/AcceptEX.patch"
+	epatch "${FILESDIR}/AcceptEX.patch"
 
 	epatch_user #282735
 	eautoreconf
