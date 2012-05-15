@@ -159,8 +159,7 @@ src_prepare() {
 	use grsecurity && epatch "${DISTDIR}/grsecurity-2.9-${PV}-${grsecurity_version}.patch"
 
 	# TuxOnIce
-#	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
-	use ice && epatch "${FILESDIR}/tuxonice-kernel-3.3.5.patch.xz"
+	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
 
 	# Intermediate Queueing Device patches
 	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_version}.diff.xz"
