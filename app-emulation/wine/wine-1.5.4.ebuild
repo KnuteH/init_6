@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-1.5.4.ebuild,v 1.1 2012/05/12 21:12:51 tetromino Exp $
 
 EAPI="4"
 
@@ -14,8 +14,7 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	MY_P="${PN}-${PV/_/-}"
 	SRC_URI="mirror://sourceforge/${PN}/Source/${MY_P}.tar.bz2"
-	#KEYWORDS="-* ~amd64 ~x86 ~x86-fbsd"
-	KEYWORDS=""
+	KEYWORDS="-* ~amd64 ~x86 ~x86-fbsd"
 	S=${WORKDIR}/${MY_P}
 fi
 
@@ -30,7 +29,7 @@ SRC_URI="${SRC_URI}
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png pulseaudio samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
+IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig +gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl +opengl +oss +perl png samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 +X xcomposite xinerama xml"
 REQUIRED_USE="elibc_glibc? ( threads )" #286560
 RESTRICT="test" #72375
 
@@ -72,7 +71,6 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	)
 	xinerama? ( x11-libs/libXinerama )
 	alsa? ( media-libs/alsa-lib )
-	pulseaudio? ( media-sound/pulseaudio )
 	cups? ( net-print/cups )
 	opencl? ( virtual/opencl )
 	opengl? ( virtual/opengl )
@@ -130,7 +128,7 @@ src_prepare() {
 	# WinePulse – PulseAudio for Wine
 	# http://art.ified.ca/?page_id=40
 	# git://repo.or.cz/wine/multimedia.git
-	epatch "${FILESDIR}/${P}-multimedia.patch.xz"
+#	epatch "${FILESDIR}/${P}-multimedia.patch.xz"
 
 	# Fix EAX sound in GTA San Andreas
 	# http://bugs.winehq.org/show_bug.cgi?id=14896
@@ -159,7 +157,6 @@ do_configure() {
 	econf \
 		--sysconfdir=/etc/wine \
 		$(use_with alsa) \
-		$(use pulseaudio && use_with pulseaudio pulse) \
 		$(use_with capi) \
 		$(use_with lcms cms) \
 		$(use_with cups) \
