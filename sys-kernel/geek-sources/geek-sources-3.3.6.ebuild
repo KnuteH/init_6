@@ -59,7 +59,7 @@ reiser4_url="http://sourceforge.net/projects/reiser4"
 #reiser4_ver="${OKV}"
 #reiser4_src="mirror://kernel/linux/kernel/people/edward/reiser4/reiser4-for-2.6/reiser4-for-${REISER4_OKV}${REISER4_VER}.patch.bz2"
 
-## Ingo Molnar's realtime preempt patches
+# Ingo Molnar's realtime preempt patches
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 #rt_ver="3.4-rc5-rt6"
 #rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
@@ -104,8 +104,7 @@ SRC_URI="${KERNEL_URI} ${ARCH_URI}
 RDEPEND="${RDEPEND}
 	grsecurity?	( >=sys-apps/gradm-2.2.2 )
 	ice?		( >=sys-apps/tuxonice-userui-1.0
-			( || ( >=sys-power/hibernate-script-2.0 sys-power/pm-utils ) ) )
-	reiser4?	( >=sys-fs/reiser4progs-1.0.7 )"
+			( || ( >=sys-power/hibernate-script-2.0 sys-power/pm-utils ) ) )"
 
 KV_FULL="${PVR}-geek"
 EXTRAVERSION="${RELEASE}-geek"
@@ -224,7 +223,7 @@ src_prepare() {
 	# Reiser4
 	use reiser4 && epatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
 
-#	# Ingo Molnar's realtime preempt patches
+	# Ingo Molnar's realtime preempt patches
 	if use rt; then
 		epatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 	fi
@@ -244,12 +243,10 @@ src_prepare() {
 
 ### BRANCH APPLY ###
 
-	# Mandriva/Mageia
 	einfo
 	einfo "Mandriva/Mageia"
 	ProcessingOfTheList "$FILESDIR/$OKV/mageia"
 
-	# Fedora
 	einfo
 	einfo "Fedora"
 	ProcessingOfTheList "$FILESDIR/$OKV/fedora"

@@ -321,49 +321,51 @@ video-mageia-logo.patch
 ### 3rdparty
 ###
 
-3rd-3rdparty-1.0-tree.patch
+# Disable all 3rdparty. by init_6
+
+#3rd-3rdparty-1.0-tree.patch
 
 # TODO: fix up patch below to include all archs?
-3rd-3rdparty-merge.patch
+#3rd-3rdparty-merge.patch
 
 # acerhk
-3rd-acerhk-0.5.35.patch
-3rd-acerhk-kbuild.patch
-3rd-acerhk-extra-cflags.patch
-3rd-acerhk-proc_dir_entry-owner.patch
-3rd-acerhk-fix-build-with-function-tracer.patch
-3rd-acerhk-2.6.36-buildfix.patch
-3rd-acerhk-fix-include.patch
+#3rd-acerhk-0.5.35.patch
+#3rd-acerhk-kbuild.patch
+#3rd-acerhk-extra-cflags.patch
+#3rd-acerhk-proc_dir_entry-owner.patch
+#3rd-acerhk-fix-build-with-function-tracer.patch
+#3rd-acerhk-2.6.36-buildfix.patch
+#3rd-acerhk-fix-include.patch
 
 # aes2501
-3rd-aes2501-r19.patch
-3rd-aes2501-kbuild.patch
-3rd-aes2501-rmmod-oops-fix.patch
+#3rd-aes2501-r19.patch
+#3rd-aes2501-kbuild.patch
+#3rd-aes2501-rmmod-oops-fix.patch
 
 # heci
-3rd-heci-3.2.0.24.patch
-3rd-heci-WARN-redefine.patch
-3rd-heci-use-sched.h.patch
-3rd-heci-2.6.36-buildfix.patch
+#3rd-heci-3.2.0.24.patch
+#3rd-heci-WARN-redefine.patch
+#3rd-heci-use-sched.h.patch
+#3rd-heci-2.6.36-buildfix.patch
 
 # ndiswrapper
-3rd-ndiswrapper-1.57.patch
-3rd-ndiswrapper-Kconfig.patch
-3rd-ndiswrapper-Makefile-build-fix.patch
-3rd-ndiswrapper-1.57-3.3-buildfix.patch
-3rd-ndiswrapper-buildhack.patch
+#3rd-ndiswrapper-1.57.patch
+#3rd-ndiswrapper-Kconfig.patch
+#3rd-ndiswrapper-Makefile-build-fix.patch
+#3rd-ndiswrapper-1.57-3.3-buildfix.patch
+#3rd-ndiswrapper-buildhack.patch
 
 # rfswitch
-3rd-rfswitch-1.3.patch
-3rd-rfswitch-build-fix.patch
-3rd-rfswitch-3.0-buildfix.patch
+#3rd-rfswitch-1.3.patch
+#3rd-rfswitch-build-fix.patch
+#3rd-rfswitch-3.0-buildfix.patch
 
 # viahss
-3rd-viahss-0.92.patch
-3rd-viahss-config.patch
-3rd-viahss-module-license.patch
-3rd-viahss-2.6.35-buildfix.patch
-3rd-viahss-3.0-buildfix.patch
+#3rd-viahss-0.92.patch
+#3rd-viahss-config.patch
+#3rd-viahss-module-license.patch
+#3rd-viahss-2.6.35-buildfix.patch
+#3rd-viahss-3.0-buildfix.patch
 
 ###
 ### Security
