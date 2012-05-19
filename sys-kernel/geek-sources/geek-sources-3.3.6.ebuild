@@ -115,11 +115,11 @@ patch_command='patch -p1 -F1 -s'
 DoPatch() {
 	local patch=$1
 	shift
-	case "$patch" in
-	*.bz2) bunzip2 < "$patch" | $patch_command ${1+"$@"} ;;
-	*.gz)  gunzip  < "$patch" | $patch_command ${1+"$@"} ;;
-	*.xz)  unxz    < "$patch" | $patch_command ${1+"$@"} ;;
-	*) $patch_command ${1+"$@"} < "$patch" ;;
+		case "$patch" in
+		*.bz2) bunzip2 < "$patch" | $patch_command ${1+"$@"} ;;
+		*.gz)  gunzip  < "$patch" | $patch_command ${1+"$@"} ;;
+		*.xz)  unxz    < "$patch" | $patch_command ${1+"$@"} ;;
+		*) $patch_command ${1+"$@"} < "$patch" ;;
 	esac
 }
 
@@ -133,16 +133,17 @@ ApplyPatch() {
 	# don't apply patch if it's empty
 	local C=$(wc -l $patch | awk '{print $1}')
 	if [ "$C" -gt 9 ]; then
-		if patch -p1 --dry-run < "$patch" &>/dev/null; then
+		patch_command='patch -p1 --dry-run'
+		if DoPatch "$patch" &>/dev/null; then
+			patch_command='patch -p1 -F1 -s'
 			DoPatch "$patch" &>/dev/null
 		else
-			ewarn "Failed to apply patch…"
-			ewarn "$patch"
+			ewarn "Failed to apply patch $patch"
 		fi
 	fi
 }
 
-ProcessingOfTheList() {
+ProcessingList() {
 	local dir=$1
 	local patch="$dir/patch_list"
 	shift
@@ -158,25 +159,34 @@ ProcessingOfTheList() {
 	done < "$patch"
 }
 
+ProcessingPatch() {
+	local patch=$1
+	local name=$(basename $patch)
+	shift
+	ebegin "Applying $name"
+		ApplyPatch "$patch"
+	eend $?
+}
+
 src_prepare() {
 	# Budget Fair Queueing Budget I/O Scheduler
-	use bfq && ProcessingOfTheList "${FILESDIR}/${OKV}/bfq"
+	use bfq && ProcessingList "${FILESDIR}/${OKV}/bfq"
 	# Con Kolivas Brain Fuck CPU Scheduler
-	use bfs && epatch "${DISTDIR}/3.3-sched-bfs-420.patch"
+	use bfs && ProcessingPatch "${DISTDIR}/3.3-sched-bfs-420.patch"
 	# Con Kolivas high performance patchset
-	use ck && epatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
+	use ck && ProcessingPatch "$DISTDIR/patch-$ck_ver-ck1.bz2"
 	# Spock's fbsplash patch
-	use fbcondecor && epatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
+	use fbcondecor && ProcessingPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
 	# grsecurity security patches
-	use grsecurity && epatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
+	use grsecurity && ProcessingPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
 	# TuxOnIce
-	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+	use ice && ProcessingPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
 	# Intermediate Queueing Device patches
-	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
+	use imq && ProcessingPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
 	# Reiser4
-	use reiser4 && epatch "${DISTDIR}/reiser4-for-${OKV}.patch.bz2"
+	use reiser4 && ProcessingPatch "${DISTDIR}/reiser4-for-${OKV}.patch.bz2"
 	# Ingo Molnar's realtime preempt patches
-	use rt && epatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
+	use rt && ProcessingPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
@@ -184,7 +194,7 @@ src_prepare() {
 		unpack "bld-${bld_ver}.tar.bz2"
 		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch"
+		ProcessingPatch "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
@@ -197,7 +207,7 @@ src_prepare() {
 #		cd ${WORKDIR}
 #		unpack ${XENO_TAR} || die "unpack failed"
 #		cd ${WORKDIR}/${XENO_SRC}
-#		ApplyPatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
+#		ProcessingPatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
 
 #		scripts/prepare-kernel.sh --linux=${S} || die "prepare kernel failed"
 #	fi
@@ -206,25 +216,25 @@ src_prepare() {
 
 	einfo
 	einfo "Mandriva/Mageia"
-	ProcessingOfTheList "$FILESDIR/$OKV/mageia"
+	ProcessingList "$FILESDIR/$OKV/mageia"
 
 	einfo
 	einfo "Fedora"
-	ProcessingOfTheList "$FILESDIR/$OKV/fedora"
+	ProcessingList "$FILESDIR/$OKV/fedora"
 
 	einfo
 	einfo "Pardus"
-	ProcessingOfTheList "$FILESDIR/$OKV/pardus"
+	ProcessingList "$FILESDIR/$OKV/pardus"
 
 	# Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression
 	# https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41
 	einfo
-	ApplyPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch"
+	ProcessingPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch"
 
 	# USE branding
 	if use branding; then
-		ApplyPatch "${FILESDIR}/font-8x16-iso-latin-1-v2.patch"
-		ApplyPatch "${FILESDIR}/gentoo-larry-logo-v2.patch"
+		ProcessingPatch "${FILESDIR}/font-8x16-iso-latin-1-v2.patch"
+		ProcessingPatch "${FILESDIR}/gentoo-larry-logo-v2.patch"
 	fi
 
 ### END OF PATCH APPLICATIONS ###
