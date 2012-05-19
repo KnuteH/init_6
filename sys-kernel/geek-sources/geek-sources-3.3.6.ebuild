@@ -138,7 +138,7 @@ ApplyPatch() {
 			patch_command='patch -p1 -F1 -s'
 			DoPatch "$patch" &>/dev/null
 		else
-			ewarn "Failed to apply patch $patch"
+			ewarn "Failed to apply patch $(basename $patch)"
 		fi
 	fi
 }
@@ -283,11 +283,12 @@ src_install() {
 }
 
 pkg_postinst() {
-	if [ ! -e ${ROOT}usr/src/linux ]
-	then
-		rm -rf "${ROOT}usr/src/linux"
-		ln -sf "${ROOT}usr/src/linux" "${ROOT}usr/src/linux-${KV_FULL}"
-	fi
+# ToDo fix that
+#	if [ ! -e ${ROOT}usr/src/linux ]
+#	then
+#		rm -rf "${ROOT}usr/src/linux"
+#		ln -sf "${ROOT}usr/src/linux" "${ROOT}usr/src/linux-${KV_FULL}"
+#	fi
 	einfo "Now is the time to configure and build the kernel."
 	use bfq && einfo "bfq enable Budget Fair Queueing Budget I/O Scheduler patches - ${bfq_url}"
 	use bfs && einfo "bfs enable Con Kolivas Brain Fuck CPU Scheduler patches - ${bfs_url}"
