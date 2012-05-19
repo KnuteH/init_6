@@ -30,3 +30,4 @@ vesa_fallback_on_fail.patch
 
 # Add new device ID for Atheros 3012 bluetooth device to load the correct firmware
 new-btusb-id-for-asus_ux31.patch
+
