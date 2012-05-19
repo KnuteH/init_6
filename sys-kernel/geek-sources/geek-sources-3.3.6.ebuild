@@ -29,7 +29,7 @@ bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
 ck_ver="3.3"
-ck_src="http://ck.kolivas.org/patches/3.0/3.3/3.3-ck1/patch-${ck_version}-ck1.bz2"
+ck_src="http://ck.kolivas.org/patches/3.0/3.3/3.3-ck1/patch-${ck_ver}-ck1.bz2"
 
 # Spock's fbsplash patch
 fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
@@ -97,6 +97,7 @@ HOMEPAGE="http://www.kernel.org
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )
 	bld?		( ${bld_src} )
+	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
 	imq?		( ${imq_src} )"
@@ -158,7 +159,7 @@ ProcessingOfTheList() {
 	done < "$patch"
 }
 
-src_unpack() {
+src_prepare() {
 	kernel-2_src_unpack
 	cd "${S}"
 
@@ -180,19 +181,17 @@ src_unpack() {
 src_prepare() {
 	# Budget Fair Queueing Budget I/O Scheduler
 	if use bfq; then
-		ProcessingOfTheList "$FILESDIR/$OKV/bfq"
+		ProcessingOfTheList "${FILESDIR}/${OKV}/bfq"
 	fi
 
 	# Con Kolivas Brain Fuck CPU Scheduler
 	if use bfs; then
-		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch "${DISTDIR}/3.3-sched-bfs-420.patch"
+		ApplyPatch "${DISTDIR}/3.3-sched-bfs-420.patch"
 	fi
 
-	# Con Kolivas 
+	# Con Kolivas high performance patchset
 	if use ck; then
-		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
+		ApplyPatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
 	fi
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
@@ -201,31 +200,31 @@ src_prepare() {
 		unpack "bld-${bld_ver}.tar.bz2"
 		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		EPATCH_OPTS="-p1" epatch "${S}/BLD_${bld_ver}-feb12.patch"
+		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
 
 	# Spock's fbsplash patch
 	if use fbcondecor; then
-		epatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
+		ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
 	fi
 
 	# grsecurity security patches
-	use grsecurity && epatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
+	use grsecurity && ApplyPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
 
 	# TuxOnIce
-	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+	use ice && ApplyPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
 
 	# Intermediate Queueing Device patches
-	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
+	use imq && ApplyPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
 
 	# Reiser4
-	use reiser4 && epatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
+	use reiser4 && ApplyPatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
 
 	# Ingo Molnar's realtime preempt patches
 	if use rt; then
-		epatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
+		ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 	fi
 
 #	if use xenomai; then
@@ -236,7 +235,7 @@ src_prepare() {
 #		cd ${WORKDIR}
 #		unpack ${XENO_TAR} || die "unpack failed"
 #		cd ${WORKDIR}/${XENO_SRC}
-#		epatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
+#		ApplyPatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
 
 #		scripts/prepare-kernel.sh --linux=${S} || die "prepare kernel failed"
 #	fi
@@ -262,8 +261,8 @@ src_prepare() {
 
 	# USE branding
 	if use branding; then
-		epatch "${FILESDIR}"/font-8x16-iso-latin-1-v2.patch
-		epatch "${FILESDIR}"/gentoo-larry-logo-v2.patch
+		ApplyPatch "${FILESDIR}"/font-8x16-iso-latin-1-v2.patch
+		ApplyPatch "${FILESDIR}"/gentoo-larry-logo-v2.patch
 	fi
 
 ### END OF PATCH APPLICATIONS ###
