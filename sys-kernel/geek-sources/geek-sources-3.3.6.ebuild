@@ -18,7 +18,7 @@ bfq_url="http://algo.ing.unimo.it/people/paolo/disk_sched/"
 
 # Con Kolivas' Brain Fuck CPU Scheduler
 bfs_url="http://ck-hack.blogspot.com"
-bfs_ver="3.3"
+#bfs_ver="3.3"
 bfs_src="http://ck.kolivas.org/patches/bfs/3.3.0/3.3-sched-bfs-420.patch"
 
 # Alternate CPU load distribution technique for Linux kernel scheduler
@@ -67,7 +67,7 @@ rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 # Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 #xenomai_url="http://www.xenomai.org"
-#xenomai_ver="2.6.0" 
+#xenomai_ver="2.6.0"
 #xenomai_src="http://download.gna.org/xenomai/stable/xenomai-${xenomai_ver}.tar.bz2"
 
 #------------------------------------------------------------------------
@@ -90,7 +90,7 @@ HOMEPAGE="http://www.kernel.org
 	GrSecurity:   ${grsecurity_url}
 	imq:          ${imq_url}
 	Mageia:       ${mageia_url}
-	TuxOnIce:     ${ice_url}
+	ice:          ${ice_url}
 	reiser4:      ${reiser4_url}
 	rt:           ${rt_url}"
 
@@ -108,9 +108,8 @@ RDEPEND="${RDEPEND}
 			( || ( >=sys-power/hibernate-script-2.0 sys-power/pm-utils ) ) )"
 
 KV_FULL="${PVR}-geek"
-EXTRAVERSION="${RELEASE}-geek"
+S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
-S="${WORKDIR}/linux-${KV_FULL}"
 
 patch_command='patch -p1 -F1 -s'
 DoPatch() {
@@ -160,39 +159,24 @@ ProcessingOfTheList() {
 }
 
 src_prepare() {
-	kernel-2_src_unpack
-	cd "${S}"
-
-	einfo "Make kernel default configs"
-	cp "${FILESDIR}"/"${PVR}"/fedora/config-* . || die "cannot copy kernel config";
-	cp "${FILESDIR}"/"${PVR}"/fedora/merge.pl "${FILESDIR}"/"${PVR}"/fedora/Makefile.config . &>/dev/null || die "cannot copy kernel files";
-	make -f Makefile.config VERSION=${PVR} configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
-
-	einfo "Copy current config from /proc"
-	if [ -e "/usr/src/linux-${KV_FULL}/.config" ]; then
-		ewarn "Kernel config file already exist."
-		ewarn "I will NOT overwrite that."
-	else
-		echo "Copying kernel config file."
-		zcat /proc/config > .config || ewarn "Can't copy /proc/config"
-	fi
-}
-
-src_prepare() {
 	# Budget Fair Queueing Budget I/O Scheduler
-	if use bfq; then
-		ProcessingOfTheList "${FILESDIR}/${OKV}/bfq"
-	fi
-
+	use bfq && ProcessingOfTheList "${FILESDIR}/${OKV}/bfq"
 	# Con Kolivas Brain Fuck CPU Scheduler
-	if use bfs; then
-		ApplyPatch "${DISTDIR}/3.3-sched-bfs-420.patch"
-	fi
-
+	use bfs && epatch "${DISTDIR}/3.3-sched-bfs-420.patch"
 	# Con Kolivas high performance patchset
-	if use ck; then
-		ApplyPatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
-	fi
+	use ck && epatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
+	# Spock's fbsplash patch
+	use fbcondecor && epatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
+	# grsecurity security patches
+	use grsecurity && epatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
+	# TuxOnIce
+	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+	# Intermediate Queueing Device patches
+	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
+	# Reiser4
+	use reiser4 && epatch "${DISTDIR}/reiser4-for-${OKV}.patch.bz2"
+	# Ingo Molnar's realtime preempt patches
+	use rt && epatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
@@ -203,28 +187,6 @@ src_prepare() {
 		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
-	fi
-
-	# Spock's fbsplash patch
-	if use fbcondecor; then
-		ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
-	fi
-
-	# grsecurity security patches
-	use grsecurity && ApplyPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
-
-	# TuxOnIce
-	use ice && ApplyPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
-
-	# Intermediate Queueing Device patches
-	use imq && ApplyPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
-
-	# Reiser4
-	use reiser4 && ApplyPatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
-
-	# Ingo Molnar's realtime preempt patches
-	if use rt; then
-		ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 	fi
 
 #	if use xenomai; then
@@ -257,15 +219,29 @@ src_prepare() {
 	# Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression
 	# https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41
 	einfo
-	epatch "${FILESDIR}"/acpi-ec-add-delay-before-write.patch
+	ApplyPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch"
 
 	# USE branding
 	if use branding; then
-		ApplyPatch "${FILESDIR}"/font-8x16-iso-latin-1-v2.patch
-		ApplyPatch "${FILESDIR}"/gentoo-larry-logo-v2.patch
+		ApplyPatch "${FILESDIR}/font-8x16-iso-latin-1-v2.patch"
+		ApplyPatch "${FILESDIR}/gentoo-larry-logo-v2.patch"
 	fi
 
 ### END OF PATCH APPLICATIONS ###
+
+	einfo "Make kernel default configs"
+	cp "$FILESDIR/$PVR"/fedora/config-* . || die "cannot copy kernel config";
+	cp "$FILESDIR/$PVR"/fedora/merge.pl "$FILESDIR/$PVR"/fedora/Makefile.config . &>/dev/null || die "cannot copy kernel files";
+	make -f Makefile.config VERSION=${PVR} configs &>/dev/null || die "cannot generate kernel .config files from config-* files"
+
+	einfo "Copy current config from /proc"
+	if [ -e "/usr/src/linux-${KV_FULL}/.config" ]; then
+		ewarn "Kernel config file already exist."
+		ewarn "I will NOT overwrite that."
+	else
+		echo "Copying kernel config file."
+		zcat /proc/config > .config || ewarn "Can't copy /proc/config"
+	fi
 
 # Install the docs
 	nonfatal dodoc "${FILESDIR}/${PVR}"/fedora/{README.txt,TODO}
