@@ -18,7 +18,7 @@
     <flag name='grsecurity'>Use grsecurity patches.</flag>
     <flag name='ice'>Use TuxOnIce patches.</flag>
     <flag name='imq'>Use Intermediate Queueing Device patches.</flag>
-    <flag name='rt'>Use Reiser4 FS patches.</flag>
+    <flag name='reiser4'>Use Reiser4 FS patches.</flag>
     <flag name='rt'>Use Ingo Molnar's realtime preempt patches.</flag>
   </use>
 </pkgmetadata>

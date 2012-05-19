@@ -73,14 +73,6 @@ rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 #------------------------------------------------------------------------
 
 KEYWORDS="~amd64 ~x86"
-use bfq && die "No bfq support yet for this version."
-use bfs && die "No bfs support yet for this version."
-use bld && die "No bld support yet for this version."
-use ck && die "No ck support yet for this version."
-use fbcondecor && die "No fbcondecor support yet for this version."
-use grsecurity && die "No grsecurity support yet for this version."
-use ice && die "No TuxOnIce support yet for this version."
-use imq && die "No imq support yet for this version."
 use reiser4 && die "No reiser4 support yet for this version."
 use rt && die "No rt support yet for this version."
 
@@ -201,18 +193,18 @@ src_prepare() {
 	# Con Kolivas 
 	if use ck; then
 		EPATCH_OPTS="-p1 -F1 -s" \
-		epatch "${DISTDIR}/patch-${ck_version}-ck1.bz2"
+		epatch "${DISTDIR}/patch-${ck_ver}-ck1.bz2"
 	fi
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
 		cd "${T}"
-		unpack "bld-${bld_version}.tar.bz2"
-		cp "${T}/bld-${bld_version}/BLD_${bld_version}-feb12.patch" "${S}/BLD_${bld_version}-feb12.patch"
+		unpack "bld-${bld_ver}.tar.bz2"
+		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		EPATCH_OPTS="-p1" epatch "${S}/BLD_${bld_version}-feb12.patch"
-		rm -f "${S}/BLD_${bld_version}-feb12.patch"
-		rm -r "${T}/bld-${bld_version}" # Clean temp
+		EPATCH_OPTS="-p1" epatch "${S}/BLD_${bld_ver}-feb12.patch"
+		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
+		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
 
 	# Spock's fbsplash patch
@@ -221,20 +213,20 @@ src_prepare() {
 	fi
 
 	# grsecurity security patches
-	use grsecurity && epatch "${DISTDIR}/grsecurity-${grsecurity_version}.patch"
+	use grsecurity && epatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
 
 	# TuxOnIce
 	use ice && epatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
 
 	# Intermediate Queueing Device patches
-	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_version}.diff.xz"
+	use imq && epatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
 
 	# Reiser4
 	use reiser4 && epatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2"
 
 #	# Ingo Molnar's realtime preempt patches
 	if use rt; then
-		epatch "${DISTDIR}/patch-${rt_version}.patch.xz"
+		epatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 	fi
 
 #	if use xenomai; then
