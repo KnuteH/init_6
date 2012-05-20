@@ -23,7 +23,7 @@ bfs_src="http://ck.kolivas.org/patches/bfs/3.3.0/3.3-sched-bfs-420.patch"
 
 # Alternate CPU load distribution technique for Linux kernel scheduler
 bld_url="http://code.google.com/p/bld"
-bld_ver="3.3-rc3"
+bld_ver="3.3-rc3" # 3.4-rc4 available but failed to install - 20.05.12
 bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 
 # Con Kolivas' high performance patchset
@@ -64,6 +64,9 @@ rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 #rt_ver="3.4-rc5-rt6"
 #rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
 
+# Ultra Kernel Samepage Merging
+ukms_url="http://kerneldedup.org"
+
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 # Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 #xenomai_url="http://www.xenomai.org"
@@ -76,7 +79,7 @@ KEYWORDS="~amd64 ~x86"
 use reiser4 && die "No reiser4 support yet for this version."
 use rt && die "No rt support yet for this version."
 
-IUSE="bfq bfs bld branding ck deblob fbcondecor grsecurity ice imq reiser4 rt"
+IUSE="bfq bfs bld branding ck deblob fbcondecor grsecurity ice imq reiser4 rt uksm"
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
@@ -92,7 +95,8 @@ HOMEPAGE="http://www.kernel.org
 	Mageia:		${mageia_url}
 	ice:		${ice_url}
 	reiser4:	${reiser4_url}
-	rt:		${rt_url}"
+	rt:		${rt_url}
+	uksm:		${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )
@@ -195,6 +199,9 @@ src_prepare() {
 
 	# Ingo Molnar's realtime preempt patches
 	use rt && ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
+
+	# Ultra Kernel Samepage Merging
+	use uksm && ApplyPatch "${FILESDIR}/${OKV}/uksm/patch_list"
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
@@ -325,4 +332,5 @@ pkg_postinst() {
 	use imq && einfo "imq enable Intermediate Queueing Device patches - ${imq_url}"
 	use reiser4 && einfo "reiser4 enable Reiser4 FS patches - ${reiser4_url}"
 	use rt && einfo "rt enable Ingo Molnar's realtime preempt patches - ${rt_url}"
+	use uksm && einfo "uksm enable Ultra Kernel Samepage Merging patches - ${uksm_url}"
 }

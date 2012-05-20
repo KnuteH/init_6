@@ -20,5 +20,6 @@
     <flag name='imq'>Use Intermediate Queueing Device patches.</flag>
     <flag name='reiser4'>Use Reiser4 FS patches.</flag>
     <flag name='rt'>Use Ingo Molnar's realtime preempt patches.</flag>
+    <flag name='uksm'>Use Ultra Kernel Samepage Merging patches.</flag>
   </use>
 </pkgmetadata>
