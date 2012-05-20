@@ -1,0 +1,14 @@
+# Ubuntu Kernel Patches
+
+# Async init pnp subsystem
+pnp-isapnp-async-init.patch
+
+# ata: blacklist FUJITSU MHW2160BH PL
+ubuntu-intrepid.git-3522f638ddff561fb46c1056fcb8c678e9e649ab.patch
+
+# Sveral SAUCE patches from jaunty and karmic
+0002-UBUNTU-SAUCE-Dell-XPS710-reboot-quirk.patch
+
+# Don't install scsi headers to avoid conflict with glibc
+ubuntu-maverick.git-c7a74029969b912241591b2889961b17514ca61f.patch
+

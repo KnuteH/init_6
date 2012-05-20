@@ -40,7 +40,7 @@ fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 
 # grsecurity security patches
 grsecurity_url="http://grsecurity.net"
-grsecurity_ver="2.9-${OKV}-201205151707"
+grsecurity_ver="2.9-${OKV}-201205191125"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
 
 # TuxOnIce
@@ -81,18 +81,18 @@ IUSE="bfq bfs bld branding ck deblob fbcondecor grsecurity ice imq reiser4 rt"
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
 HOMEPAGE="http://www.kernel.org
-	bfq:          ${bfq_url}
-	bfs:          ${bfs_url}
-	bld:          ${bld_url}
-	ck:           ${ck_url}
-	fbcondecor:   ${fbcondecor_url}
-	Fedora:       ${fedora_url}
-	GrSecurity:   ${grsecurity_url}
-	imq:          ${imq_url}
-	Mageia:       ${mageia_url}
-	ice:          ${ice_url}
-	reiser4:      ${reiser4_url}
-	rt:           ${rt_url}"
+	bfq:		${bfq_url}
+	bfs:		${bfs_url}
+	bld:		${bld_url}
+	ck:		${ck_url}
+	fbcondecor:	${fbcondecor_url}
+	Fedora:		${fedora_url}
+	GrSecurity:	${grsecurity_url}
+	imq:		${imq_url}
+	Mageia:		${mageia_url}
+	ice:		${ice_url}
+	reiser4:	${reiser4_url}
+	rt:		${rt_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )
@@ -112,18 +112,18 @@ S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
 
 patch_command='patch -p1 -F1 -s'
-DoPatch() {
+ExtractApply() {
 	local patch=$1
 	shift
-		case "$patch" in
-		*.bz2) bunzip2 < "$patch" | $patch_command ${1+"$@"} ;;
-		*.gz)  gunzip  < "$patch" | $patch_command ${1+"$@"} ;;
-		*.xz)  unxz    < "$patch" | $patch_command ${1+"$@"} ;;
-		*) $patch_command ${1+"$@"} < "$patch" ;;
+	case "$patch" in
+	*.bz2) bunzip2 < "$patch" | $patch_command ${1+"$@"} ;;
+	*.gz)  gunzip  < "$patch" | $patch_command ${1+"$@"} ;;
+	*.xz)  unxz    < "$patch" | $patch_command ${1+"$@"} ;;
+	*) $patch_command ${1+"$@"} < "$patch" ;;
 	esac
 }
 
-ApplyPatch() {
+Handler() {
 	local patch=$1
 	shift
 	if [ ! -f $patch ]; then
@@ -134,59 +134,67 @@ ApplyPatch() {
 	local C=$(wc -l $patch | awk '{print $1}')
 	if [ "$C" -gt 9 ]; then
 		patch_command='patch -p1 --dry-run'
-		if DoPatch "$patch" &>/dev/null; then
+		if ExtractApply "$patch" &>/dev/null; then
 			patch_command='patch -p1 -F1 -s'
-			DoPatch "$patch" &>/dev/null
+			ExtractApply "$patch" &>/dev/null
 		else
-			ewarn "Failed to apply patch $(basename $patch)"
+			ewarn "Skipping patch --> $(basename $patch)"
 		fi
 	fi
 }
 
-ProcessingList() {
-	local dir=$1
-	local patch="$dir/patch_list"
-	shift
-	while read -r line
-	do
-		# skip comments
-		[[ $line =~ ^\ {0,}# ]] && continue
-		# skip empty lines
-		[[ -z "$line" ]] && continue
-			ebegin "Applying $line"
-				ApplyPatch "$dir/$line"
-			eend $?
-	done < "$patch"
-}
-
-ProcessingPatch() {
+ApplyPatch() {
 	local patch=$1
-	local name=$(basename $patch)
 	shift
-	ebegin "Applying $name"
-		ApplyPatch "$patch"
-	eend $?
+	case `basename "$patch"` in
+	patch_list)
+		while read -r line
+		do
+			# skip comments
+			[[ $line =~ ^\ {0,}# ]] && continue
+			# skip empty lines
+			[[ -z "$line" ]] && continue
+				ebegin "Applying $line"
+					dir=`dirname "$patch"`
+					Handler "$dir/$line"
+				eend $?
+		done < "$patch"
+	;;
+	*)
+		ebegin "Applying $(basename $patch)"
+			Handler "$patch"
+		eend $?
+	;;
+	esac
 }
 
 src_prepare() {
 	# Budget Fair Queueing Budget I/O Scheduler
-	use bfq && ProcessingList "${FILESDIR}/${OKV}/bfq"
+	use bfq && ApplyPatch "${FILESDIR}/${OKV}/bfq/patch_list"
+
 	# Con Kolivas Brain Fuck CPU Scheduler
-	use bfs && ProcessingPatch "${DISTDIR}/3.3-sched-bfs-420.patch"
+	use bfs && ApplyPatch "${DISTDIR}/3.3-sched-bfs-420.patch"
+
 	# Con Kolivas high performance patchset
-	use ck && ProcessingPatch "$DISTDIR/patch-$ck_ver-ck1.bz2"
+	use ck && ApplyPatch "$DISTDIR/patch-$ck_ver-ck1.bz2"
+
 	# Spock's fbsplash patch
-	use fbcondecor && ProcessingPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
+	use fbcondecor && ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch"
+
 	# grsecurity security patches
-	use grsecurity && ProcessingPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
+	use grsecurity && ApplyPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch"
+
 	# TuxOnIce
-	use ice && ProcessingPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+	use ice && ApplyPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz"
+
 	# Intermediate Queueing Device patches
-	use imq && ProcessingPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
+	use imq && ApplyPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz"
+
 	# Reiser4
-	use reiser4 && ProcessingPatch "${DISTDIR}/reiser4-for-${OKV}.patch.bz2"
+	use reiser4 && ApplyPatch "${DISTDIR}/reiser4-for-${OKV}.patch.bz2"
+
 	# Ingo Molnar's realtime preempt patches
-	use rt && ProcessingPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
+	use rt && ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz"
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
@@ -194,7 +202,7 @@ src_prepare() {
 		unpack "bld-${bld_ver}.tar.bz2"
 		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		ProcessingPatch "${S}/BLD_${bld_ver}-feb12.patch"
+		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
@@ -207,34 +215,46 @@ src_prepare() {
 #		cd ${WORKDIR}
 #		unpack ${XENO_TAR} || die "unpack failed"
 #		cd ${WORKDIR}/${XENO_SRC}
-#		ProcessingPatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
-
+#		ApplyPatch ${FILESDIR}/prepare-kernel.patch || die "patch failed"
 #		scripts/prepare-kernel.sh --linux=${S} || die "prepare kernel failed"
 #	fi
 
 ### BRANCH APPLY ###
 
-	einfo
+	echo
 	einfo "Mandriva/Mageia"
-	ProcessingList "$FILESDIR/$OKV/mageia"
+	ApplyPatch "$FILESDIR/$OKV/mageia/patch_list"
 
-	einfo
+	echo
+	einfo "Moblin/Meego"
+	# fastboot: retry mounting / if it fails first time
+	ApplyPatch "$FILESDIR/$OKV/meego/linux-2.6.29-retry-root-mount.patch"
+
+	echo
+	einfo "Ubuntu"
+	ApplyPatch "$FILESDIR/$OKV/ubuntu/patch_list"
+
+	echo
 	einfo "Fedora"
-	ProcessingList "$FILESDIR/$OKV/fedora"
+	ApplyPatch "$FILESDIR/$OKV/fedora/patch_list"
 
-	einfo
+	echo
+	einfo "OpenSuSE"
+	ApplyPatch "$FILESDIR/$OKV/suse/patch_list"
+
+	echo
 	einfo "Pardus"
-	ProcessingList "$FILESDIR/$OKV/pardus"
+	ApplyPatch "$FILESDIR/$OKV/pardus/patch_list"
+	echo
 
 	# Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression
 	# https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41
-	einfo
-	ProcessingPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch"
+	ApplyPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch"
 
 	# USE branding
 	if use branding; then
-		ProcessingPatch "${FILESDIR}/font-8x16-iso-latin-1-v2.patch"
-		ProcessingPatch "${FILESDIR}/gentoo-larry-logo-v2.patch"
+		ApplyPatch "${FILESDIR}/font-8x16-iso-latin-1-v2.patch"
+		ApplyPatch "${FILESDIR}/gentoo-larry-logo-v2.patch"
 	fi
 
 ### END OF PATCH APPLICATIONS ###
@@ -249,7 +269,7 @@ src_prepare() {
 		ewarn "Kernel config file already exist."
 		ewarn "I will NOT overwrite that."
 	else
-		echo "Copying kernel config file."
+		einfo "Copying kernel config file."
 		zcat /proc/config > .config || ewarn "Can't copy /proc/config"
 	fi
 

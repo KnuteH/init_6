@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-1.5.4.ebuild,v 1.1 2012/05/12 21:12:51 tetromino Exp $
+# $Header: $
 
 EAPI="4"
 
