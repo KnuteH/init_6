@@ -1,0 +1,165 @@
+# Generic ARM config. This is common config options that should be
+# enabled on all ARM kernels and hence should be added here
+#
+# FIXME - we need to add debug/nodebug generic build options
+# CONFIG_DEBUG_PER_CPU_MAPS is not set
+
+# Generic ARM processor options
+CONFIG_ARM=y
+
+CONFIG_ARM_THUMB=y
+CONFIG_AEABI=y
+CONFIG_OABI_COMPAT=y
+CONFIG_VFP=y
+CONFIG_ARM_UNWIND=y
+
+CONFIG_SMP=y
+CONFIG_NR_CPUS=4
+CONFIG_SMP_ON_UP=y
+
+# CONFIG_FPE_NWFPE is not set
+CONFIG_FPE_FASTFPE=y
+
+# Generic ARM Errata
+CONFIG_ARM_ERRATA_720789=y
+CONFIG_ARM_ERRATA_751472=y
+CONFIG_OMAP4_ERRATA_I688=y
+
+# Generic ARM config options
+CONFIG_ZBOOT_ROM_TEXT=0
+CONFIG_ZBOOT_ROM_BSS=0
+
+CONFIG_ATAGS_PROC=y
+
+# DeviceTree
+CONFIG_USE_OF=y
+# CONFIG_OF_SELFTEST is not set
+CONFIG_PROC_DEVICETREE=y
+CONFIG_ARM_APPENDED_DTB=y
+
+# Generic options we want for ARM that aren't defualt
+CONFIG_HIGHMEM=y
+CONFIG_CC_OPTIMIZE_FOR_SIZE=y
+
+CONFIG_SCHED_MC=y
+CONFIG_SCHED_SMT=y
+
+CONFIG_RCU_FANOUT=32
+
+CONFIG_CPU_IDLE=y
+# CONFIG_CPU_IDLE_GOV_LADDER is not set
+CONFIG_CPU_IDLE_GOV_MENU=y
+
+CONFIG_NO_HZ=y
+CONFIG_HIGH_RES_TIMERS=y
+
+CONFIG_PM=y
+CONFIG_PM_STD_PARTITION=""
+CONFIG_SUSPEND=y
+CONFIG_ARM_CPU_SUSPEND=y
+CONFIG_ARM_CPU_TOPOLOGY=y
+
+CONFIG_THERMAL=y
+
+CONFIG_PERF_EVENTS=y
+CONFIG_PERF_COUNTERS=y
+
+CONFIG_CC_STACKPROTECTOR=y
+
+CONFIG_AUTO_ZRELADDR=y
+
+CONFIG_SECCOMP=y
+CONFIG_STRICT_DEVMEM=y
+
+CONFIG_SPARSE_IRQ=y
+
+CONFIG_DEFAULT_MMAP_MIN_ADDR=32768
+CONFIG_LSM_MMAP_MIN_ADDR=32768
+
+# Generic HW for all ARM platforms
+CONFIG_LEDS=y
+CONFIG_LEDS_CPU=y
+CONFIG_LEDS_GPIO=m
+
+CONFIG_RFKILL_GPIO=m
+CONFIG_ARCH_WANT_OPTIONAL_GPIOLIB=y
+
+CONFIG_SND_ARM=y
+CONFIG_SND_ARMAACI=m
+CONFIG_SND_SOC=m
+# CONFIG_SND_SOC_CACHE_LZO is not set
+CONFIG_SND_SOC_ALL_CODECS=m
+
+CONFIG_AX88796=m
+CONFIG_AX88796_93CX6=y
+CONFIG_SMC91X=m
+CONFIG_DM9000=m
+CONFIG_DM9000_DEBUGLEVEL=4
+# CONFIG_DM9000_FORCE_SIMPLE_PHY_POLL is not set
+CONFIG_SMC911X=m
+CONFIG_SMSC911X=m
+
+# Generic MTD options. Platform specific set there
+CONFIG_MTD=y
+CONFIG_MTD_TESTS=m
+CONFIG_MTD_CMDLINE_PARTS=y
+# CONFIG_MTD_AFS_PARTS is not set
+# CONFIG_MTD_AR7_PARTS is not set
+CONFIG_MTD_CHAR=y
+CONFIG_MTD_BLKDEVS=y
+CONFIG_MTD_BLOCK=y
+CONFIG_SM_FTL=m
+CONFIG_MTD_PHYSMAP=m
+# CONFIG_MTD_PHYSMAP_COMPAT is not set
+# CONFIG_MTD_GPIO_ADDR is not set
+CONFIG_MTD_PLATRAM=m
+CONFIG_MTD_AFS_PARTS=y
+CONFIG_MTD_ARM_INTEGRATOR=y
+CONFIG_MTD_IMPA7=y
+# CONFIG_MTD_PISMO is not set
+CONFIG_MTD_PHYSMAP_OF=m
+CONFIG_MTD_OF_PARTS=y
+
+CONFIG_MMC_SDHCI_PLTFM=m
+
+# Generic GPIO options
+CONFIG_GENERIC_GPIO=y
+
+# We'll enable this here as various platforms will need it
+CONFIG_DRM=m
+# HW Disabled because it causes issues on ARM platforms
+
+# disable TPM on arm at least on the trimslices it causes havoc
+# CONFIG_TCG_TPM is not set
+# CONFIG_IMA is not set
+
+# ERROR: "__bswapsi2" [drivers/staging/crystalhd/crystalhd.ko] undefined!
+# CONFIG_CRYSTALHD is not set
+
+# these modules all fail with missing __bad_udelay
+# http://www.spinics.net/lists/arm/msg15615.html provides some background
+# CONFIG_SUNGEM is not set
+# CONFIG_FB_SAVAGE is not set
+# CONFIG_FB_RADEON is not set
+# CONFIG_DRM_RADEON is not set
+# CONFIG_ATM_HE is not set
+# CONFIG_SCSI_ACARD is not set
+# CONFIG_SFC is not set
+
+# these all currently fail due to missing symbols __bad_udelay or
+# error: implicit declaration of function ‘iowrite32be’
+# CONFIG_SND_ALI5451 is not set
+# CONFIG_DRM_NOUVEAU is not set 
+# CONFIG_MLX4_EN is not set
+
+# drivers/input/touchscreen/eeti_ts.c:65:2: error: implicit declaration of function 'irq_to_gpio' [-Werror=implicit-function-declaration]
+# CONFIG_TOUCHSCREEN_EETI is not set
+# CONFIG_TOUCHSCREEN_EGALAX is not set 
+# CONFIG_TOUCHSCREEN_AUO_PIXCIR is not set
+#
+# CONFIG_FB_MX3 is not set
+# CONFIG_MX3_IPU is not set
+# CONFIG_MX3_IPU_IRQS is not set
+
+# CONFIG_NET_VENDOR_CIRRUS is not set
+# CONFIG_CS89x0 is not set

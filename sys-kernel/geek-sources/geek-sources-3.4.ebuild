@@ -5,7 +5,7 @@
 EAPI="4"
 ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
-K_DEBLOB_AVAILABLE="1"
+K_DEBLOB_AVAILABLE="0"
 
 inherit kernel-2 versionator
 detect_version
@@ -23,7 +23,7 @@ bfs_src="http://ck.kolivas.org/patches/bfs/3.3.0/3.3-sched-bfs-420.patch"
 
 # Alternate CPU load distribution technique for Linux kernel scheduler
 bld_url="http://code.google.com/p/bld"
-bld_ver="3.3-rc3" # 3.4-rc4 available but failed to install - 20.05.12
+bld_ver="3.4-rc4"
 bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 
 # Con Kolivas' high performance patchset
@@ -40,11 +40,9 @@ fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 
 # grsecurity security patches
 grsecurity_url="http://grsecurity.net"
-grsecurity_ver="2.9-${OKV}-201205191125"
+grsecurity_ver="2.9-3.3.6-201205191125"
+#grsecurity_ver="2.9-${OKV}-201205191125"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
-
-# Gentoo hardened patchset
-hardened_url="http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-patchset.git;a=summary"
 
 # TuxOnIce
 ice_url="http://tuxonice.net"
@@ -55,13 +53,7 @@ imq_ver="3.3"
 imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver}.diff.xz"
 
 # Mandriva/Mageia
-mageia_url="http://svnweb.mageia.org/packages/cauldron/kernel"
-
-# Moblin/Meego
-meego_url="https://meego.gitorious.org/meego-os-base/kernel-source" # http://git.yoctoproject.org/
-
-# Pardus
-pardus_url="https://svn.pardus.org.tr/pardus/playground/kaan.aksit/2011/kernel/default/kernel"
+mageia_url="http://svnweb.mageia.org/packages/cauldron/kernel/current"
 
 # Reiser4
 reiser4_url="http://sourceforge.net/projects/reiser4"
@@ -70,14 +62,8 @@ reiser4_url="http://sourceforge.net/projects/reiser4"
 
 # Ingo Molnar's realtime preempt patches
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
-#rt_ver="3.4-rc5-rt6"
-#rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
-
-# OpenSuSe
-suse_url="http://kernel.opensuse.org/cgit/kernel-source"
-
-# Ubuntu
-ubuntu_url="https://launchpad.net/ubuntu/+source/linux"
+rt_ver="3.4-rc5-rt6"
+rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
 
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 # Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
@@ -87,15 +73,36 @@ ubuntu_url="https://launchpad.net/ubuntu/+source/linux"
 
 #------------------------------------------------------------------------
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="" #"~amd64 ~x86"
+use bfq && die "No bfq support yet for this version."
+use bfs && die "No bfs support yet for this version."
+use ck && die "No ck support yet for this version."
+use grsecurity && die "No grsecurity support yet for this version."
+use ice && die "No TuxOnIce support yet for this version."
+use imq && die "No iqm support yet for this version."
 use reiser4 && die "No reiser4 support yet for this version."
-use rt && die "No rt support yet for this version."
+use mageia && die "No mageia support yet for this version."
+use pardus && die "No pardus support yet for this version."
+use suse && die "No suse support yet for this version."
+use ubuntu && die "No ubuntu support yet for this version."
 
 IUSE="bfq bfs bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse ubuntu"
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bfs_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url}"
+HOMEPAGE="http://www.kernel.org
+	bfq:		${bfq_url}
+	bfs:		${bfs_url}
+	bld:		${bld_url}
+	ck:		${ck_url}
+	fbcondecor:	${fbcondecor_url}
+	Fedora:		${fedora_url}
+	GrSecurity:	${grsecurity_url}
+	imq:		${imq_url}
+	Mageia:		${mageia_url}
+	ice:		${ice_url}
+	reiser4:	${reiser4_url}
+	rt:		${rt_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )
@@ -103,7 +110,8 @@ SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
-	imq?		( ${imq_src} )"
+	imq?		( ${imq_src} )
+	rt?		( ${rt_src} )"
 
 RDEPEND="${RDEPEND}
 	grsecurity?	( >=sys-apps/gradm-2.2.2 )
@@ -225,19 +233,19 @@ src_prepare() {
 ### BRANCH APPLY ###
 
 	# Mandriva/Mageia
-	use mageia && ApplyPatch "$FILESDIR/$OKV/mageia/patch_list"
+#	use mageia && ApplyPatch "$FILESDIR/$OKV/mageia/patch_list"
 
 	# Ubuntu
-	use ubuntu && ApplyPatch "$FILESDIR/$OKV/ubuntu/patch_list"
+#	use ubuntu && ApplyPatch "$FILESDIR/$OKV/ubuntu/patch_list"
 
 	# Fedora
 	use fedora && ApplyPatch "$FILESDIR/$OKV/fedora/patch_list"
 
 	# OpenSuSE
-	use suse && ApplyPatch "$FILESDIR/$OKV/suse/patch_list"
+#	use suse && ApplyPatch "$FILESDIR/$OKV/suse/patch_list"
 
-	# Pardus
-	use pardus && ApplyPatch "$FILESDIR/$OKV/pardus/patch_list"
+	# Pardus"
+#	use pardus && ApplyPatch "$FILESDIR/$OKV/pardus/patch_list"
 
 	# Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression
 	# https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41
