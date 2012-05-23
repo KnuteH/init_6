@@ -1,0 +1,46 @@
+From 59365671464539dc695bbf4d4bf37aabfd8604f2 Mon Sep 17 00:00:00 2001
+From: Ben Skeggs <bskeggs@redhat.com>
+Date: Mon, 26 Mar 2012 17:18:40 +1000
+Subject: [PATCH 3/3] drm/nouveau/i2c: fix thinko/regression on really old
+ chipsets
+
+Fixes i2c on my TNT2.
+
+Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+---
+ drivers/gpu/drm/nouveau/nouveau_i2c.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/nouveau/nouveau_i2c.c b/drivers/gpu/drm/nouveau/nouveau_i2c.c
+index 8f4f914..e2be95a 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_i2c.c
++++ b/drivers/gpu/drm/nouveau/nouveau_i2c.c
+@@ -315,8 +315,8 @@ nouveau_i2c_init(struct drm_device *dev)
+ 	struct drm_nouveau_private *dev_priv = dev->dev_private;
+ 	struct nvbios *bios = &dev_priv->vbios;
+ 	struct nouveau_i2c_chan *port;
++	u8 version = 0x00, entries, recordlen;
+ 	u8 *i2c, *entry, legacy[2][4] = {};
+-	u8 version, entries, recordlen;
+ 	int ret, i;
+ 
+ 	INIT_LIST_HEAD(&dev_priv->i2c_ports);
+@@ -346,12 +346,12 @@ nouveau_i2c_init(struct drm_device *dev)
+ 		if (i2c[7]) legacy[1][1] = i2c[7];
+ 	}
+ 
+-	if (i2c && version >= 0x30) {
++	if (version >= 0x30) {
+ 		entry     = i2c[1] + i2c;
+ 		entries   = i2c[2];
+ 		recordlen = i2c[3];
+ 	} else
+-	if (i2c) {
++	if (version) {
+ 		entry     = i2c;
+ 		entries   = 16;
+ 		recordlen = 4;
+-- 
+1.7.9.3
+

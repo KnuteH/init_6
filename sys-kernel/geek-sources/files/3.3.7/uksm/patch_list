@@ -1,0 +1,15 @@
+# http://kerneldedup.org/download/uksm/0.1.1.1/patches/uksm-0.1.1.1-for-v3.3.ge.5.patch
+uksm-0.1.1.1-for-v3.3.ge.5.patch
+
+# UKSM: update anon_page counter when a anon_page remap to uksm_zero_page
+# http://kerneldedup.org/download/uksm/0.1.1.1/patches/0001-UKSM-update-anon_page-counter-when-a-anon_page-remap.patch
+0001-UKSM-update-anon_page-counter-when-a-anon_page-remap.patch
+
+# UKSM: add VM_MERGEABLE to vm_flags before vma_merge()
+# http://kerneldedup.org/download/uksm/0.1.1.1/patches/0002-UKSM-add-VM_MERGEABLE-to-vm_flags-before-vma_merge.patch
+0002-UKSM-add-VM_MERGEABLE-to-vm_flags-before-vma_merge.patch
+
+# UKSM: Missing text info in vmstat_text
+# http://kerneldedup.org/download/uksm/0.1.1.1/patches/0003-UKSM-Missing-text-info-in-vmstat_text.patch
+0003-UKSM-Missing-text-info-in-vmstat_text.patch
+

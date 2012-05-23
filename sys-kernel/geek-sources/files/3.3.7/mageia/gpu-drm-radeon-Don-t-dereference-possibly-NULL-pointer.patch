@@ -1,0 +1,33 @@
+From e199fd422420d1620cf64fd9bdd4ff8bc255cc76 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel.daenzer@amd.com>
+Date: Thu, 29 Mar 2012 16:47:43 +0200
+Subject: [PATCH 3/3] drm/radeon: Don't dereference possibly-NULL pointer.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Michel Dänzer <michel.daenzer@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+---
+ drivers/gpu/drm/radeon/radeon_object.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/radeon/radeon_object.c b/drivers/gpu/drm/radeon/radeon_object.c
+index 6f70158..df6a4db 100644
+--- a/drivers/gpu/drm/radeon/radeon_object.c
++++ b/drivers/gpu/drm/radeon/radeon_object.c
+@@ -241,7 +241,8 @@ int radeon_bo_pin_restricted(struct radeon_bo *bo, u32 domain, u64 max_offset,
+ 				domain_start = bo->rdev->mc.vram_start;
+ 			else
+ 				domain_start = bo->rdev->mc.gtt_start;
+-			WARN_ON_ONCE((*gpu_addr - domain_start) > max_offset);
++			WARN_ON_ONCE(max_offset <
++				     (radeon_bo_gpu_offset(bo) - domain_start));
+ 		}
+ 
+ 		return 0;
+-- 
+1.7.9.3
+

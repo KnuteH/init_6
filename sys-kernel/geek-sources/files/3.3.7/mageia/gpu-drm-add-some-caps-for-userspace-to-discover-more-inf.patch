@@ -1,0 +1,89 @@
+From 019d96cb55ade38a4b4a52bba0304e8cd681f30a Mon Sep 17 00:00:00 2001
+From: Dave Airlie <airlied@redhat.com>
+Date: Thu, 29 Sep 2011 16:20:42 +0100
+Subject: [PATCH] drm: add some caps for userspace to discover more info for
+ dumb KMS driver (v2)
+
+For the simple KMS driver case we need some more info about what the preferred
+depth and if a shadow framebuffer is preferred.
+
+I've only added this for intel/radeon which support the dumb ioctls so far.
+
+If you need something really fancy you should be writing a real X.org driver.
+
+v2: drop cursor information, just return an error from the cursor ioctls
+and we can make userspace fallback to sw cursor in that case, cursor
+info was getting too messy, best to start smaller.
+
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+[tmb: dropped radeon bits, as they are in separate patch]
+Signed-off-by: Thomas Backlund <tmb@mageia.org>
+---
+ drivers/gpu/drm/drm_ioctl.c             |    6 ++++++
+ drivers/gpu/drm/i915/intel_display.c    |    3 +++
+ drivers/gpu/drm/radeon/radeon_display.c |    3 +++
+ include/drm/drm.h                       |    2 ++
+ include/drm/drm_crtc.h                  |    3 +++
+ 5 files changed, 17 insertions(+)
+
+diff --git a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
+index 2300ab1..cf85155 100644
+--- a/drivers/gpu/drm/drm_ioctl.c
++++ b/drivers/gpu/drm/drm_ioctl.c
+@@ -277,6 +277,12 @@ int drm_getcap(struct drm_device *dev, void *data, struct drm_file *file_priv)
+ 	case DRM_CAP_VBLANK_HIGH_CRTC:
+ 		req->value = 1;
+ 		break;
++	case DRM_CAP_DUMB_PREFERRED_DEPTH:
++		req->value = dev->mode_config.preferred_depth;
++		break;
++	case DRM_CAP_DUMB_PREFER_SHADOW:
++		req->value = dev->mode_config.prefer_shadow;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/gpu/drm/i915/intel_display.c b/drivers/gpu/drm/i915/intel_display.c
+index dfa6744..0a8a640 100644
+--- a/drivers/gpu/drm/i915/intel_display.c
++++ b/drivers/gpu/drm/i915/intel_display.c
+@@ -9089,6 +9089,9 @@ void intel_modeset_init(struct drm_device *dev)
+ 	dev->mode_config.min_width = 0;
+ 	dev->mode_config.min_height = 0;
+ 
++	dev->mode_config.preferred_depth = 24;
++	dev->mode_config.prefer_shadow = 1;
++
+ 	dev->mode_config.funcs = (void *)&intel_mode_funcs;
+ 
+ 	intel_init_quirks(dev);
+diff --git a/include/drm/drm.h b/include/drm/drm.h
+index 49d94ed..34a7b89 100644
+--- a/include/drm/drm.h
++++ b/include/drm/drm.h
+@@ -761,6 +761,8 @@ struct drm_event_vblank {
+ 
+ #define DRM_CAP_DUMB_BUFFER 0x1
+ #define DRM_CAP_VBLANK_HIGH_CRTC 0x2
++#define DRM_CAP_DUMB_PREFERRED_DEPTH 0x3
++#define DRM_CAP_DUMB_PREFER_SHADOW 0x4
+ 
+ /* typedef area */
+ #ifndef __KERNEL__
+diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
+index 8235314..2a0872c 100644
+--- a/include/drm/drm_crtc.h
++++ b/include/drm/drm_crtc.h
+@@ -796,6 +796,9 @@ struct drm_mode_config {
+ 	struct drm_property *scaling_mode_property;
+ 	struct drm_property *dithering_mode_property;
+ 	struct drm_property *dirty_info_property;
++
++	/* dumb ioctl parameters */
++	uint32_t preferred_depth, prefer_shadow;
+ };
+ 
+ #define obj_to_crtc(x) container_of(x, struct drm_crtc, base)
+-- 
+1.7.9.3
+
