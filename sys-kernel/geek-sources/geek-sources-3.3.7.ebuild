@@ -5,7 +5,7 @@
 EAPI="4"
 ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
-K_DEBLOB_AVAILABLE="0"
+K_DEBLOB_AVAILABLE="1"
 
 inherit kernel-2 versionator
 detect_version
