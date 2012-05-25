@@ -16,11 +16,6 @@ detect_arch
 # Budget Fair Queueing Budget I/O Scheduler
 bfq_url="http://algo.ing.unimo.it/people/paolo/disk_sched/"
 
-# Alternate CPU load distribution technique for Linux kernel scheduler
-bld_url="http://code.google.com/p/bld"
-bld_ver="3.3-rc3"
-bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
-
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
 ck_ver="3.3"
@@ -79,10 +74,9 @@ IUSE="bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia par
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
+HOMEPAGE="http://www.kernel.org ${bfq_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
-	bld?		( ${bld_src} )
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	imq?		( ${imq_src} )
@@ -176,13 +170,8 @@ src_prepare() {
 	use rt && ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz" "Ingo Molnar's realtime preempt patches - ${rt_url}"
 
 	if use bld; then
-		cd "${T}"
-		unpack "bld-${bld_ver}.tar.bz2"
-		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
-		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
-		rm -r "${T}/bld-${bld_ver}" # Clean temp
+		ApplyPatch "${FILESDIR}/BLD_3.3.X.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
 	fi
 
 	use uksm && ApplyPatch "${FILESDIR}/${OKV}/uksm/patch_list" "Ultra Kernel Samepage Merging - ${uksm_url}"
