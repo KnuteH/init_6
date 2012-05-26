@@ -13,13 +13,29 @@ detect_arch
 
 #------------------------------------------------------------------------
 
+# Latest version checker:
+# # curl -s http://www.kernel.org/kdist/finger_banner
+
+# aufs
+# git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git, read README
+# Patch creation:
+# git clone git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
+# cd aufs3-standalone
+# git checkout -b aufs3.4 origin/aufs3.4
+# cat aufs3-kbuild.patch aufs3-base.patch aufs3-standalone.patch > ~/rpm/packages/kernel/kernel-aufs3.patch
+# mkdir linux
+# cp -a Documentation fs include linux
+# diff -urN /usr/share/empty linux >> ~/rpm/packages/kernel/kernel-aufs3.patch
+# drop hunk at the end of patch (hunk is patching include/linux/Kbuild with single line change)
+
+# apparmor
+# http://git.kernel.org/?p=linux/kernel/git/jj/linux-apparmor.git;a=shortlog;h=refs/heads/v3.4-aa2.8
+
 # Budget Fair Queueing Budget I/O Scheduler
 bfq_url="http://algo.ing.unimo.it/people/paolo/disk_sched/"
 
 # Alternate CPU load distribution technique for Linux kernel scheduler
 bld_url="http://code.google.com/p/bld"
-bld_ver="3.4-rc4"
-bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
@@ -34,9 +50,11 @@ fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpa
 fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 
 # grsecurity security patches
+# NOTE: mirror of old grsecurity patches:
+# https://github.com/slashbeast/grsecurity-scrape/tree/master/test
 grsecurity_url="http://grsecurity.net"
-grsecurity_ver="2.9-3.3.6-201205191125"
 #grsecurity_ver="2.9-${OKV}-201205191125"
+grsecurity_ver="2.9-3.3.6-201205191125"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
 
 # TuxOnIce
@@ -57,10 +75,13 @@ reiser4_url="http://sourceforge.net/projects/reiser4"
 
 # Ingo Molnar's realtime preempt patches
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
-rt_ver="3.4-rc5-rt6"
+rt_ver="3.4-rt7"
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
 
 uksm_url="http://kerneldedup.org"
+
+# unionfs
+# http://download.filesystems.org/unionfs/unionfs-2.x/unionfs-2.5.11_for_3.3.0-rc3.diff.gz
 
 # todo: add Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
 # Xenomai: Real-Time Framework for Linux http://www.xenomai.org/
@@ -79,7 +100,6 @@ use ice && die "No TuxOnIce support yet for this version."
 use imq && die "No imq support yet for this version."
 use mageia && die "No mageia support yet for this version."
 use pardus && die "No pardus support yet for this version."
-use suse && die "No suse support yet for this version."
 
 IUSE="bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse uksm"
 
@@ -88,7 +108,6 @@ DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, ma
 HOMEPAGE="http://www.kernel.org ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
-	bld?		( ${bld_src} )
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
@@ -265,5 +284,6 @@ src_install() {
 
 pkg_postinst() {
 	einfo "Now is the time to configure and build the kernel."
-	use uksm && einfo "Do not forget to disable the remote bug reporting feature by echo 0> usr_spt_enabled more http://kerneldedup.org/en/projects/uksm/uksmdoc/usage/"
+	use uksm && einfo "Do not forget to disable the remote bug reporting feature by echo 0 > /sys/kernel/mm/uksm/usr_spt_enabled
+	more http://kerneldedup.org/en/projects/uksm/uksmdoc/usage/"
 }

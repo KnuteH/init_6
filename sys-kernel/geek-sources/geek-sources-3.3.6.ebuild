@@ -21,6 +21,9 @@ bfs_url="http://ck-hack.blogspot.com"
 #bfs_ver="3.3"
 bfs_src="http://ck.kolivas.org/patches/bfs/3.3.0/3.3-sched-bfs-420.patch"
 
+# Alternate CPU load distribution technique for Linux kernel scheduler
+bld_url="http://code.google.com/p/bld"
+
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
 ck_ver="3.3"
@@ -90,7 +93,7 @@ IUSE="bfq bfs bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bfs_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url}"
+HOMEPAGE="http://www.kernel.org ${bfq_url} ${bfs_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )

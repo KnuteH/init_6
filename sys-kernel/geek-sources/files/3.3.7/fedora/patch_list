@@ -113,6 +113,7 @@ fix_xen_guest_on_old_EC2.patch
 #drm-edid-try-harder-to-fix-up-broken-headers.patch
 
 # Intel DRM
+drm-intel-next.patch
 drm-i915-dp-stfu.patch
 drm-i915-fbc-stfu.patch
 
@@ -192,6 +193,9 @@ rtl818x-fix-sleeping-function-called-from-invalid-context.patch
 
 #rhbz 822120
 rtlwifi-fix-for-race-condition-when-firmware-is-cach.patch
+
+#rhbz 822825 822821 CVE-2012-2372
+mm-pmd_read_atomic-fix-32bit-PAE-pmd-walk-vs-pmd_populate-SMP-race-condition.patch
 
 # END OF PATCH APPLICATIONS
 

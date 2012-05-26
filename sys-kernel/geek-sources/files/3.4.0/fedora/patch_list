@@ -97,6 +97,7 @@ drm-vgem.patch
 # Nouveau DRM
 
 # Intel DRM
+drm-intel-next.patch
 drm-i915-dp-stfu.patch
 
 linux-2.6-intel-iommu-igfx.patch
@@ -104,6 +105,12 @@ linux-2.6-intel-iommu-igfx.patch
 # silence the ACPI blacklist code
 linux-2.6-silence-acpi-blacklist.patch
 quite-apm.patch
+
+# V4L/DVB updates/fixes/experimental drivers
+#  apply if non-empty
+linux-2.6-v4l-dvb-fixes.patch
+linux-2.6-v4l-dvb-update.patch
+linux-2.6-v4l-dvb-experimental.patch
 
 # Patches headed upstream
 fs-proc-devtree-remove_proc_entry.patch
@@ -140,10 +147,8 @@ selinux-apply-different-permission-to-ptrace-child.patch
 #Highbank clock functions
 highbank-export-clock-functions.patch 
 
-#vgaarb patches.  blame mjg59
-vgaarb-vga_default_device.patch
-
-perf-Fix-trace-event-perl.c-build.patch
+#rhbz 822825 822821 CVE-2012-2372
+mm-pmd_read_atomic-fix-32bit-PAE-pmd-walk-vs-pmd_populate-SMP-race-condition.patch
 
 # END OF PATCH APPLICATIONS
 
