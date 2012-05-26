@@ -14,7 +14,10 @@ DESCRIPTION="NVIDIA X11 driver and GLX libraries"
 HOMEPAGE="http://www.nvidia.com/"
 SRC_URI="x86? ( http://us.download.nvidia.com/XFree86/Linux-x86/${PV}/${X86_NV_PACKAGE}.run )
 	 amd64? ( http://us.download.nvidia.com/XFree86/Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}.run )
-	 x86-fbsd? ( http://us.download.nvidia.com/XFree86/FreeBSD-x86/${PV}/${X86_FBSD_NV_PACKAGE}.tar.gz )"
+	 x86-fbsd? ( http://us.download.nvidia.com/XFree86/FreeBSD-x86/${PV}/${X86_FBSD_NV_PACKAGE}.tar.gz )
+	 x86? ( ftp://download.nvidia.com/XFree86/Linux-x86/${PV}/${X86_NV_PACKAGE}.run )
+	 amd64? ( ftp://download.nvidia.com/XFree86/Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}.run )
+	 x86-fbsd? ( ftp://download.nvidia.com/XFree86/FreeBSD-x86/${PV}/${X86_FBSD_NV_PACKAGE}.tar.gz )"
 
 LICENSE="NVIDIA"
 SLOT="0"
@@ -54,6 +57,7 @@ QA_TEXTRELS_x86="
 QA_TEXTRELS_x86_fbsd="boot/modules/nvidia.ko
 	usr/lib/opengl/nvidia/lib/libGL.so.1
 	usr/lib/libnvidia-glcore.so.1
+	usr/lib/libvdpau_nvidia.so.1
 	usr/lib/libnvidia-cfg.so.1
 	usr/lib/libnvidia-ml.so.1
 	usr/lib/opengl/nvidia/extensions/libglx.so.1
@@ -235,6 +239,7 @@ pkg_setup() {
 
 	# set variables to where files are in the package structure
 	if use kernel_FreeBSD; then
+		S="${WORKDIR}/${X86_FBSD_NV_PACKAGE}"
 		NV_DOC="${S}/doc"
 		NV_EXEC="${S}/obj"
 		NV_LIB="${S}/obj"
@@ -287,10 +292,6 @@ src_prepare() {
 		sed -i \
 			-e 's:-Wsign-compare::g' \
 			"${NV_SRC}"/Makefile.kbuild
-
-		# fix CVE-2012-0946
-		# ftp://download.nvidia.com/XFree86/patches/security/CVE-2012-0946/nvidia-blacklist-register-mapping-290-295.diff
-		epatch "${FILESDIR}"/nvidia-blacklist-register-mapping-290-295.diff
 
 		# Fix building with Linux 3.3.x wrt #408841
 		sed -i \
@@ -348,10 +349,10 @@ src_install() {
 #		newins "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
 	elif use x86-fbsd; then
 		insinto /boot/modules
-		doins "${WORKDIR}/${NV_PACKAGE}/src/nvidia.kld" || die
+		doins "${S}/src/nvidia.kld" || die
 
 		exeinto /boot/modules
-		doexe "${WORKDIR}/${NV_PACKAGE}/src/nvidia.ko" || die
+		doexe "${S}/src/nvidia.ko" || die
 	fi
 
 	# NVIDIA kernel <-> userspace driver config lib
@@ -364,25 +365,27 @@ src_install() {
 		/usr/$(get_libdir)/libnvidia-cfg.so || \
 		die "failed to create libnvidia-cfg.so symlink"
 
-	# NVIDIA monitoring library
-	dolib.so ${NV_LIB}/libnvidia-ml.so.${NV_SOVER} || \
-		die "failed to install libnvidia-ml"
-	dosym libnvidia-ml.so.${NV_SOVER} \
-		/usr/$(get_libdir)/libnvidia-ml.so.1 || \
-		die "failed to create libnvidia-ml.so symlink"
-	dosym libnvidia-ml.so.1 \
-		/usr/$(get_libdir)/libnvidia-ml.so || \
-		die "failed to create libnvidia-ml.so symlink"
+	if use kernel_linux; then
+		# NVIDIA monitoring library
+		dolib.so ${NV_LIB}/libnvidia-ml.so.${NV_SOVER} || \
+			die "failed to install libnvidia-ml"
+		dosym libnvidia-ml.so.${NV_SOVER} \
+			/usr/$(get_libdir)/libnvidia-ml.so.1 || \
+			die "failed to create libnvidia-ml.so symlink"
+		dosym libnvidia-ml.so.1 \
+			/usr/$(get_libdir)/libnvidia-ml.so || \
+			die "failed to create libnvidia-ml.so symlink"
 
-	# NVIDIA video decode <-> CUDA
-	dolib.so ${NV_LIB}/libnvcuvid.so.${NV_SOVER} || \
-		die "failed to install libnvcuvid.so"
-	dosym libnvcuvid.so.${NV_SOVER} \
-		/usr/$(get_libdir)/libnvcuvid.so.1 || \
-		die "failed to create libnvcuvid.so symlink"
-	dosym libnvcuvid.so.1 \
-		/usr/$(get_libdir)/libnvcuvid.so || \
-		die "failed to create libnvcuvid.so symlink"
+		# NVIDIA video decode <-> CUDA
+		dolib.so ${NV_LIB}/libnvcuvid.so.${NV_SOVER} || \
+			die "failed to install libnvcuvid.so"
+		dosym libnvcuvid.so.${NV_SOVER} \
+			/usr/$(get_libdir)/libnvcuvid.so.1 || \
+			die "failed to create libnvcuvid.so symlink"
+		dosym libnvcuvid.so.1 \
+			/usr/$(get_libdir)/libnvcuvid.so || \
+			die "failed to create libnvcuvid.so symlink"
+	fi
 
 	# Xorg DDX driver
 	insinto /usr/$(get_libdir)/xorg/modules/drivers
@@ -434,7 +437,7 @@ src_install() {
 	# Helper Apps
 	exeinto /opt/bin/
 	doexe ${NV_EXEC}/nvidia-xconfig || die
-	doexe ${NV_EXEC}/nvidia-debugdump || die
+	use kernel_linux && { doexe ${NV_EXEC}/nvidia-debugdump || die ; }
 	if use gtk; then
 		doexe ${NV_EXEC}/nvidia-settings || die
 	fi
@@ -444,7 +447,7 @@ src_install() {
 	fi
 
 	# Desktop entries for nvidia-settings
-	if use gtk; then
+	if use gtk && use kernel_linux ; then
 		sed -e 's:__UTILS_PATH__:/opt/bin:' \
 			-e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' \
 			-i "${NV_EXEC}/nvidia-settings.desktop"
