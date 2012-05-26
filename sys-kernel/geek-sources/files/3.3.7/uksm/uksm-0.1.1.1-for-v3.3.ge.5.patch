@@ -1075,7 +1075,7 @@ index 0000000..c22787b
 +static struct sockaddr_in uksm_usr_spt_addr;
 +static struct socket *uksm_usr_spt_sock = NULL;
 +static unsigned long uksm_usr_spt_last;
-+static int uksm_usr_spt_enabled = 1;
++static int uksm_usr_spt_enabled = 0;
 +
 +/*
 + * Flags for rmap_item to judge if it's listed in the stable/unstable tree.

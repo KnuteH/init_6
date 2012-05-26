@@ -21,11 +21,6 @@ bfs_url="http://ck-hack.blogspot.com"
 #bfs_ver="3.3"
 bfs_src="http://ck.kolivas.org/patches/bfs/3.3.0/3.3-sched-bfs-420.patch"
 
-# Alternate CPU load distribution technique for Linux kernel scheduler
-bld_url="http://code.google.com/p/bld"
-bld_ver="3.3-rc3" # 3.4-rc4 available but failed to install - 20.05.12
-bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
-
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
 ck_ver="3.3"
@@ -95,11 +90,10 @@ IUSE="bfq bfs bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bfs_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url}"
+HOMEPAGE="http://www.kernel.org ${bfq_url} ${bfs_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bfs?		( ${bfs_src} )
-	bld?		( ${bld_src} )
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
@@ -201,13 +195,8 @@ src_prepare() {
 
 	# Alternate CPU load distribution technique for Linux kernel scheduler
 	if use bld; then
-		cd "${T}"
-		unpack "bld-${bld_ver}.tar.bz2"
-		cp "${T}/bld-${bld_ver}/BLD_${bld_ver}-feb12.patch" "${S}/BLD_${bld_ver}-feb12.patch"
 		cd "${S}"
-		ApplyPatch "${S}/BLD_${bld_ver}-feb12.patch"
-		rm -f "${S}/BLD_${bld_ver}-feb12.patch"
-		rm -r "${T}/bld-${bld_ver}" # Clean temp
+		ApplyPatch "${FILESDIR}/BLD_3.3.X.patch"
 	fi
 
 #	if use xenomai; then
