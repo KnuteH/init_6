@@ -1,0 +1,25 @@
+From 839aed23c3a303ee4892bdf67e649ba048463d86 Mon Sep 17 00:00:00 2001
+From: "Figo.zhang" <figo1802@gmail.com>
+Date: Thu, 10 May 2012 20:19:19 +0800
+Subject: [PATCH] UKSM: update anon_page counter when a anon_page remap to
+ uksm_zero_page
+
+---
+ mm/uksm.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/mm/uksm.c b/mm/uksm.c
+index c22787b..e123a6e 100644
+--- a/mm/uksm.c
++++ b/mm/uksm.c
+@@ -2746,6 +2746,7 @@ static void cmp_and_merge_page(struct rmap_item *rmap_item)
+ 			inc_dup_vma(rmap_item->slot, rmap_item->slot);
+ 			rmap_item->slot->pages_merged++;
+ 			__inc_zone_page_state(page, NR_UKSM_ZERO_PAGES);
++			dec_mm_counter(rmap_item->slot->mm, MM_ANONPAGES);
+ 			return ;
+ 		} else {
+ 			inc_rshash_neg(memcmp_cost / 2);
+-- 
+1.7.9.5
+

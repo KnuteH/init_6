@@ -36,6 +36,8 @@ bfq_url="http://algo.ing.unimo.it/people/paolo/disk_sched/"
 
 # Alternate CPU load distribution technique for Linux kernel scheduler
 bld_url="http://code.google.com/p/bld"
+bld_ver="3.4-rc4"
+bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
@@ -53,6 +55,8 @@ fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 # NOTE: mirror of old grsecurity patches:
 # https://github.com/slashbeast/grsecurity-scrape/tree/master/test
 grsecurity_url="http://grsecurity.net"
+# Gentoo hardened patchset
+# http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-patchset.git;a=summary
 #grsecurity_ver="2.9-${OKV}-201205191125"
 grsecurity_ver="2.9-3.3.6-201205191125"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
@@ -68,6 +72,9 @@ imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver}.diff.xz"
 # Mandriva/Mageia
 mageia_url="http://svnweb.mageia.org/packages/cauldron/kernel/current"
 
+# Pardus
+pardus_url="https://svn.pardus.org.tr/pardus/playground/kaan.aksit/2011/kernel/default/kernel"
+
 # Reiser4
 reiser4_url="http://sourceforge.net/projects/reiser4"
 #reiser4_ver="${OKV}"
@@ -77,6 +84,9 @@ reiser4_url="http://sourceforge.net/projects/reiser4"
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 rt_ver="3.4-rt7"
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
+
+# OpenSuSE
+suse_url="http://kernel.opensuse.org/cgit/kernel-source"
 
 uksm_url="http://kerneldedup.org"
 
@@ -108,6 +118,7 @@ DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, ma
 HOMEPAGE="http://www.kernel.org ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
+	bld?		( ${bld_src} )
 	ck?		( ${ck_src} )
 	fbcondecor?	( ${fbcondecor_src} )
 	grsecurity?	( ${grsecurity_src} )
@@ -188,7 +199,7 @@ src_prepare() {
 
 	use ck && ApplyPatch "$DISTDIR/patch-$ck_ver-ck1.bz2" "Con Kolivas high performance patchset - ${ck_url}"
 
-	use fbcondecor && ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch" "Spock's fbsplash patch - ${fbcondecor}"
+	use fbcondecor && ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch" "Spock's fbsplash patch - ${fbcondecor_url}"
 
 	use grsecurity && ApplyPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch" "GrSecurity patches - ${grsecurity_url}"
 
@@ -205,8 +216,8 @@ src_prepare() {
 		unpack "bld-${bld_ver}.tar.bz2"
 		cp "${T}/bld-${bld_ver}/BLD-${bld_ver}.patch" "${S}/BLD-${bld_ver}.patch"
 		cd "${S}"
-		ApplyPatch "${S}/BLD-${bld_ver}.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
-		rm -f "${S}/BLD_${bld_ver}.patch"
+		ApplyPatch "BLD-${bld_ver}.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
+		rm -f "BLD_${bld_ver}.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
 
