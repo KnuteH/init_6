@@ -21,9 +21,9 @@ linux-2.6-add-lmpcm_usb-driver.patch
 linux-2.6-add-fujitsu-amilo-74xx-rfkill-drivers.patch
 
 # Pardus Logo Enhancements
-logo.patch
-logo-vga16.patch
-logo-mono.patch
+#logo.patch # mask by init_6
+#logo-vga16.patch
+#logo-mono.patch
 
 # Fallback to vesa 640x480x16 on undefined video mode number (Fixes #7117)
 vesa_fallback_on_fail.patch

@@ -228,16 +228,6 @@
  # raw + specific targets
  config IP_NF_RAW
  	tristate  'raw table support (required for NOTRACK/TRACE)'
---- a/net/ipv4/netfilter/Makefile
-+++ b/net/ipv4/netfilter/Makefile
-@@ -54,6 +54,7 @@ obj-$(CONFIG_IP_NF_MATCH_ECN) += ipt_ecn
- 
- # targets
- obj-$(CONFIG_IP_NF_TARGET_CLUSTERIP) += ipt_CLUSTERIP.o
-+obj-$(CONFIG_IP_NF_TARGET_IFWLOG) += ipt_IFWLOG.o
- obj-$(CONFIG_IP_NF_TARGET_ECN) += ipt_ECN.o
- obj-$(CONFIG_IP_NF_TARGET_LOG) += ipt_LOG.o
- obj-$(CONFIG_IP_NF_TARGET_MASQUERADE) += ipt_MASQUERADE.o
 --- /dev/null
 +++ b/include/linux/netfilter_ipv4/ipt_IFWLOG.h
 @@ -0,0 +1,26 @@
@@ -267,3 +257,13 @@
 +};
 +
 +#endif /* _IPT_IFWLOG_H */
+--- linux/net/ipv4/netfilter/Makefile.net-netfilter-IFWLOG.orig	2012-05-21 01:29:13.000000000 +0300
++++ linux/net/ipv4/netfilter/Makefile	2012-05-26 01:23:57.511514194 +0300
+@@ -53,6 +53,7 @@ obj-$(CONFIG_IP_NF_MATCH_RPFILTER) += ip
+ 
+ # targets
+ obj-$(CONFIG_IP_NF_TARGET_CLUSTERIP) += ipt_CLUSTERIP.o
++obj-$(CONFIG_IP_NF_TARGET_IFWLOG) += ipt_IFWLOG.o
+ obj-$(CONFIG_IP_NF_TARGET_ECN) += ipt_ECN.o
+ obj-$(CONFIG_IP_NF_TARGET_MASQUERADE) += ipt_MASQUERADE.o
+ obj-$(CONFIG_IP_NF_TARGET_NETMAP) += ipt_NETMAP.o

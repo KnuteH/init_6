@@ -223,12 +223,11 @@ diff -p -up linux-2.6.28/net/ipv4/netfilter/ipt_psd.c.orig linux-2.6.28/net/ipv4
  config IP_NF_MATCH_RPFILTER
  	tristate '"rpfilter" reverse path filter match support'
  	depends on NETFILTER_ADVANCED
---- a/include/linux/netfilter_ipv4/Kbuild
-+++ b/include/linux/netfilter_ipv4/Kbuild
-@@ -11,5 +11,6 @@
+--- linux/include/linux/netfilter_ipv4/Kbuild.net-netfilter-psd-mdv.orig	2012-05-26 01:28:56.000000000 +0300
++++ linux/include/linux/netfilter_ipv4/Kbuild	2012-05-26 01:30:21.493540796 +0300
+@@ -10,4 +10,5 @@ header-y += ipt_ULOG.h
  header-y += ipt_addrtype.h
  header-y += ipt_ah.h
  header-y += ipt_ecn.h
 +header-y += ipt_psd.h
- header-y += ipt_realm.h
  header-y += ipt_ttl.h

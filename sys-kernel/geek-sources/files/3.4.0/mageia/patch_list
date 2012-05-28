@@ -14,12 +14,6 @@
 ###
 ### Stable Queue
 ###
-stable-alsa-echoaudio-remove-incorrect-part-of-assertion.patch
-stable-alsa-hda-lessen-cpu-usage-when-waiting-for-chip-to-respond.patch
-stable-alsa-hda-realtek-add-missing-cd-input-pin-for-msi-7350-mobo.patch
-stable-alsa-hda-idt-fix-power-map-for-speaker-pins-with-some-hp-laptops.patch
-stable-usbnet-fix-skb-traversing-races-during-unlink-v2.patch
-stable-namespaces-pid_ns-fix-leakage-on-fork-failure.patch
 
 ###
 ### Arch x86
@@ -76,12 +70,6 @@ pnp-isapnp-async-init.patch
 ### ACPI
 ###
 
-# TTL: forever
-acpi-dsdt-initrd-v0.9c-2.6.28.patch
-acpi-dsdt-initrd-v0.9c-fixes.patch
-
-# list acpi fixed events at /proc/acpi/fixed_events
-acpi-add-proc-event-regs.patch
 
 # CLEVO M360S acpi irq workaround
 acpi-CLEVO-M360S-disable_acpi_irq.patch
@@ -129,28 +117,16 @@ dm-raid-aliases.patch
 # prefer ata drivers before ide
 ata-prefer-ata-drivers-over-ide-drivers-when-both-are-built.patch
 
-# Intel Lynx Point support
-ata-ahci-AHCI-mode-SATA-patch-for-Intel-Lynx-Point-Devic.patch
-ata-ata_piix-IDE-mode-SATA-patch-for-Intel-Lynx-Point-De.patch
-
 # disable floppy autoloading (mga #4696)
 block-floppy-disable-pnp-modalias.patch
-
-# more hw support
-ata-ahci-Detect-Marvell-88SE9172-SATA-controller.patch
-ata-ata_piix-IDE-mode-SATA-patch-for-Intel-DH89xxCC-DeviceIDs.patch
 
 ###
 ### File-system
 ###
 
 # unionfs (http://www.filesystems.org/project-unionfs.html)
-fs-unionfs-2.5.11_for_3.3.0-rc6.patch
-
-# aufs2 v2.1
-# git://git.c3sl.ufpr.br/aufs/aufs2-2.6.git
-# BROKEN: fs-aufs2.1-38.patch
-# BROKEN: fs-aufs2.1-38-modular.patch
+fs-unionfs-2.5.11_for_3.4.0.patch
+fs-unionfs-2.5.11_for_3.4.0-buildfix.patch
 
 ###
 ### FireWire
@@ -178,33 +154,6 @@ gpu-drm-mach64-3.0-buildfix.patch
 gpu-drm-mach64-include-module.h.patch
 gpu-drm-mach64-3.3-buildfix.patch
 
-# drm changes to support nouveau and radeon backports
-gpu-drm-add-convenience-function-to-create-an-enum-prope.patch
-gpu-drm-add-convenience-function-to-create-an-range-prop.patch
-gpu-drm-add-some-caps-for-userspace-to-discover-more-inf.patch
-gpu-drm-Add-drm_mode_copy.patch
-
-# radeon backport to support Southern Islands (HD7xxx)
-gpu-drm-radeon-southern-islands-backport.patch
-gpu-drm-radeon-southern-islands-backport-includes.patch
-gpu-drm-radeon-Don-t-dereference-possibly-NULL-pointer.patch
-
-# nouveau backport to support Kepler
-gpu-drm-nouveau-Kepler-backport.patch
-gpu-drm-nouveau-move-out-of-staging-drivers.patch
-gpu-drm-nouveau-fix-thinko-causing-init-to-fail-on-cards.patch
-gpu-drm-nouveau-default-to-8bpc-for-non-LVDS-panels-if-E.patch
-gpu-drm-nouveau-i2c-fix-thinko-regression-on-really-old-.patch
-gpu-drm-nouveau-oops-create-m2mf-for-nvd9-too.patch
-gpu-drm-nouveau-Revert-inform-userspace-of-new-kernel-su.patch
-gpu-drm-nouveau-inform-userspace-of-relaxed-kernel-subch.patch
-gpu-drm-nouveau-select-POWER_SUPPLY.patch
-gpu-drm-nouveau-Fix-crash-when-pci_ram_rom-returns-a-size-of.patch
-# BROKEN: gpu-drm-nouveau-bios-Fix-tracking-of-BIOS-image-data.patch
-
-# i915 fixes
-gpu-drm-i915-add-Ivy-Bridge-GT2-Server-entries.patch
-
 ###
 ### Hardware Monitoring
 ###
@@ -223,6 +172,9 @@ kbuild-compress-kernel-modules-on-installation.patch
 ###
 ### Media
 ###
+
+#fix build with slub
+media-radio-radio-rttrack-include-slab.h.patch
 
 ###
 ### MM
@@ -252,15 +204,8 @@ net-wireless-rt2800usb_disable_ps.patch
 # temp fix for mga #144
 # DISABLED: net-wireless-ath9k-testfix.patch
 
-# fix stability issues on ath5k
-net-wireless-ath5k-do-not-stop-queues-for-full-calibration.patch
-net-wireless-ath5k-do-not-re-run-AGC-calibration-periodically.patch
-
 # make it work with nl80211 clients like Network Manager (#5720)
 net-wireless-ipw2x00-add-supported-cipher-suites-to-wiphy-initialization.patch
-
-# fixes deadlock
-net-e1000-Prevent-reset-task-killing-itself.patch
 
 ###
 ### Platform drivers
@@ -332,8 +277,6 @@ video-mageia-logo.patch
 ###
 ### 3rdparty
 ###
-
-# Mask all 3rdparty by init_6 23.05.12
 
 #3rd-3rdparty-1.0-tree.patch
 

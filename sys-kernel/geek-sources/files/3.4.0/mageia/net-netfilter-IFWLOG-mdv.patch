@@ -252,8 +252,8 @@ diff -p -up linux-2.6.28/net/ipv4/netfilter/ipt_IFWLOG.c.orig linux-2.6.28/net/i
 +MODULE_AUTHOR("Luiz Capitulino <lcapitulino@mandriva.com.br>");
 +MODULE_DESCRIPTION("Interactive firewall logging and module");
 +MODULE_VERSION("v1.1");
---- linux/include/linux/netfilter_ipv4/Kbuild.net-netfilter-IFWLOG-mdv.orig	2011-12-24 13:13:37.000000000 +0200
-+++ linux/include/linux/netfilter_ipv4/Kbuild	2011-12-24 21:54:11.583667852 +0200
+--- linux/include/linux/netfilter_ipv4/Kbuild.net-netfilter-IFWLOG-mdv.orig	2012-05-21 01:29:13.000000000 +0300
++++ linux/include/linux/netfilter_ipv4/Kbuild	2012-05-26 01:27:24.743139430 +0300
 @@ -2,6 +2,7 @@ header-y += ip_queue.h
  header-y += ip_tables.h
  header-y += ipt_CLUSTERIP.h
@@ -261,4 +261,4 @@ diff -p -up linux-2.6.28/net/ipv4/netfilter/ipt_IFWLOG.c.orig linux-2.6.28/net/i
 +header-y += ipt_IFWLOG.h
  header-y += ipt_LOG.h
  header-y += ipt_REJECT.h
- header-y += ipt_SAME.h
+ header-y += ipt_TTL.h
