@@ -97,7 +97,6 @@ drm-vgem.patch
 # Nouveau DRM
 
 # Intel DRM
-drm-intel-next.patch
 drm-i915-dp-stfu.patch
 
 linux-2.6-intel-iommu-igfx.patch
@@ -105,12 +104,6 @@ linux-2.6-intel-iommu-igfx.patch
 # silence the ACPI blacklist code
 linux-2.6-silence-acpi-blacklist.patch
 quite-apm.patch
-
-# V4L/DVB updates/fixes/experimental drivers
-#  apply if non-empty
-linux-2.6-v4l-dvb-fixes.patch
-linux-2.6-v4l-dvb-update.patch
-linux-2.6-v4l-dvb-experimental.patch
 
 # Patches headed upstream
 fs-proc-devtree-remove_proc_entry.patch
