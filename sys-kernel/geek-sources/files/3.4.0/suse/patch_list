@@ -60,10 +60,10 @@
 ########################################################
 # kbuild/module infrastructure fixes
 ########################################################
-patches.suse/supported-flag
-patches.suse/supported-flag-enterprise
-patches.suse/genksyms-add-override-flag.diff
-patches.suse/kconfig-automate-kernel-desktop
+#patches.suse/supported-flag
+#patches.suse/supported-flag-enterprise
+#patches.suse/genksyms-add-override-flag.diff
+#patches.suse/kconfig-automate-kernel-desktop
 
 ########################################################
 # Simple export additions/removals
