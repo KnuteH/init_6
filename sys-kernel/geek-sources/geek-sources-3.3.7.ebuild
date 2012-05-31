@@ -16,7 +16,7 @@ detect_arch
 # Latest version checker:
 # # curl -s http://www.kernel.org/kdist/finger_banner
 
-# aufs
+aufs_url="http://aufs.sourceforge.net/"
 # git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git, read README
 # Patch creation:
 # git clone git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
@@ -104,11 +104,11 @@ use rt && die "No rt support yet for this version."
 use ice && die "No ice support yet for this version."
 use grsecurity && die "No grsecurity support yet for this version."
 
-IUSE="bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse uksm"
+IUSE="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse uksm"
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
+HOMEPAGE="http://www.kernel.org ${aufs_url} ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	ck?		( ${ck_src} )
@@ -223,6 +223,8 @@ src_prepare() {
 #	fi
 
 ### BRANCH APPLY ###
+
+	use aufs && ApplyPatch "$FILESDIR/$OKV/aufs/patch_list" "aufs3 - ${aufs_url}"
 
 	use mageia && ApplyPatch "$FILESDIR/$OKV/mageia/patch_list" "Mandriva/Mageia - ${mageia_url}"
 

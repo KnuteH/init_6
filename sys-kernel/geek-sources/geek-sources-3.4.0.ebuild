@@ -112,7 +112,7 @@ IUSE="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq magei
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
 
-HOMEPAGE="http://www.kernel.org ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url} ${aufs_url}"
+HOMEPAGE="http://www.kernel.org ${aufs_url} ${bfq_url} ${bld_url} ${ck_url} ${fbcondecor_url} ${fedora_url} ${grsecurity_url} ${ice_url} ${imq_url} ${mageia_url} ${pardus_url} ${reiser4_url} ${rt_url} ${suse_url} ${uksm_url}"
 
 SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	bld?		( ${bld_src} )
