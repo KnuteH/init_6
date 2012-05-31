@@ -1,22 +1,38 @@
 Budget Fair Queueing I/O Scheduler
 ==================================
 
-This patchset introduces BFQ-v3r3 into Linux 3.3.
+This patchset introduces BFQ-v3r4 into Linux 3.4.
 For further information: http://algo.ing.unimo.it/people/paolo/disk_sched/.
 
 The overall diffstat is the following:
 
  block/Kconfig.iosched         |   26 +
  block/Makefile                |    1 +
- block/bfq-cgroup.c            |  771 +++++++++++
- block/bfq-ioc.c               |   34 +
- block/bfq-iosched.c           | 2912 +++++++++++++++++++++++++++++++++++++++++
- block/bfq-sched.c             | 1037 +++++++++++++++
- block/bfq.h                   |  596 +++++++++
+ block/bfq-cgroup.c            |  838 +++++++++++++++++++++++++++++
+ block/bfq-ioc.c               |   34 ++
+ block/bfq-iosched.c           | 2900 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ block/bfq-sched.c             | 1066 +++++++++++++++++++++++++++++++++++++
+ block/bfq.h                   |  596 +++++++++++++++++++++
  include/linux/cgroup_subsys.h |    6 +
- 8 files changed, 5383 insertions(+), 0 deletions(-)
+ 8 files changed, 5467 insertions(+)
 
 CHANGELOG
+
+v3-r4:
+- Bugfixes
+  * Removed an important memory leak: under some circumstances the process references
+    to a queue were not decremented correctly, which prevented unused shared bfq_queue
+    to be correctly deallocated.
+  * Fixed various errors related to hierarchical scheduling:
+	* Removed an error causing tasks to be attached to the bfqio cgroup
+	  controller even when BFQ was not the active scheduler
+	* Corrected wrong update of the budgets from the leaf to the root upon
+	  forced selection of a service tree or a bfq_queue
+	* Fixed the way how active leaf entities are moved to the root group before
+	  the group entity is deactivated when a cgroup is destroyed
+- Throughput-boosting improvement for cooperating queues: close detection is now based
+  on a fixed threshold instead of the queue's average seek. This is a port of one of
+  the changes in the CFQ commit 3dde36d by Corrado Zoccolo.
 
 v3-r3:
 - Bugfix: removed an important error causing occasional kernel panics when
