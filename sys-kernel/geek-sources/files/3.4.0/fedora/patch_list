@@ -86,6 +86,7 @@ linux-2.6-e1000-ich9-montevina.patch
 
 # crypto/
 modsign-20120510.patch
+modsign-fix-elf-rel.patch
 
 # Assorted Virt Fixes
 fix_xen_guest_on_old_EC2.patch
