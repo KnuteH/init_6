@@ -105,7 +105,6 @@ KEYWORDS="~amd64 ~x86"
 use reiser4 && die "No reiser4 support yet for this version."
 use ck && die "No ck support yet for this version."
 use grsecurity && die "No grsecurity support yet for this version."
-use ice && die "No TuxOnIce support yet for this version."
 use imq && die "No imq support yet for this version."
 
 IUSE="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse uksm"
