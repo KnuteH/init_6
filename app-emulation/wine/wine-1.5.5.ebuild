@@ -13,7 +13,7 @@ if [[ ${PV} == "9999" ]] ; then
 	#KEYWORDS=""
 else
 	MY_P="${PN}-${PV/_/-}"
-	SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
+	SRC_URI="mirror://sourceforge/${PN}/Source/${MY_P}.tar.bz2"
 	KEYWORDS="-* ~amd64 ~x86 ~x86-fbsd"
 	S=${WORKDIR}/${MY_P}
 fi
@@ -100,7 +100,7 @@ DEPEND="${RDEPEND}
 	)
 	xinerama? ( x11-proto/xineramaproto )
 	!hardened? ( sys-devel/prelink )
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	virtual/yacc
 	sys-devel/flex"
 
@@ -129,7 +129,7 @@ src_prepare() {
 	# WinePulse – PulseAudio for Wine
 	# http://art.ified.ca/?page_id=40
 	# git://repo.or.cz/wine/multimedia.git
-	epatch "${FILESDIR}/${P}-multimedia.patch.xz"
+	EPATCH_OPTS="-p1 -F1 -s" epatch "${FILESDIR}/${P}-multimedia.patch.xz"
 
 	# Fix EAX sound in GTA San Andreas
 	# http://bugs.winehq.org/show_bug.cgi?id=14896
