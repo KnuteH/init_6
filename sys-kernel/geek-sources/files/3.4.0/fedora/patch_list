@@ -100,8 +100,6 @@ drm-vgem.patch
 # Intel DRM
 drm-i915-dp-stfu.patch
 
-linux-2.6-intel-iommu-igfx.patch
-
 # silence the ACPI blacklist code
 linux-2.6-silence-acpi-blacklist.patch
 quite-apm.patch
@@ -141,8 +139,8 @@ selinux-apply-different-permission-to-ptrace-child.patch
 #Highbank clock functions
 highbank-export-clock-functions.patch 
 
-#rhbz 822825 822821 CVE-2012-2372
-mm-pmd_read_atomic-fix-32bit-PAE-pmd-walk-vs-pmd_populate-SMP-race-condition.patch
+# rhbz 826983
+drm-cirrus-qemu-fix-crash.patch
 
 # END OF PATCH APPLICATIONS
 

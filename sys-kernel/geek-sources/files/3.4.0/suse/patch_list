@@ -106,10 +106,10 @@ patches.suse/setuid-dumpable-wrongdir
 ########################################################
 patches.arch/x86_64-hpet-64bit-timer.patch
 
-patches.arch/kvm-split-paravirt-ops-by-functionality
-patches.arch/kvm-only-export-selected-pv-ops-feature-structs
-patches.arch/kvm-split-the-KVM-pv-ops-support-by-feature
-patches.arch/kvm-replace-kvm-io-delay-pv-ops-with-linux-magic
+#patches.arch/kvm-split-paravirt-ops-by-functionality
+#patches.arch/kvm-only-export-selected-pv-ops-feature-structs
+#patches.arch/kvm-split-the-KVM-pv-ops-support-by-feature
+#patches.arch/kvm-replace-kvm-io-delay-pv-ops-with-linux-magic
 
 ########################################################
 # x86 MCE/MCA (Machine Check Error/Architecture) extensions
@@ -136,7 +136,7 @@ patches.suse/led_classdev.sysfs-name.patch
 patches.suse/radeon-monitor-jsxx-quirk.patch
 
 patches.suse/8250-sysrq-ctrl_o.patch
-patches.suse/ppc-no-LDFLAGS_MODULE.patch
+#patches.suse/ppc-no-LDFLAGS_MODULE.patch
 patches.arch/ppc-pegasos-console-autodetection.patch
 patches.suse/ppc-powerbook-usb-fn-key-default.patch
 patches.drivers/ppc64-adb
@@ -206,7 +206,7 @@ patches.arch/acpi_fix_fadt_32_bit_zero_length.patch
 # level) to provide OEMs a safety break so that they can add
 # for example SLE11 specific BIOS updates (if there is no other
 # way to safely solve an ACPI issue).
-patches.suse/acpi_osi_sle11_ident.patch
+#patches.suse/acpi_osi_sle11_ident.patch
 
 # Queued for 2.6.36 -> just revert after some time
 patches.fixes/acpi_ec_sys_access_user_space_with_get_user.patch
