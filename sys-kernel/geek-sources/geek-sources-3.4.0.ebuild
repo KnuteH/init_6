@@ -295,4 +295,5 @@ pkg_postinst() {
 	einfo "Now is the time to configure and build the kernel."
 	use uksm && einfo "Do not forget to disable the remote bug reporting feature by echo 0 > /sys/kernel/mm/uksm/usr_spt_enabled
 	more http://kerneldedup.org/en/projects/uksm/uksmdoc/usage/"
+	einfo "Be sure to mask all of EXTRAVERSION in /usr/src/linux/Makefile different from EXTRAVERSION = -geek-gnu"
 }
