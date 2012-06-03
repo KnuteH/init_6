@@ -36,8 +36,7 @@ DEPEND="${COMMON}
 RDEPEND="${COMMON}
 	x11-libs/libXvMC
 	acpi? ( sys-power/acpid )"
-PDEPEND=">=x11-libs/libvdpau-0.3-r1
-	gtk? ( media-video/nvidia-settings )"
+PDEPEND=">=x11-libs/libvdpau-0.3-r1"
 
 QA_TEXTRELS_x86="
 	usr/lib/OpenCL/vendors/nvidia/libOpenCL.so.1.0.0
