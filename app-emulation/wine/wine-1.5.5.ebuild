@@ -129,7 +129,7 @@ src_prepare() {
 	# WinePulse – PulseAudio for Wine
 	# http://art.ified.ca/?page_id=40
 	# git://repo.or.cz/wine/multimedia.git
-	EPATCH_OPTS="-p1 -F1 -s" epatch "${FILESDIR}/${P}-multimedia-2012-06-02.patch.xz"
+	EPATCH_OPTS="-p1 -F1 -s" epatch "${FILESDIR}/${P}-multimedia.patch.xz"
 
 	# Fix EAX sound in GTA San Andreas
 	# http://bugs.winehq.org/show_bug.cgi?id=14896

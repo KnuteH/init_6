@@ -213,7 +213,7 @@ src_prepare() {
 		cp "${T}/bld-${bld_ver}/BLD-${bld_ver}.patch" "${S}/BLD-${bld_ver}.patch"
 		cd "${S}"
 		ApplyPatch "BLD-${bld_ver}.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
-		rm -f "BLD_${bld_ver}.patch"
+		rm -f "BLD-${bld_ver}.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
 
