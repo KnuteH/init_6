@@ -76,7 +76,7 @@
 ########################################################
 # Scheduler / Core
 ########################################################
-patches.suse/setuid-dumpable-wrongdir
+#patches.suse/setuid-dumpable-wrongdir
 
 ########################################################
 # Architecture-specific patches. These used to be all
@@ -214,9 +214,9 @@ patches.fixes/acpi_ec_sys_access_user_space_with_get_user.patch
 patches.drivers/apei_allow_drivers_access_nvs_ram.patch
 
 # Needs comparison with f7b004a17c9183f023796dea0d70284684ec000d
-patches.arch/acpica_introduce_acpi_os_phys_table_override_function.patch
-patches.arch/acpica_fix_wrongly_mapped_acpi_table_header_when_overriding_via_initrd.patch
-patches.arch/acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
+#patches.arch/acpica_introduce_acpi_os_phys_table_override_function.patch
+#patches.arch/acpica_fix_wrongly_mapped_acpi_table_header_when_overriding_via_initrd.patch
+#patches.arch/acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
 
 patches.arch/dell_latitude_e6xxx_e5xxx__fix_reboot.patch
 
@@ -250,7 +250,7 @@ patches.fixes/bridge-module-get-put.patch
 # NFS
 ########################################################
 
-patches.fixes/nfsd-06-sunrpc-cache-retry-cache-lookups-that-return-ETIMEDO.patch
+#patches.fixes/nfsd-06-sunrpc-cache-retry-cache-lookups-that-return-ETIMEDO.patch
 patches.fixes/nfs-adaptive-readdir-plus
 patches.fixes/nfs-connect-timeout
 
@@ -278,7 +278,7 @@ patches.fixes/nfs-connect-timeout
 ########################################################
 # Reiserfs Patches
 ########################################################
-patches.suse/reiser4-dependencies
+#patches.suse/reiser4-dependencies
 
 ########################################################
 # dlm
@@ -430,7 +430,7 @@ patches.drivers/input-Add-LED-support-to-Synaptics-device
 patches.fixes/parport-mutex
 
 # Needs updating WRT d27769ec (block: add GENHD_FL_NO_PART_SCAN)
-patches.suse/no-partition-scan
+#patches.suse/no-partition-scan
 
 ########################################################
 # Other drivers we have added to the tree
@@ -664,3 +664,4 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen-x86_64-dump-user-pgt
 #patches.xen/xen-x86_64-note-init-p2m
 #patches.xen/xen-x86_64-unmapped-initrd
+

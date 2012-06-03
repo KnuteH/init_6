@@ -7,6 +7,7 @@
     <name>Andrey Ovcharov</name>
   </maintainer>
   <use>
+    <flag name='aufs'>AnotherUnionFS.</flag>
     <flag name='bfq'>Budget Fair Queueing Budget I/O Scheduler.</flag>
     <flag name='bld'>Alternate CPU load distribution technique for Linux kernel scheduler.</flag>
     <flag name='backports'>Use backports patches.</flag>
