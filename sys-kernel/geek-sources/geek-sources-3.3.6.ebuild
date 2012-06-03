@@ -261,7 +261,7 @@ src_prepare() {
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile
 
 	einfo "Delete temp files"
-	for cfg in {config-*,temp-*,merge.pl}; do
+	for cfg in {config-*,temp-*,merge.pl,*.orig}; do
 		rm -f $cfg
 	done;
 }
