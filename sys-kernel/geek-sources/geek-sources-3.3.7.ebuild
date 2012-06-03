@@ -55,7 +55,7 @@ fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 grsecurity_url="http://grsecurity.net"
 # Gentoo hardened patchset
 # http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-patchset.git;a=summary
-grsecurity_ver="2.9-${OKV}-201205271953"
+grsecurity_ver="2.9-${OKV}-201206011935"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
 
 # TuxOnIce
@@ -101,8 +101,6 @@ uksm_url="http://kerneldedup.org"
 KEYWORDS="~amd64 ~x86"
 use reiser4 && die "No reiser4 support yet for this version."
 use rt && die "No rt support yet for this version."
-use ice && die "No ice support yet for this version."
-use grsecurity && die "No grsecurity support yet for this version."
 
 IUSE="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus reiser4 rt suse uksm"
 
