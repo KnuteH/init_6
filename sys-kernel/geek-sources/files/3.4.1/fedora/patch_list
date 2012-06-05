@@ -4,14 +4,14 @@ linux-2.6-makefile-after_link.patch
 
 taint-vbox.patch
 
-#Stable Queue for 3.4.1
-3.4.1-stable-queue.patch.xz
-
 # Architecture patches
 # x86(-64)
-linux-2.6-32bit-mmap-exec-randomization.patch
-linux-2.6-i386-nx-emulation.patch
-nx-emu-remove-cpuinitdata-for-disable_nx-on-x86_32.patch
+#linux-2.6-32bit-mmap-exec-randomization.patch
+#linux-2.6-i386-nx-emulation.patch
+#nx-emu-remove-cpuinitdata-for-disable_nx-on-x86_32.patch
+#rhbz 804957 CVE-2012-1568
+#shlib_base_randomize.patch
+
 
 #
 # ARM
@@ -131,9 +131,6 @@ hfsplus-Fix-bless-ioctl-when-used-with-hardlinks.patch
 #rhbz 754518
 scsi-sd_revalidate_disk-prevent-NULL-ptr-deref.patch
 
-#rhbz 804957 CVE-2012-1568
-shlib_base_randomize.patch
-
 unhandled-irqs-switch-to-polling.patch
 
 weird-root-dentry-name-debug.patch
@@ -145,7 +142,7 @@ highbank-export-clock-functions.patch
 selinux-apply-different-permission-to-ptrace-child.patch
 
 #vgaarb patches.  blame mjg59
-#vgaarb-vga_default_device.patch # <-- init_6
+#vgaarb-vga_default_device.patch
 
 #rhbz 814278 814289 CVE-2012-2119
 macvtap-zerocopy-validate-vector-length.patch

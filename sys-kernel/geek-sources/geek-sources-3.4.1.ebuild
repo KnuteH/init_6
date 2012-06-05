@@ -41,8 +41,8 @@ bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
-ck_ver="3.3"
-ck_src="http://ck.kolivas.org/patches/3.0/3.3/3.3-ck1/patch-${ck_ver}-ck1.bz2"
+ck_ver="3.4"
+ck_src="http://ck.kolivas.org/patches/3.0/3.4/3.4-ck1/patch-${ck_ver}-ck1.bz2"
 
 # Spock's fbsplash patch
 fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
@@ -103,7 +103,6 @@ uksm_url="http://kerneldedup.org"
 
 KEYWORDS="~amd64 ~x86"
 use reiser4 && die "No reiser4 support yet for this version."
-use ck && die "No ck support yet for this version."
 use grsecurity && die "No grsecurity support yet for this version."
 use imq && die "No imq support yet for this version."
 

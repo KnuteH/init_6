@@ -18,7 +18,6 @@ In this overlay you will find:
 	sys-kernel/geek-sources Full sources for the Linux kernel including:
 		aufs - AnotherUnionFS.
 		bfq - Budget Fair Queueing Budget I/O Scheduler.
-		bfs - Use Con Kolivas' Brain Fuck CPU Scheduler.
 		bld - Alternate CPU load distribution technique for Linux kernel scheduler.
 		backports - Use backports patches.
 		branding - Enable Gentoo specific branding.

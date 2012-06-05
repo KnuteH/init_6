@@ -33,10 +33,10 @@
 # Patches in patches.rpmify are applied to both -vanilla
 # and patched flavors.
 ########################################################
-#patches.rpmify/apm-honor-config_apm_cpu_idle-n
-#patches.rpmify/nouveau-make-vga_switcheroo-code-depend-on-vga_switcheroo
-#patches.rpmify/pti-depends-on-x86-pci
-#patches.rpmify/geode-depends-on-x86_32
+patches.rpmify/apm-honor-config_apm_cpu_idle-n
+patches.rpmify/nouveau-make-vga_switcheroo-code-depend-on-vga_switcheroo
+patches.rpmify/pti-depends-on-x86-pci
+patches.rpmify/geode-depends-on-x86_32
 
 ########################################################
 # kABI consistency patches
@@ -76,7 +76,7 @@
 ########################################################
 # Scheduler / Core
 ########################################################
-#patches.suse/setuid-dumpable-wrongdir
+patches.suse/setuid-dumpable-wrongdir
 
 ########################################################
 # Architecture-specific patches. These used to be all
@@ -237,7 +237,7 @@ patches.drivers/x86_acpi_cpufreq_autoload.patch
 ########################################################
 # Suse specific stuff
 ########################################################
-patches.suse/suse-hv-storvsc-ignore-ata_16.patch
+patches.suse/msft-hv-0349-SCSI-storvsc-Properly-handle-errors-from-the-host.patch
 patches.suse/suse-hv-pata_piix-ignore-disks.patch
 patches.fixes/hv-storvsc-reset-wait.patch
 
@@ -313,7 +313,7 @@ patches.suse/0011-richacl-Check-if-an-acl-is-equivalent-to-a-file-mode.patch
 patches.suse/0012-richacl-Automatic-Inheritance.patch
 patches.suse/0013-richacl-Restrict-access-check-algorithm.patch
 patches.suse/0014-richacl-xattr-mapping-functions.patch
-#patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch # <-- by init_6
+#patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
 
 ########################################################
 # other filesystem stuff
@@ -664,4 +664,3 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen-x86_64-dump-user-pgt
 #patches.xen/xen-x86_64-note-init-p2m
 #patches.xen/xen-x86_64-unmapped-initrd
-
