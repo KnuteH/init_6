@@ -136,10 +136,6 @@ pnp-isapnp-async-init.patch
 ### ACPI
 ###
 
-# TTL: forever
-acpi-dsdt-initrd-v0.9c-2.6.28.patch
-acpi-dsdt-initrd-v0.9c-fixes.patch
-
 # CLEVO M360S acpi irq workaround
 acpi-CLEVO-M360S-disable_acpi_irq.patch
 

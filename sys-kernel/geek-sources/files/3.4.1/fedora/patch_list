@@ -21,6 +21,7 @@ taint-vbox.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
 arm-beagle-usb-init.patch
+arm-omap-drm-register.patch
 
 #
 # bugfixes to drivers and filesystems
@@ -137,6 +138,7 @@ weird-root-dentry-name-debug.patch
 
 #Highbank clock functions
 highbank-export-clock-functions.patch 
+highbank-secure-smc.patch
 
 #selinux ptrace child permissions
 selinux-apply-different-permission-to-ptrace-child.patch
