@@ -13,10 +13,10 @@ index 5481c8b..7141876 100644
  map_hugetlb.c
 diff --git a/Documentation/vm/uksm.txt b/Documentation/vm/uksm.txt
 new file mode 100644
-index 0000000..e18f6d8
+index 0000000..6b260e5
 --- /dev/null
 +++ b/Documentation/vm/uksm.txt
-@@ -0,0 +1,50 @@
+@@ -0,0 +1,51 @@
 +The Ultra Kernel Samepage Merging feature
 +----------------------------------------------
 +/*
@@ -67,6 +67,7 @@ index 0000000..e18f6d8
 +
 +2012-05-05 The creation of this Doc
 +2012-05-08 UKSM 0.1.1.1 libc crash bug fix, api clean up, doc clean up.
++2012-05-28 UKSM 0.1.1.2 bug fix release
 diff --git a/fs/exec.c b/fs/exec.c
 index b1fd202..a681805 100644
 --- a/fs/exec.c
@@ -238,10 +239,10 @@ index dff7115..63de7c8 100644
   * @zone - pointer to struct zone variable
 diff --git a/include/linux/uksm.h b/include/linux/uksm.h
 new file mode 100644
-index 0000000..27b80bf
+index 0000000..a2b78bc
 --- /dev/null
 +++ b/include/linux/uksm.h
-@@ -0,0 +1,115 @@
+@@ -0,0 +1,138 @@
 +#ifndef __LINUX_UKSM_H
 +#define __LINUX_UKSM_H
 +/*
@@ -318,6 +319,20 @@ index 0000000..27b80bf
 +		vma->uksm_vma_slot->pages_cowed++;
 +}
 +
++static inline int uksm_flags_can_scan(unsigned long vm_flags)
++{
++	return !(vm_flags & (VM_PFNMAP | VM_IO  | VM_DONTEXPAND |
++				  VM_RESERVED  | VM_HUGETLB | VM_INSERTPAGE |
++				  VM_NONLINEAR | VM_MIXEDMAP | VM_SAO |
++				  VM_SHARED  | VM_MAYSHARE | VM_GROWSUP
++				  | VM_GROWSDOWN));
++}
++
++static inline void uksm_vm_flags_mod(unsigned long *vm_flags_p)
++{
++	if (uksm_flags_can_scan(*vm_flags_p))
++		*vm_flags_p |= VM_MERGEABLE;
++}
 +
 +/*
 + * Just a wrapper for BUG_ON for where ksm_zeropage must not be. TODO: it will
@@ -352,16 +367,25 @@ index 0000000..27b80bf
 +{
 +}
 +
++static inline int uksm_flags_can_scan(unsigned long vm_flags)
++{
++	return 0;
++}
++
++static inline void uksm_vm_flags_mod(unsigned long *vm_flags_p)
++{
++}
++
 +static inline void uksm_bugon_zeropage(pte_t pte)
 +{
 +}
 +#endif /* !CONFIG_UKSM */
 +#endif /* __LINUX_UKSM_H */
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 687a15d..09f3c30 100644
+index 8163333..6ab5223 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -361,7 +361,7 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+@@ -362,7 +362,7 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
  				goto fail_nomem;
  			charge = len;
  		}
@@ -370,7 +394,7 @@ index 687a15d..09f3c30 100644
  		if (!tmp)
  			goto fail_nomem;
  		*tmp = *mpnt;
-@@ -413,7 +413,7 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+@@ -414,7 +414,7 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
  		__vma_link_rb(mm, tmp, rb_link, rb_parent);
  		rb_link = &tmp->vm_rb.rb_right;
  		rb_parent = &tmp->vm_rb;
@@ -568,7 +592,7 @@ index 6105f47..e719a0c 100644
  		entry = mk_pte(new_page, vma->vm_page_prot);
  		entry = maybe_mkwrite(pte_mkdirty(entry), vma);
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 848ef52..5b0a701 100644
+index 848ef52..226ef50 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -30,6 +30,7 @@
@@ -641,7 +665,17 @@ index 848ef52..5b0a701 100644
  	validate_mm(mm);
  
  	return 0;
-@@ -1357,6 +1371,7 @@ munmap_back:
+@@ -1006,6 +1020,9 @@ static unsigned long do_mmap_pgoff(struct file *file, unsigned long addr,
+ 	vm_flags = calc_vm_prot_bits(prot) | calc_vm_flag_bits(flags) |
+ 			mm->def_flags | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
+ 
++	/* If uksm is enabled, we add VM_MERGABLE to new VMAs. */
++	uksm_vm_flags_mod(&vm_flags);
++
+ 	if (flags & MAP_LOCKED)
+ 		if (!can_do_mlock())
+ 			return -EPERM;
+@@ -1357,6 +1374,7 @@ munmap_back:
  
  	vma_link(mm, vma, prev, rb_link, rb_parent);
  	file = vma->vm_file;
@@ -649,7 +683,7 @@ index 848ef52..5b0a701 100644
  
  	/* Once vma denies write, undo our temporary denial count */
  	if (correct_wcount)
-@@ -1383,6 +1398,7 @@ unmap_and_free_vma:
+@@ -1383,6 +1401,7 @@ unmap_and_free_vma:
  	unmap_region(mm, vma, prev, vma->vm_start, vma->vm_end);
  	charged = 0;
  free_vma:
@@ -657,7 +691,7 @@ index 848ef52..5b0a701 100644
  	kmem_cache_free(vm_area_cachep, vma);
  unacct_error:
  	if (charged)
-@@ -1458,7 +1474,7 @@ full_search:
+@@ -1458,7 +1477,7 @@ full_search:
  		addr = vma->vm_end;
  	}
  }
@@ -666,7 +700,7 @@ index 848ef52..5b0a701 100644
  
  void arch_unmap_area(struct mm_struct *mm, unsigned long addr)
  {
-@@ -2012,6 +2028,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
+@@ -2012,6 +2031,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
  	else
  		err = vma_adjust(vma, vma->vm_start, addr, vma->vm_pgoff, new);
  
@@ -675,7 +709,15 @@ index 848ef52..5b0a701 100644
  	/* Success. */
  	if (!err)
  		return 0;
-@@ -2253,6 +2271,7 @@ static unsigned long do_brk(unsigned long addr, unsigned long len)
+@@ -2185,6 +2206,7 @@ static unsigned long do_brk(unsigned long addr, unsigned long len)
+ 		return error;
+ 
+ 	flags = VM_DATA_DEFAULT_FLAGS | VM_ACCOUNT | mm->def_flags;
++	uksm_vm_flags_mod(&flags);
+ 
+ 	error = get_unmapped_area(NULL, addr, len, 0, MAP_FIXED);
+ 	if (error & ~PAGE_MASK)
+@@ -2253,6 +2275,7 @@ static unsigned long do_brk(unsigned long addr, unsigned long len)
  	vma->vm_flags = flags;
  	vma->vm_page_prot = vm_get_page_prot(flags);
  	vma_link(mm, vma, prev, rb_link, rb_parent);
@@ -683,7 +725,7 @@ index 848ef52..5b0a701 100644
  out:
  	perf_event_mmap(vma);
  	mm->total_vm += len >> PAGE_SHIFT;
-@@ -2285,6 +2304,12 @@ void exit_mmap(struct mm_struct *mm)
+@@ -2285,6 +2308,12 @@ void exit_mmap(struct mm_struct *mm)
  	/* mm's last user has gone, and its about to be pulled down */
  	mmu_notifier_release(mm);
  
@@ -696,7 +738,7 @@ index 848ef52..5b0a701 100644
  	if (mm->locked_vm) {
  		vma = mm->mmap;
  		while (vma) {
-@@ -2318,6 +2343,11 @@ void exit_mmap(struct mm_struct *mm)
+@@ -2318,6 +2347,11 @@ void exit_mmap(struct mm_struct *mm)
  	while (vma)
  		vma = remove_vma(vma);
  
@@ -708,7 +750,7 @@ index 848ef52..5b0a701 100644
  	BUG_ON(mm->nr_ptes > (FIRST_USER_ADDRESS+PMD_SIZE-1)>>PMD_SHIFT);
  }
  
-@@ -2427,6 +2457,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -2427,6 +2461,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  			if (new_vma->vm_ops && new_vma->vm_ops->open)
  				new_vma->vm_ops->open(new_vma);
  			vma_link(mm, new_vma, prev, rb_link, rb_parent);
@@ -716,7 +758,7 @@ index 848ef52..5b0a701 100644
  		}
  	}
  	return new_vma;
-@@ -2532,10 +2563,10 @@ int install_special_mapping(struct mm_struct *mm,
+@@ -2532,10 +2567,10 @@ int install_special_mapping(struct mm_struct *mm,
  	ret = insert_vm_struct(mm, vma);
  	if (ret)
  		goto out;
@@ -746,10 +788,10 @@ index 5b5ad58..4ee34d9 100644
  static void __page_set_anon_rmap(struct page *page,
 diff --git a/mm/uksm.c b/mm/uksm.c
 new file mode 100644
-index 0000000..aec45c2
+index 0000000..ebcc073
 --- /dev/null
 +++ b/mm/uksm.c
-@@ -0,0 +1,5345 @@
+@@ -0,0 +1,5342 @@
 +/*
 + * Ultra KSM. Copyright (C) 2011-2012 Nai Xia
 + *
@@ -1067,7 +1109,7 @@ index 0000000..aec45c2
 +static struct sockaddr_in uksm_usr_spt_addr;
 +static struct socket *uksm_usr_spt_sock = NULL;
 +static unsigned long uksm_usr_spt_last;
-+static int uksm_usr_spt_enabled = 1;
++static int uksm_usr_spt_enabled = 0;
 +
 +/*
 + * Flags for rmap_item to judge if it's listed in the stable/unstable tree.
@@ -1711,11 +1753,7 @@ index 0000000..aec45c2
 + */
 +static inline int vma_can_enter(struct vm_area_struct *vma)
 +{
-+	return !(vma->vm_flags & (VM_PFNMAP | VM_IO  | VM_DONTEXPAND |
-+				  VM_RESERVED  | VM_HUGETLB | VM_INSERTPAGE |
-+				  VM_NONLINEAR | VM_MIXEDMAP | VM_SAO |
-+				  VM_SHARED  | VM_MAYSHARE | VM_GROWSUP
-+				  | VM_GROWSDOWN));
++	return uksm_flags_can_scan(vma->vm_flags);
 +}
 +
 +/*
@@ -3499,6 +3537,7 @@ index 0000000..aec45c2
 +			inc_dup_vma(rmap_item->slot, rmap_item->slot);
 +			rmap_item->slot->pages_merged++;
 +			__inc_zone_page_state(page, NR_UKSM_ZERO_PAGES);
++			dec_mm_counter(rmap_item->slot->mm, MM_ANONPAGES);
 +			return ;
 +		} else {
 +			inc_rshash_neg(memcmp_cost / 2);
@@ -6095,3 +6134,17 @@ index 0000000..aec45c2
 +late_initcall(uksm_init);
 +#endif
 +
+diff --git a/mm/vmstat.c b/mm/vmstat.c
+index 7db1b9b..351339c 100644
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -719,6 +719,9 @@ const char * const vmstat_text[] = {
+ 	"numa_other",
+ #endif
+ 	"nr_anon_transparent_hugepages",
++#ifdef CONFIG_UKSM
++	"nr_uksm_zero_pages",
++#endif
+ 	"nr_dirty_threshold",
+ 	"nr_dirty_background_threshold",
+ 
