@@ -42,7 +42,7 @@ bld_src="http://bld.googlecode.com/files/bld-${bld_ver}.tar.bz2"
 # Con Kolivas' high performance patchset
 ck_url="http://users.on.net/~ckolivas/kernel"
 ck_ver="3.4"
-ck_src="http://ck.kolivas.org/patches/3.0/3.4/3.4-ck1/patch-${ck_ver}-ck1.bz2"
+ck_src="http://ck.kolivas.org/patches/3.0/3.4/3.4-ck2/patch-${ck_ver}-ck2.bz2"
 
 # Spock's fbsplash patch
 fbcondecor_url="http://dev.gentoo.org/~spock/projects/fbcondecor"
@@ -190,7 +190,7 @@ ApplyPatch() {
 src_prepare() {
 	use bfq && ApplyPatch "${FILESDIR}/${OKV}/bfq/patch_list" "Budget Fair Queueing Budget I/O Scheduler - ${bfq_url}"
 
-	use ck && ApplyPatch "$DISTDIR/patch-$ck_ver-ck1.bz2" "Con Kolivas high performance patchset - ${ck_url}"
+	use ck && ApplyPatch "$DISTDIR/patch-$ck_ver-ck2.bz2" "Con Kolivas high performance patchset - ${ck_url}"
 
 	use fbcondecor && ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch" "Spock's fbsplash patch - ${fbcondecor_url}"
 
