@@ -118,6 +118,8 @@ SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	imq?		( ${imq_src} )
 	rt?		( ${rt_src} )"
 
+RESTRICT="mirror"
+
 RDEPEND="${RDEPEND}
 	grsecurity?	( >=sys-apps/gradm-2.2.2 )
 	ice?		( >=sys-apps/tuxonice-userui-1.0

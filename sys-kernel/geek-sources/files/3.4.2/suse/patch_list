@@ -51,19 +51,19 @@ patches.rpmify/geode-depends-on-x86_32
 # Note that every patch in the patches.rpmify directory
 # will be included in the vanilla package.
 ########################################################
-#patches.rpmify/firmware-path
+patches.rpmify/firmware-path
 
-#patches.rpmify/rpm-kernel-config
-#patches.rpmify/split-package
-#patches.rpmify/cloneconfig.diff
+patches.rpmify/rpm-kernel-config
+patches.rpmify/split-package
+patches.rpmify/cloneconfig.diff
 
 ########################################################
 # kbuild/module infrastructure fixes
 ########################################################
-#patches.suse/supported-flag
-#patches.suse/supported-flag-enterprise
-#patches.suse/genksyms-add-override-flag.diff
-#patches.suse/kconfig-automate-kernel-desktop
+patches.suse/supported-flag
+patches.suse/supported-flag-enterprise
+patches.suse/genksyms-add-override-flag.diff
+patches.suse/kconfig-automate-kernel-desktop
 
 ########################################################
 # Simple export additions/removals
@@ -76,7 +76,7 @@ patches.rpmify/geode-depends-on-x86_32
 ########################################################
 # Scheduler / Core
 ########################################################
-#patches.suse/setuid-dumpable-wrongdir
+patches.suse/setuid-dumpable-wrongdir
 
 ########################################################
 # Architecture-specific patches. These used to be all
@@ -153,6 +153,7 @@ patches.fixes/ptrace-getsiginfo
 # ARM
 ########################################################
 patches.arch/arm-phys-offset.patch
+patches.arch/cubox-configuration.patch
 
 ########################################################
 # S/390
@@ -345,6 +346,8 @@ patches.fixes/netfilter-implement-rfc-1123-for-ftp-conntrack
 # Device drivers
 #
 ########################################################
+patches.drivers/spi-orion-convert-to-new-infrastructure.patch
+patches.drivers/mach-dove-Fixup-ge00-initialisation.patch
 
 ########################################################
 # Storage
@@ -673,4 +676,3 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen-x86_64-dump-user-pgt
 #patches.xen/xen-x86_64-note-init-p2m
 #patches.xen/xen-x86_64-unmapped-initrd
-

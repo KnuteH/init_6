@@ -166,6 +166,15 @@ rtl818x-fix-sleeping-function-called-from-invalid-context.patch
 
 #rhbz 822825 822821 CVE-2012-2372
 mm-pmd_read_atomic-fix-32bit-PAE-pmd-walk-vs-pmd_populate-SMP-race-condition.patch
+thp-avoid-atomic64_read-in-pmd_read_atomic-for-32bit-PAE.patch
+
+#rhbz 825491
+iwlwifi-disable-the-buggy-chain-extension-feature-in-HW.patch
+iwlwifi-dont-mess-up-the-SCD-when-removing-a-key.patch
+
+#rhbz 830862
+SUNRPC-new-svc_bind-routine-introduced.patch
+SUNRPC-move-per-net-operations-from-svc_destroy.patch
 
 # END OF PATCH APPLICATIONS
 

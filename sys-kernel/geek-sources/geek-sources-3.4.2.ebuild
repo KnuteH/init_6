@@ -57,7 +57,7 @@ fedora_url="http://pkgs.fedoraproject.org/gitweb/?p=kernel.git;a=summary"
 grsecurity_url="http://grsecurity.net"
 # Gentoo hardened patchset
 # http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-patchset.git;a=summary
-grsecurity_ver="2.9.1-${OKV}-201206111838"
+grsecurity_ver="2.9.1-${OKV}-201206122153"
 grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver}.patch"
 
 # TuxOnIce
@@ -116,6 +116,8 @@ SRC_URI="${KERNEL_URI} ${ARCH_URI}
 	grsecurity?	( ${grsecurity_src} )
 	imq?		( ${imq_src} )
 	rt?		( ${rt_src} )"
+
+RESTRICT="mirror"
 
 RDEPEND="${RDEPEND}
 	grsecurity?	( >=sys-apps/gradm-2.2.2 )
