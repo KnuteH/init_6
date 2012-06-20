@@ -84,7 +84,7 @@ reiser4_url="http://sourceforge.net/projects/reiser4"
 
 # Ingo Molnar's realtime preempt patches
 rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
-rt_ver="3.4-rt7"
+rt_ver="3.4.3-rt11"
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
 
 # OpenSuSE
