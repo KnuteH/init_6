@@ -34,7 +34,8 @@ SUBLEVEL="${3}"
 KMV="${1}.${2}"
 
 # ebuild default values setup settings
-KV_FULL="${PVR}-geek"
+EXTRAVERSION="-geek"
+KV_FULL="${PVR}${EXTRAVERSION}"
 S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
 
@@ -356,6 +357,9 @@ kernel-geek_src_prepare() {
 	echo
 	einfo "Live long and prosper."
 	echo
+
+	einfo "Set extraversion in Makefile" # manually set extraversion
+	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile
 
 	# Comment out EXTRAVERSION added by CK patch:
 	use ck && sed -i -e 's/\(^EXTRAVERSION :=.*$\)/# \1/' "Makefile"
