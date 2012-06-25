@@ -13,9 +13,9 @@ bld_ver="${KMV}-rc4"
 ck_ver="${KMV}-ck2"
 grsecurity_ver="2.9.1-3.4.3-201206221855"
 imq_ver="3.3"
-rt_ver="3.4.3-rt11"
+rt_ver="3.4.3-rt12"
 
-SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld rt suse uksm"
+SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
 
 inherit kernel-geek
 

@@ -15,7 +15,7 @@ grsecurity_ver="2.9.1-${PV}-201206171836"
 imq_ver="3.3"
 rt_ver="${PV}-rt11"
 
-SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld rt suse uksm"
+SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
 
 inherit kernel-geek
 
