@@ -141,7 +141,7 @@ unhandled-irqs-switch-to-polling.patch
 weird-root-dentry-name-debug.patch
 
 #Highbank clock functions
-highbank-export-clock-functions.patch 
+highbank-export-clock-functions.patch
 highbank-secure-smc.patch
 
 #selinux ptrace child permissions
@@ -182,4 +182,3 @@ cifs-fix-parsing-of-password-mount-option.patch
 usb-storage-try-read_capacity-10-first.patch
 
 # END OF PATCH APPLICATIONS
-

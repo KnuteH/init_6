@@ -33,10 +33,10 @@
 # Patches in patches.rpmify are applied to both -vanilla
 # and patched flavors.
 ########################################################
-patches.rpmify/apm-honor-config_apm_cpu_idle-n
-patches.rpmify/nouveau-make-vga_switcheroo-code-depend-on-vga_switcheroo
-patches.rpmify/pti-depends-on-x86-pci
-patches.rpmify/geode-depends-on-x86_32
+#patches.rpmify/apm-honor-config_apm_cpu_idle-n
+#patches.rpmify/nouveau-make-vga_switcheroo-code-depend-on-vga_switcheroo
+#patches.rpmify/pti-depends-on-x86-pci
+#patches.rpmify/geode-depends-on-x86_32
 
 ########################################################
 # kABI consistency patches
@@ -51,19 +51,19 @@ patches.rpmify/geode-depends-on-x86_32
 # Note that every patch in the patches.rpmify directory
 # will be included in the vanilla package.
 ########################################################
-patches.rpmify/firmware-path
+#patches.rpmify/firmware-path
 
-patches.rpmify/rpm-kernel-config
-patches.rpmify/split-package
-patches.rpmify/cloneconfig.diff
+#patches.rpmify/rpm-kernel-config
+#patches.rpmify/split-package
+#patches.rpmify/cloneconfig.diff
 
 ########################################################
 # kbuild/module infrastructure fixes
 ########################################################
-patches.suse/supported-flag
-patches.suse/supported-flag-enterprise
-patches.suse/genksyms-add-override-flag.diff
-patches.suse/kconfig-automate-kernel-desktop
+#patches.suse/supported-flag
+#patches.suse/supported-flag-enterprise
+#patches.suse/genksyms-add-override-flag.diff
+#patches.suse/kconfig-automate-kernel-desktop
 
 ########################################################
 # Simple export additions/removals
@@ -175,7 +175,6 @@ patches.fixes/remount-no-shrink-dcache
 patches.suse/readahead-request-tunables.patch
 patches.fixes/fs-partitions-efi-c-corrupted-guid-partition-tables-can-cause-kernel-oops
 patches.fixes/mm-Fix-assertion-mapping-nrpages-0-in-end_writeback.patch
-patches.fixes/mm-correctly-synchronize-rss-counters-at-exit-exec.patch
 
 ########################################################
 # IPC patches
@@ -658,4 +657,3 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen-x86_64-dump-user-pgt
 #patches.xen/xen-x86_64-note-init-p2m
 #patches.xen/xen-x86_64-unmapped-initrd
-
