@@ -61,7 +61,7 @@ deblob_src="http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.
 fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/${KMV}/4200_fbcondecor-0.9.6.patch"
 
 # grsecurity security patches
-grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver/KMV/$KMV}.patch"
+#grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver/KMV/$KMV}.patch"
 
 # Intermediate Queueing Device patches
 imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver/KMV/$KMV}.diff.xz"
@@ -134,15 +134,15 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${fedora_url}"
 			;;
 		grsecurity)
-			if [ "${OVERRIDE_grsecurity_src}" != "" ]; then
-				grsecurity_src="${OVERRIDE_grsecurity_src}"
-			fi
+#			if [ "${OVERRIDE_grsecurity_src}" != "" ]; then
+#				grsecurity_src="${OVERRIDE_grsecurity_src}"
+#			fi
 			grsecurity_url="http://grsecurity.net"
 			HOMEPAGE="${HOMEPAGE} ${grsecurity_url}"
 			RDEPEND="${RDEPEND}
 				grsecurity?	( >=sys-apps/gradm-2.2.2 )"
-			SRC_URI="${SRC_URI}
-				grsecurity?	( ${grsecurity_src} )"
+#			SRC_URI="${SRC_URI}
+#				grsecurity?	( ${grsecurity_src} )"
 			;;
 		ice)
 			ice_url="http://tuxonice.net"
@@ -287,13 +287,14 @@ kernel-geek_src_unpack() {
 }
 
 kernel-geek_src_prepare() {
-	use grsecurity && ApplyPatch "${DISTDIR}/grsecurity-${grsecurity_ver}.patch" "GrSecurity patches - ${grsecurity_url}"
 
 	use bfq && ApplyPatch "${FILESDIR}/${PV}/bfq/patch_list" "Budget Fair Queueing Budget I/O Scheduler - ${bfq_url}"
 
 	use ck && ApplyPatch "$DISTDIR/patch-${ck_ver}.bz2" "Con Kolivas high performance patchset - ${ck_url}"
 
 	use fbcondecor && ApplyPatch "${DISTDIR}/4200_fbcondecor-0.9.6.patch" "Spock's fbsplash patch - ${fbcondecor_url}"
+
+	use grsecurity && ApplyPatch "${FILESDIR}/${PV}/grsecurity/patch_list" "GrSecurity patches - ${grsecurity_url}"
 
 	use ice && ApplyPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz" "TuxOnIce - ${ice_url}"
 
