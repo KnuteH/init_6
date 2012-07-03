@@ -11,7 +11,7 @@ KMV="$(echo $PV | cut -f 1-2 -d .)"
 bfq_ver="v3r4"
 bld_ver="${KMV}-rc4"
 ck_ver="${KMV}-ck2"
-grsecurity_ver="2.9.1-${PV}-201206171836"
+#grsecurity_ver="2.9.1-${PV}-201206171836"
 imq_ver="3.3"
 rt_ver="${PV}-rt11"
 

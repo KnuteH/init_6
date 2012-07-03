@@ -117,6 +117,9 @@ dm-raid-aliases.patch
 # disable floppy autoloading (mga #4696)
 block-floppy-disable-pnp-modalias.patch
 
+# fix hang on mounting invalid ext3 partition
+block-fix-infinite-loop-in-__getblk_slow.patch
+
 ###
 ### File-system
 ###
@@ -124,6 +127,9 @@ block-floppy-disable-pnp-modalias.patch
 # unionfs (http://www.filesystems.org/project-unionfs.html)
 fs-unionfs-2.5.11_for_3.4.0.patch
 fs-unionfs-2.5.11_for_3.4.0-buildfix.patch
+
+# requested by blino on irc, is cc stable
+fs-cifs-fix-parsing-of-password-mount-option.patch
 
 ###
 ### FireWire
@@ -334,6 +340,8 @@ smack-unionfs-deadlock-fix.patch
 ###
 arm_fix_bad_udelay_usage.patch
 kbuild_firmware_install.patch
+arm-orion-fix-virtual-physical-mixup-with-watchdog.patch
+arm-tegra-make-tegra_cpu_reset_handler_enable-__init.patch
 
 ###
 ### Tools

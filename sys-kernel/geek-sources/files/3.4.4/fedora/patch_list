@@ -125,11 +125,14 @@ efi-dont-map-boot-services-on-32bit.patch
 
 lis3-improve-handling-of-null-rate.patch
 
+team-update-from-net-next.patch
+
 ips-noirq.patch
 
 # Uprobes (rhbz 832083)
 uprobes-3.4-backport.patch
 uprobes-3.4-tip.patch
+uprobes-task_work_add-generic-process-context-callbacks.patch
 
 power-x86-destdir.patch
 
@@ -141,7 +144,7 @@ unhandled-irqs-switch-to-polling.patch
 weird-root-dentry-name-debug.patch
 
 #Highbank clock functions
-highbank-export-clock-functions.patch
+highbank-export-clock-functions.patch 
 highbank-secure-smc.patch
 
 #selinux ptrace child permissions
@@ -181,4 +184,17 @@ cifs-fix-parsing-of-password-mount-option.patch
 #rhbz 831807
 usb-storage-try-read_capacity-10-first.patch
 
+#rhbz 828731
+ath9k_htc-configure-bssid-on-ASSOC-IBSS-change.patch
+
+#rhbz 835019
+block-fix-infinite-loop-in-__getblk_slow.patch
+
+#rhbz 832867
+mm-correctly-synchronize-rss-counters-at-exit-exec.patch
+
+#rhbz 832927
+ath9k-fix-panic-caused-by-returning-a-descriptor-we-.patch
+
 # END OF PATCH APPLICATIONS
+

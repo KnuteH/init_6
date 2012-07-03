@@ -11,9 +11,9 @@ KMV="$(echo $PV | cut -f 1-2 -d .)"
 bfq_ver="v3r4"
 bld_ver="${KMV}-rc4"
 ck_ver="${KMV}-ck2"
-grsecurity_ver="2.9.1-${PV}-201206251759"
+#grsecurity_ver="2.9.1-${PV}-201206251759"
 imq_ver="3.3"
-rt_ver="3.4.3-rt12"
+rt_ver="${PV}-rt13"
 
 SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
 
