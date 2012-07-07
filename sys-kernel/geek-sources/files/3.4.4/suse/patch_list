@@ -157,6 +157,7 @@ patches.arch/cubox-configuration.patch
 patches.arch/arm-omap-add-drm.patch
 patches.arch/arm-revert-omap-ehci-fix.patch
 patches.arch/arm-revert-omap-hsmmc-cmd12.patch
+patches.arch/mach-dove-define-TIMER_PHYS_BASE.patch
 
 ########################################################
 # S/390
@@ -203,25 +204,15 @@ patches.arch/acpi_thinkpad_introduce_acpi_root_table_boot_param.patch
 
 patches.arch/acpi_thermal_passive_blacklist.patch
 
-patches.arch/acpi_fix_fadt_32_bit_zero_length.patch
-
-# Adjust this patch for every new product (at least Enterprise
-# level) to provide OEMs a safety break so that they can add
-# for example SLE11 specific BIOS updates (if there is no other
-# way to safely solve an ACPI issue).
-#patches.suse/acpi_osi_sle11_ident.patch
-
 # Queued for 2.6.36 -> just revert after some time
 patches.fixes/acpi_ec_sys_access_user_space_with_get_user.patch
 
-patches.drivers/apei_allow_drivers_access_nvs_ram.patch
+patches.fixes/acpica_fix_null_pointer_in_repair_code.patch
 
 # Needs comparison with f7b004a17c9183f023796dea0d70284684ec000d
 #patches.arch/acpica_introduce_acpi_os_phys_table_override_function.patch
 #patches.arch/acpica_fix_wrongly_mapped_acpi_table_header_when_overriding_via_initrd.patch
 #patches.arch/acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
-
-patches.arch/dell_latitude_e6xxx_e5xxx__fix_reboot.patch
 
 ########################################################
 # CPUFREQ
@@ -314,7 +305,7 @@ patches.suse/0011-richacl-Check-if-an-acl-is-equivalent-to-a-file-mode.patch
 patches.suse/0012-richacl-Automatic-Inheritance.patch
 patches.suse/0013-richacl-Restrict-access-check-algorithm.patch
 patches.suse/0014-richacl-xattr-mapping-functions.patch
-#patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
+patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
 
 ########################################################
 # other filesystem stuff
