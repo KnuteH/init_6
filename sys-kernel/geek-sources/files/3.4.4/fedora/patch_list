@@ -144,7 +144,7 @@ unhandled-irqs-switch-to-polling.patch
 weird-root-dentry-name-debug.patch
 
 #Highbank clock functions
-highbank-export-clock-functions.patch 
+highbank-export-clock-functions.patch
 highbank-secure-smc.patch
 
 #selinux ptrace child permissions
@@ -196,5 +196,23 @@ mm-correctly-synchronize-rss-counters-at-exit-exec.patch
 #rhbz 832927
 ath9k-fix-panic-caused-by-returning-a-descriptor-we-.patch
 
-# END OF PATCH APPLICATIONS
+#rhbz 834910
+ACPI-video-Still-use-ACPI-backlight-control-if-_DOS-doesnt-exist.patch
 
+#rhbz 828824
+rt2x00usb-fix-indexes-ordering-on-RX-queue-kick.patch
+
+#rhbz 825123
+tg3-Apply-short-DMA-frag-workaround-to-5906.patch
+
+#rhbz 830359
+drm-nouveau-fbcon-using-nv_two_heads-is-not-a-good-i.patch
+
+#rhbz 829880
+USB-qmi_wwan-Make-forced-int-4-whitelist-generic.patch
+USB-qmi_wwan-Add-ZTE-Vodafone-K3520-Z.patch
+net-qmi_wwan-fix-Gobi-device-probing.patch
+
+ACPI-APEI-Avoid-too-much-error-reporting.patch
+
+# END OF PATCH APPLICATIONS
