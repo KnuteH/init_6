@@ -4,9 +4,6 @@
 4430_grsec-remove-localversion-grsec.patch
 4435_grsec-mute-warnings.patch
 4440_grsec-remove-protected-paths.patch
-4445_grsec-pax-without-grsec.patch
 4450_grsec-kconfig-default-gids.patch
-4455_grsec-kconfig-gentoo.patch
-4460-grsec-kconfig-proc-user.patch
 4465_selinux-avc_audit-log-curr_ip.patch
 4470_disable-compat_vdso.patch
