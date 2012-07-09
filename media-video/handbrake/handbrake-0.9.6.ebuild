@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+ESVN_REPO_URI="svn://svn.handbrake.fr/HandBrake/trunk"
+ESVN_PROJECT="hb-trunk"
 
-inherit python gnome2-utils toolchain-funcs
+inherit subversion python gnome2-utils toolchain-funcs
 
 DESCRIPTION="Video Encoder"
 HOMEPAGE="http://handbrake.fr"
-SRC_URI="http://iweb.dl.sourceforge.net/project/handbrake/${PV}/HandBrake-${PV}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="-* ~amd64"
-IUSE="gtk gst ffmpeg2"
+KEYWORDS="~amd64"
+IUSE="gtk gst ffmpeg2 doc"
 
 # fribidi is necessary to compile libass
 # Don't need this dependency, net-libs/webkit-gtk, 
@@ -43,7 +44,7 @@ RDEPEND="${DEPEND}"
 
 # the directory name differs from the package name so
 # need to modify the source directory
-S="${WORKDIR}/HandBrake-${PV}"
+S="${WORKDIR}/hb-trunk"
 
 # what version of python must be eselected in the user's environment
 ESELECT_PY_VERSION=2.7
@@ -83,41 +84,8 @@ dependencies.  See above explanation and run eselect python help for details."
    fi
 }
 
-src_prepare()
-{
-   # This hack is necessary to get libass to compile.
-   # The fribidi that libass is trying to build can't find glib.h
-   # unless I add those directories to the build path.  This is
-   # fixed in Gentoo's version of fribidi but is broken with the
-   # snapshot of libass that Handbrake took before this release.
-#   mkdir "${S}/build"
-#   cp "${FILESDIR}/GNUmakefile.custom.defs" "${S}/build"
-
-#   this hack didn't work either...
-#   append-flags $($(tc-getPKG_CONFIG) --cflags fribidi)
-
-    # try creating an inline GNUmakefile.custom.defs based
-    # on the one under ${S}/contrib/libass/module.defs
-    CURRENT_FRIBIDI_CFLAGS=$($(tc-getPKG_CONFIG) --cflags fribidi)
-    FRIBIDI_FIX_PATH="${S}/build/GNUmakefile.custom.defs"
-    mkdir "${S}/build"
-    touch "${FRIBIDI_FIX_PATH}"
-    echo 'LIBASS.CONFIGURE.extra = \' >> "${FRIBIDI_FIX_PATH}"
-    echo '--disable-png --disable-enca \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FREETYPE_LIBS="-L$(call fn.ABSOLUTE,$(CONTRIB.build/))lib -lfreetype" \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FREETYPE_CFLAGS="-I$(call fn.ABSOLUTE,$(CONTRIB.build/))include/freetype2" \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FONTCONFIG_LIBS="-L$(call fn.ABSOLUTE,$(CONTRIB.build/))lib -lfontconfig" \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FONTCONFIG_CFLAGS="-I$(call fn.ABSOLUTE,$(CONTRIB.build/))include" \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FRIBIDI_LIBS="-L$(call fn.ABSOLUTE,$(CONTRIB.build/))lib -lfribidi" \' >> "${FRIBIDI_FIX_PATH}"
-    echo 'FRIBIDI_CFLAGS="-I$(call fn.ABSOLUTE,$(CONTRIB.build/))include '"${CURRENT_FRIBIDI_CFLAGS}" '"' >> "${FRIBIDI_FIX_PATH}"
-}
-
 src_configure()
 {
-   elog "./configure --force --prefix=/usr $(use_enable gtk) \
---disable-gtk-update-checks ${DISABLE_GST} \
-${ENABLE_FFMPEG2} --fetch=${FETCH}"
-
    # python configure script doesn't accept all econf flags
    ./configure --force --prefix=/usr $(use_enable gtk) \
 --disable-gtk-update-checks ${DISABLE_GST} \
@@ -136,6 +104,14 @@ src_install()
 may now change back to the previous version you were using before \
 emerging ${PN}.  Please run eselect python list; eselect python set 1 \
 (if python version ${ESELECT_PY_VERSION} is in the first slot, for example)."
+
+   if use doc ; then
+      WANT_AUTOMAKE="${AUTOMAKE_VERSION}" emake -C build doc
+      dodoc AUTHORS CREDITS NEWS THANKS build/doc/articles/txt/* || die "dodoc
+failed"
+   else
+      dodoc AUTHORS CREDITS NEWS THANKS || die "dodoc failed"
+   fi
 }
 
 pkg_preinst()
