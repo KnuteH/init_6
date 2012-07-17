@@ -52,7 +52,7 @@ SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.x/linux-${KMV}.tar.xz
 bld_src="http://bld.googlecode.com/files/bld-${bld_ver/KMV/$KMV}.tar.bz2"
 
 # Con Kolivas' high performance patchset
-ck_src="http://ck.kolivas.org/patches/3.0/${KMV}/${KMV}-ck2/patch-${ck_ver/KMV/$KMV}.bz2"
+ck_src="http://ck.kolivas.org/patches/3.0/${KMV}/${ck_ver/KMV/$KMV}/patch-${ck_ver/KMV/$KMV}.bz2"
 
 # deblob
 deblob_src="http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-${KMV} http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-check"
