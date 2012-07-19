@@ -174,4 +174,7 @@ crypto-aesni-intel-fix-wrong-kfree-pointer.patch
 #rhbz 834318
 ACPICA-Fix-possible-fault-in-return-package-object-repair-code.patch
 
+#rhbz 772730
+ACPI-AC-check-the-return-value-of-power_supply_register.patch
+
 # END OF PATCH APPLICATIONS

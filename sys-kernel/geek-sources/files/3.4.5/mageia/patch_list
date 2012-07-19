@@ -120,6 +120,9 @@ block-floppy-disable-pnp-modalias.patch
 # fix hang on mounting invalid ext3 partition
 block-fix-infinite-loop-in-__getblk_slow.patch
 
+# disable needless warning (request by coling)
+block-scsi-Silence-unnecessary-warnings-about-ioctl-to-partition.patch
+
 ###
 ### File-system
 ###
@@ -127,9 +130,6 @@ block-fix-infinite-loop-in-__getblk_slow.patch
 # unionfs (http://www.filesystems.org/project-unionfs.html)
 fs-unionfs-2.5.11_for_3.4.0.patch
 fs-unionfs-2.5.11_for_3.4.0-buildfix.patch
-
-# requested by blino on irc, is cc stable
-fs-cifs-fix-parsing-of-password-mount-option.patch
 
 ###
 ### FireWire
@@ -203,9 +203,6 @@ net-netfilter-psd-2.6.35-buildfix.patch
 
 # temp fix for mga #144
 # DISABLED: net-wireless-ath9k-testfix.patch
-
-# make it work with nl80211 clients like Network Manager (#5720)
-net-wireless-ipw2x00-add-supported-cipher-suites-to-wiphy-initialization.patch
 
 ###
 ### Platform drivers
@@ -340,10 +337,7 @@ smack-unionfs-deadlock-fix.patch
 ###
 arm_fix_bad_udelay_usage.patch
 kbuild_firmware_install.patch
-arm-orion-fix-virtual-physical-mixup-with-watchdog.patch
-arm-tegra-make-tegra_cpu_reset_handler_enable-__init.patch
 
 ###
 ### Tools
 ###
-tools-hv-verify-origin-of-netlink-connector-message_CVE-2012-2669.patch

@@ -132,7 +132,6 @@ patches.arch/x86-apic-force-bigsmp-apic-on-IBM-EXA3-4.patch
 ########################################################
 # powerpc/generic
 ########################################################
-patches.suse/led_classdev.sysfs-name.patch
 patches.suse/radeon-monitor-jsxx-quirk.patch
 
 patches.suse/8250-sysrq-ctrl_o.patch
