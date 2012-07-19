@@ -20,7 +20,7 @@ fi
 
 GV="1.6"
 MV="0.0.4"
-DESCRIPTION="free implementation of Windows(tm) on Unix"
+DESCRIPTION="Wine with Maarten Lankhorst's multimedia patches, including PulseAudio support"
 HOMEPAGE="http://www.winehq.org/"
 SRC_URI="${SRC_URI}
 	gecko? (
@@ -253,4 +253,12 @@ src_install() {
 		dosym /usr/bin/wine{64,} # 404331
 		dosym /usr/bin/wine{64,}-preloader
 	fi
+
+	insinto /etc/xdg/menus/applications-merged/
+	doins  "${FILESDIR}/menus/wine.menu" || die "doins menu failed"
+	insinto /usr/share/desktop-directories/
+	doins  "${FILESDIR}/desktop-directories/Wine.directory" || die "doins directory failed"
+	domenu "${FILESDIR}"/applications/*.desktop || die "domenu *.desktop failed"
+	insinto /usr/share/pixmaps/
+	doins "${FILESDIR}"/icons/*.svg || die "doins pixmaps failed"
 }
