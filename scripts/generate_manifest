@@ -1,4 +1,5 @@
 #!/bin/sh
+cd ..
 for file in $(find `pwd` -iname  \*.ebuild); do
 	echo "${file}";
 	cp "${file}" "${file}~";
