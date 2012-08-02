@@ -229,8 +229,8 @@ src_install() {
 #		exeinto /lib/udev
 #		doexe "${FILESDIR}"/nvidia-udev.sh
 
-		insinto /lib/udev/rules.d
-		newins "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
+#		insinto /lib/udev/rules.d
+#		newins "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
 	elif use kernel_FreeBSD; then
 		if use x86-fbsd; then
 			insinto /boot/modules

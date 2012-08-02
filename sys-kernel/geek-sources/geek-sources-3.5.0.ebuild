@@ -12,7 +12,7 @@ KMV="$(echo $PV | cut -f 1-2 -d .)"
 rt_ver="3.4.4-rt14"
 
 # SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
-SUPPORTED_FEATURES="branding deblob fbcondecor fedora ice mageia rt suse uksm"
+SUPPORTED_FEATURES="aufs branding deblob fbcondecor fedora ice mageia rt suse uksm"
 
 inherit kernel-geek
 
