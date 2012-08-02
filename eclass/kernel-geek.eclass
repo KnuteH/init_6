@@ -41,8 +41,11 @@ SLOT="${PV}"
 
 KNOWN_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus pld reiser4 rt suse uksm"
 
-SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.x/linux-${KMV}.tar.xz
-	http://www.kernel.org/pub/linux/kernel/v3.x/patch-${PV}.xz"
+SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.0/linux-${KMV}.tar.xz"
+
+if  [ "${SUBLEVEL}" != "0" ]; then
+	SRC_URI="${SRC_URI} http://www.kernel.org/pub/linux/kernel/v3.0/patch-${PV}.xz"
+fi
 
 # bfq
 #bfq_src_1="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${bfq_ver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfq_ver}-${KVM}.patch"
@@ -277,8 +280,9 @@ kernel-geek_src_unpack() {
 		mv "linux-${KMV}" "${S}"
 	fi
 	cd "${S}"
-	ApplyPatch "${DISTDIR}/patch-${PV}.xz" "Update to latest upstream ..."
-
+	if "${SUBLEVEL}" != "0"; then
+		ApplyPatch "${DISTDIR}/patch-${PV}.xz" "Update to latest upstream ..."
+	fi
 	if [[ $DEBLOB_AVAILABLE == 1 ]] && use deblob ; then
 		cp "${DISTDIR}/deblob-${KMV}" "${T}" || die "cp deblob-${KMV} failed"
 		cp "${DISTDIR}/deblob-check" "${T}/deblob-check" || die "cp deblob-check failed"
