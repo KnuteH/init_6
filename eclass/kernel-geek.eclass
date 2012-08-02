@@ -280,7 +280,7 @@ kernel-geek_src_unpack() {
 		mv "linux-${KMV}" "${S}"
 	fi
 	cd "${S}"
-	if "${SUBLEVEL}" != "0"; then
+	if  [ "${SUBLEVEL}" != "0" ]; then
 		ApplyPatch "${DISTDIR}/patch-${PV}.xz" "Update to latest upstream ..."
 	fi
 	if [[ $DEBLOB_AVAILABLE == 1 ]] && use deblob ; then
