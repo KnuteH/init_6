@@ -140,7 +140,7 @@ patches.arch/ppc-pegasos-console-autodetection.patch
 patches.suse/ppc-powerbook-usb-fn-key-default.patch
 patches.drivers/ppc64-adb
 patches.suse/suse-ppc64-branding
-patches.arch/ppc64-xmon-dmesg-printing.patch
+#patches.arch/ppc64-xmon-dmesg-printing.patch
 patches.arch/ppc-prom-nodisplay.patch
 patches.fixes/ptrace-getsiginfo
 
@@ -203,12 +203,13 @@ patches.arch/acpi_thermal_passive_blacklist.patch
 # Queued for 2.6.36 -> just revert after some time
 patches.fixes/acpi_ec_sys_access_user_space_with_get_user.patch
 
-patches.fixes/acpica_fix_null_pointer_in_repair_code.patch
-
 # Needs comparison with f7b004a17c9183f023796dea0d70284684ec000d
 #patches.arch/acpica_introduce_acpi_os_phys_table_override_function.patch
 #patches.arch/acpica_fix_wrongly_mapped_acpi_table_header_when_overriding_via_initrd.patch
 #patches.arch/acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
+
+patches.arch/srat_parsing_redo_return.patch
+patches.arch/acpi_fix_empty_srat_mem_declarations.patch
 
 ########################################################
 # CPUFREQ
@@ -227,6 +228,11 @@ patches.drivers/x86_acpi_cpufreq_autoload.patch
 ########################################################
 # Suse specific stuff
 ########################################################
+patches.suse/msft-hv-0361-hyperv-Add-support-for-setting-MAC-from-within-guest.patch
+patches.suse/msft-hv-0362-Drivers-hv-Change-the-hex-constant-to-a-decimal-cons.patch
+patches.suse/msft-hv-0363-hyperv-Add-error-handling-to-rndis_filter_device_add.patch
+patches.suse/msft-hv-0364-hyperv-Add-a-check-for-ring_size-value.patch
+patches.suse/suse-hv-Cleanup-the-guest-ID-computation.patch
 patches.fixes/hv-storvsc-reset-wait.patch
 
 ########################################################
@@ -263,10 +269,14 @@ patches.fixes/nfs-connect-timeout
 # btrfs
 ########################################################
 
+patches.suse/btrfs-use-correct-device-for-maps.patch
+patches.suse/btrfs-allow-cross-subvolume-file-clone.patch
+
 ########################################################
 # Reiserfs Patches
 ########################################################
 #patches.suse/reiser4-dependencies
+patches.fixes/reiserfs-fix-deadlock-in-quota-code
 
 ########################################################
 # dlm
@@ -301,7 +311,7 @@ patches.suse/0011-richacl-Check-if-an-acl-is-equivalent-to-a-file-mode.patch
 patches.suse/0012-richacl-Automatic-Inheritance.patch
 patches.suse/0013-richacl-Restrict-access-check-algorithm.patch
 patches.suse/0014-richacl-xattr-mapping-functions.patch
-patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
+#patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
 
 ########################################################
 # other filesystem stuff
@@ -371,6 +381,7 @@ patches.drivers/ehea-modinfo.patch
 # Wireless Networking
 ########################################################
 patches.suse/b43-missing-firmware-info.patch
+patches.fixes/brcmsmac-firmware
 
 ########################################################
 # ISDN
@@ -396,6 +407,7 @@ patches.fixes/misdn-add-support-for-group-membership-check
 ########################################################
 # I2C
 ########################################################
+patches.fixes/i2c-busses-fix-build-error-if-config_i2c_designware_platform-y-config_i2c_design
 
 ########################################################
 # Input & Console
@@ -403,11 +415,13 @@ patches.fixes/misdn-add-support-for-group-membership-check
 patches.suse/SUSE-bootsplash
 patches.drivers/elousb.patch
 patches.fixes/input-add-acer-aspire-5710-to-nomux.patch
-patches.drivers/input-Add-LED-support-to-Synaptics-device
 
 ##########################################################
 # Sound
 ##########################################################
+patches.drivers/ALSA-hda-Fix-mute-LED-GPIO-setup-for-HP-Mini-210
+patches.drivers/ALSA-hda-Fix-polarity-of-mute-LED-on-HP-Mini-210
+patches.drivers/ALSA-hda-Fix-mute-LED-GPIO-initialization-for-IDT-co
 
 ########################################################
 # Char / serial
@@ -595,8 +609,7 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen3-patch-3.2
 #patches.xen/xen3-patch-3.3
 #patches.xen/xen3-patch-3.4
-#patches.xen/xen3-patch-3.5-rc3
-#patches.xen/xen3-apei_allow_drivers_access_nvs_ram.patch
+#patches.xen/xen3-patch-3.5
 #patches.xen/xen3-acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
 #patches.xen/xen3-stack-unwind
 #patches.xen/xen3-x86_64-unwind-annotations

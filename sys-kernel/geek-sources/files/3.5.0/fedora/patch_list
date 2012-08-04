@@ -5,6 +5,8 @@ linux-2.6-makefile-after_link.patch
 taint-vbox.patch
 taint-rss.patch
 
+vmbugon-warnon.patch
+
 # Architecture patches
 # x86(-64)
 #linux-2.6-32bit-mmap-exec-randomization.patch
@@ -163,6 +165,11 @@ CPU-hotplug-cpusets-suspend-Dont-modify-cpusets-during.patch
 rds-set-correct-msg_namelen.patch
 
 3.5-git-stable.patch
+
+#rhbz 845558 844714
+net-Allow-driver-to-limit-number-of-GSO-segments-per-skb.patch
+sfc-Fix-maximum-number-of-TSO-segments-and-minimum-TX-queue-size.patch
+tcp-Apply-device-TSO-segment-limit-earlier.patch
 
 # END OF PATCH APPLICATIONS
 
