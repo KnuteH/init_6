@@ -314,10 +314,10 @@ kernel-geek_src_prepare() {
 		echo
 		cd "${T}"
 		unpack "bld-${bld_ver}.tar.bz2"
-		cp "${T}/bld-${bld_ver}/BLD-${bld_ver}.patch" "${S}/BLD-${bld_ver}.patch"
+		cp "${T}/bld-${bld_ver}/BLD-${KMV}.patch" "${S}/BLD-${KMV}.patch"
 		cd "${S}"
-		ApplyPatch "BLD-${bld_ver}.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
-		rm -f "BLD-${bld_ver}.patch"
+		ApplyPatch "BLD-${KMV}.patch" "Alternate CPU load distribution technique for Linux kernel scheduler - ${bld_url}"
+		rm -f "BLD-${KMV}.patch"
 		rm -r "${T}/bld-${bld_ver}" # Clean temp
 	fi
 

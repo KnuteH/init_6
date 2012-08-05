@@ -8,11 +8,15 @@ DEBLOB_AVAILABLE="1"
 
 KMV="$(echo $PV | cut -f 1-2 -d .)"
 
+#bfq_ver="v3r4"
+bld_ver="${PV}"
+#ck_ver="${KMV}-ck3"
+#imq_ver="3.3"
 #rt_ver="${PV}-rt13"
-rt_ver="3.4.4-rt14"
+rt_ver="3.4.7-rt15"
 
 # SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
-SUPPORTED_FEATURES="aufs branding deblob fbcondecor fedora ice mageia rt suse uksm"
+SUPPORTED_FEATURES="aufs bfq bld branding deblob fbcondecor fedora ice mageia rt suse uksm"
 
 inherit kernel-geek
 
