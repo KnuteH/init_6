@@ -125,6 +125,7 @@ block-floppy-disable-pnp-modalias.patch
 fs-unionfs-2.5.11_for_3.5.0.patch
 fs-unionfs-2.5.11_for_3.4.0-buildfix.patch
 fs-unionfs-2.5.11_for_3.5.0-buildfix.patch
+fs-unionfs-3.5.1-buildfix.patch
 
 ###
 ### FireWire

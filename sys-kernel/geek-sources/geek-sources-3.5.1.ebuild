@@ -13,7 +13,7 @@ bld_ver="${KMV}.0"
 #ck_ver="${KMV}-ck3"
 #imq_ver="3.3"
 #rt_ver="${PV}-rt13"
-rt_ver="3.4.7-rt15"
+rt_ver="3.4.8-rt16"
 
 # SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
 SUPPORTED_FEATURES="aufs bfq bld branding deblob fbcondecor fedora grsecurity ice mageia rt suse uksm"
