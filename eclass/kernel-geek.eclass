@@ -180,6 +180,9 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${reiser4_url}"
 			;;
 		rt)
+			if [ "${OVERRIDE_rt_src}" != "" ]; then
+				rt_src="${OVERRIDE_rt_src}"
+			fi
 			rt_url="http://www.kernel.org/pub/linux/kernel/projects/rt"
 			HOMEPAGE="${HOMEPAGE} ${rt_url}"
 			SRC_URI="${SRC_URI}
