@@ -39,7 +39,7 @@ KV_FULL="${PVR}${EXTRAVERSION}"
 S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
 
-KNOWN_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus pld reiser4 rt suse uksm"
+KNOWN_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus pld reiser4 rt suse uksm zfs"
 
 SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.0/linux-${KMV}.tar.xz"
 
@@ -195,6 +195,12 @@ featureKnown() {
 		uksm)
 			uksm_url="http://kerneldedup.org"
 			HOMEPAGE="${HOMEPAGE} ${uksm_url}"
+			;;
+		zfs)
+			zfs_url="http://zfsonlinux.org"
+			HOMEPAGE="${HOMEPAGE} ${zfs_url}"
+			RDEPEND="${RDEPEND}
+				zfs?	( >=sys-fs/zfs-0.6.0_rc9-r6 )"
 			;;
 	esac
 }
@@ -352,7 +358,11 @@ kernel-geek_src_prepare() {
 
 	use pld && ApplyPatch "$FILESDIR/${PV}/pld/patch_list" "PLD - ${pld_url}"
 
+	use zfs && ApplyPatch "$FILESDIR/${PV}/zfs/patch_list" "zfs - ${zfs_url}"
+
 	ApplyPatch "${FILESDIR}/acpi-ec-add-delay-before-write.patch" "Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41"
+
+	ApplyPatch "${FILESDIR}/lpc_ich_3.5.1.patch" "Oops: lpc_ich: Resource conflict(s) found affecting iTCO_wdt https://bugzilla.kernel.org/show_bug.cgi?id=44991"
 
 	# USE branding
 	if use branding; then
