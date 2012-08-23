@@ -9,18 +9,12 @@ vmbugon-warnon.patch
 
 # Architecture patches
 # x86(-64)
-#linux-2.6-32bit-mmap-exec-randomization.patch
-#linux-2.6-i386-nx-emulation.patch
-#nx-emu-remove-cpuinitdata-for-disable_nx-on-x86_32.patch
-#rhbz 804957 CVE-2012-1568
-#shlib_base_randomize.patch
-
 
 #
 # ARM
 #
 #arm-omap-dt-compat.patch
-#arm-smsc-support-reading-mac-address-from-device-tree.patch
+# arm-smsc-support-reading-mac-address-from-device-tree.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
 #arm-beagle-usb-init.patch
@@ -165,6 +159,10 @@ rds-set-correct-msg_namelen.patch
 net-Allow-driver-to-limit-number-of-GSO-segments-per-skb.patch
 sfc-Fix-maximum-number-of-TSO-segments-and-minimum-TX-queue-size.patch
 tcp-Apply-device-TSO-segment-limit-earlier.patch
+
+fbcon-fix-race-condition-between-console-lock-and-cursor-timer.patch
+
+af_netlink-credentials-cve-2012-3520.patch
 
 # END OF PATCH APPLICATIONS
 

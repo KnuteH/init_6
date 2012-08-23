@@ -78,7 +78,6 @@
 # Scheduler / Core
 ########################################################
 patches.suse/setuid-dumpable-wrongdir
-patches.fixes/printk-fix-calculation-of-length-used-to-discard-records
 
 ########################################################
 # Architecture-specific patches. These used to be all
@@ -134,8 +133,6 @@ patches.arch/x86-apic-force-bigsmp-apic-on-IBM-EXA3-4.patch
 ########################################################
 # powerpc/generic
 ########################################################
-patches.suse/radeon-monitor-jsxx-quirk.patch
-
 patches.suse/8250-sysrq-ctrl_o.patch
 #patches.suse/ppc-no-LDFLAGS_MODULE.patch
 patches.arch/ppc-pegasos-console-autodetection.patch
@@ -155,7 +152,6 @@ patches.fixes/ptrace-getsiginfo
 ########################################################
 patches.arch/arm-phys-offset.patch
 patches.arch/cubox-configuration.patch
-patches.arch/arm-omap-add-drm.patch
 
 ########################################################
 # S/390
@@ -208,9 +204,6 @@ patches.fixes/acpi_ec_sys_access_user_space_with_get_user.patch
 #patches.arch/acpica_fix_wrongly_mapped_acpi_table_header_when_overriding_via_initrd.patch
 #patches.arch/acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
 
-patches.arch/srat_parsing_redo_return.patch
-patches.arch/acpi_fix_empty_srat_mem_declarations.patch
-
 ########################################################
 # CPUFREQ
 ########################################################
@@ -228,10 +221,6 @@ patches.drivers/x86_acpi_cpufreq_autoload.patch
 ########################################################
 # Suse specific stuff
 ########################################################
-patches.suse/msft-hv-0361-hyperv-Add-support-for-setting-MAC-from-within-guest.patch
-patches.suse/msft-hv-0362-Drivers-hv-Change-the-hex-constant-to-a-decimal-cons.patch
-patches.suse/msft-hv-0363-hyperv-Add-error-handling-to-rndis_filter_device_add.patch
-patches.suse/msft-hv-0364-hyperv-Add-a-check-for-ring_size-value.patch
 patches.suse/suse-hv-Cleanup-the-guest-ID-computation.patch
 patches.fixes/hv-storvsc-reset-wait.patch
 
@@ -268,9 +257,7 @@ patches.fixes/nfs-connect-timeout
 ########################################################
 # btrfs
 ########################################################
-
 patches.suse/btrfs-use-correct-device-for-maps.patch
-patches.suse/btrfs-allow-cross-subvolume-file-clone.patch
 
 ########################################################
 # Reiserfs Patches
@@ -336,7 +323,6 @@ patches.fixes/netfilter-implement-rfc-1123-for-ftp-conntrack
 #
 ########################################################
 patches.drivers/spi-orion-convert-to-new-infrastructure.patch
-patches.drivers/mach-dove-Fixup-ge00-initialisation.patch
 
 ########################################################
 # Storage
@@ -420,10 +406,6 @@ patches.fixes/input-add-acer-aspire-5710-to-nomux.patch
 ##########################################################
 # Sound
 ##########################################################
-patches.drivers/ALSA-hda-Fix-mute-LED-GPIO-setup-for-HP-Mini-210
-patches.drivers/ALSA-hda-Fix-polarity-of-mute-LED-on-HP-Mini-210
-patches.drivers/ALSA-hda-Fix-mute-LED-GPIO-initialization-for-IDT-co
-patches.drivers/ASoC-omap-Add-missing-modules-aliases-to-get-sound-w
 
 ########################################################
 # Char / serial
@@ -459,8 +441,8 @@ patches.suse/dm-raid45-api-3.0
 patches.suse/dm-raid45-split-dependencies
 patches.fixes/dm-mpath-reattach-dh
 patches.suse/dm-mpath-leastpending-path-update
-patches.suse/dm-mpath-accept-failed-paths
-patches.suse/dm-mpath-detach-existing-hardware-handler
+#patches.suse/dm-mpath-accept-failed-paths
+#patches.suse/dm-mpath-detach-existing-hardware-handler
 patches.fixes/dm-table-switch-to-readonly
 patches.fixes/dm-release-map_lock-before-set_disk_ro
 patches.suse/dm-mpath-no-activate-for-offlined-paths
@@ -557,33 +539,33 @@ patches.fixes/kvm-macos.patch
 #patches.xen/pci-guestdev
 #patches.xen/pci-reserve
 
-# bulk stuff, new files for xen
+## bulk stuff, new files for xen
 #patches.xen/xen3-auto-xen-arch.diff
 #patches.xen/xen3-auto-xen-drivers.diff
 #patches.xen/xen3-auto-include-xen-interface.diff
 #patches.xen/xen3-auto-blktap2-pvops.diff
 
-# kconfig bits for xen
+## kconfig bits for xen
 #patches.xen/xen3-auto-xen-kconfig.diff
 
-# common code changes
+## common code changes
 #patches.xen/xen3-auto-common.diff
 #patches.xen/xen3-auto-arch-x86.diff
 #patches.xen/xen3-auto-arch-i386.diff
 #patches.xen/xen3-auto-arch-x86_64.diff
 
-# fixups due to upstream Xen parts
+## fixups due to upstream Xen parts
 #patches.xen/xen3-fixup-xen
 
-# newer changeset backports
+## newer changeset backports
 
-# changes outside arch/{i386,x86_64}/xen
+## changes outside arch/{i386,x86_64}/xen
 #patches.xen/xen3-fixup-kconfig
 #patches.xen/xen3-fixup-common
 #patches.xen/xen3-fixup-arch-x86
 #patches.xen/xen3-fixup-blktap2-pvops
 
-# ports of other patches
+## ports of other patches
 #patches.xen/xen3-patch-2.6.18
 #patches.xen/xen3-patch-2.6.19
 #patches.xen/xen3-patch-2.6.20
@@ -616,7 +598,7 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen3-stack-unwind
 #patches.xen/xen3-x86_64-unwind-annotations
 
-# bugfixes and enhancements
+## bugfixes and enhancements
 #patches.xen/xen-kconfig-compat
 #patches.xen/xen-sys-suspend
 #patches.xen/xen-ipi-per-cpu-irq
@@ -662,3 +644,4 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen-x86_64-dump-user-pgt
 #patches.xen/xen-x86_64-note-init-p2m
 #patches.xen/xen-x86_64-unmapped-initrd
+
