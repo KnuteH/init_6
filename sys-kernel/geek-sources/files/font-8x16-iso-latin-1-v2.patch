@@ -4691,6 +4691,16 @@ diff -urN a/drivers/video/console/Kconfig c/drivers/video/console/Kconfig
  config FONT_6x11
  	bool "Mac console 6x11 font (not supported by all drivers)" if FONTS
  	depends on FRAMEBUFFER_CONSOLE || STI_CONSOLE
+--- a/drivers/video/console/Kconfig	2012-07-21 23:58:29.000000000 +0300
++++ c/drivers/video/console/Kconfig	2012-09-01 16:55:19.946568597 +0300
+@@ -236,6 +236,7 @@
+	depends on !FONT_SUN8x16
+	depends on !FONT_SUN12x22
+	depends on !FONT_10x18
++	depends on !FONT_ISO_LATIN_1_8x16
+	select FONT_8x16
+
+ endmenu
 diff -urN a/drivers/video/console/Makefile c/drivers/video/console/Makefile
 --- a/drivers/video/console/Makefile	2012-01-05 01:55:44.000000000 +0200
 +++ c/drivers/video/console/Makefile	2012-01-21 16:59:49.912574347 +0200

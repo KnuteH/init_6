@@ -1,11 +1,11 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/nvidia-drivers/nvidia-drivers-304.43.ebuild,v 1.3 2012/08/29 03:50:01 cardoe Exp $
 
 EAPI=4
 
-inherit eutils unpacker multilib portability versionator \
-	linux-mod flag-o-matic nvidia-driver linux-info
+inherit eutils flag-o-matic linux-info linux-mod multilib nvidia-driver \
+	portability toolchain-funcs unpacker user versionator
 
 X86_NV_PACKAGE="NVIDIA-Linux-x86-${PV}"
 AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${PV}"
@@ -22,7 +22,7 @@ SRC_URI="x86? ( http://us.download.nvidia.com/XFree86/Linux-x86/${PV}/${X86_NV_P
 LICENSE="NVIDIA"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~x86 ~amd64-fbsd ~x86-fbsd"
-IUSE="acpi multilib kernel_FreeBSD kernel_linux +tools +X"
+IUSE="acpi multilib kernel_FreeBSD kernel_linux pax_kernel +tools +X"
 RESTRICT="strip"
 EMULTILIB_PKG="true"
 
@@ -30,11 +30,14 @@ COMMON="app-admin/eselect-opencl
 	kernel_linux? ( >=sys-libs/glibc-2.6.1 )
 	multilib? ( app-emulation/emul-linux-x86-xlibs )
 	X? (
-		<x11-base/xorg-server-1.12.99
+		<x11-base/xorg-server-1.13.99
 		>=app-admin/eselect-opengl-1.0.9
 	)"
 DEPEND="${COMMON}
-	kernel_linux? ( virtual/linux-sources )"
+	kernel_linux? (
+		virtual/linux-sources
+		virtual/pkgconfig
+	)"
 RDEPEND="${COMMON}
 	acpi? ( sys-power/acpid )
 	tools? (
@@ -44,22 +47,18 @@ RDEPEND="${COMMON}
 		x11-libs/gtk+:2
 		x11-libs/libX11
 		x11-libs/libXext
-		x11-libs/pango
+		x11-libs/pango[X]
 	)
 	X? ( x11-libs/libXvMC )"
 PDEPEND="X? ( >=x11-libs/libvdpau-0.3-r1 )"
 
 REQUIRED_USE="tools? ( X )"
 
-QA_PREBUILT=""
+QA_PREBUILT="opt/* usr/lib*"
 
 S=${WORKDIR}/
 
 pkg_pretend() {
-
-	if [ "${I_AM_CRAZY_TO_USE_MASKED_VERSIONS}" != "1" ]; then
-		die "Don't use experimental in development ebuilds"
-	fi
 
 	if use amd64 && has_multilib_profile && \
 		[ "${DEFAULT_ABI}" != "amd64" ]; then
@@ -140,8 +139,17 @@ src_prepare() {
 		# If greater than 2.6.5 use M= instead of SUBDIR=
 		convert_to_m "${NV_SRC}"/Makefile.kbuild
 	fi
+
+	if use pax_kernel; then
+		ewarn "Using PAX patches is not supported. You will be asked to"
+		ewarn "use a standard kernel should you have issues. Should you"
+		ewarn "need support with these patches, contact the PaX team."
+	    epatch "${FILESDIR}"/nvidia-drivers-pax-const.patch
+	    epatch "${FILESDIR}"/nvidia-drivers-pax-usercopy.patch
+	fi
+
 	cat <<- EOF > "${S}"/nvidia.icd
-		/usr/$(get_libdir)/libcuda.so
+		/usr/$(get_libdir)/libnvidia-opencl.so
 	EOF
 
 	# Allow user patches so they can support RC kernels and whatever else
@@ -187,9 +195,6 @@ donvidia() {
 	# Get just the library name
 	libname=$(basename $1)
 
-	# Add it to QA_PREBUILT
-	QA_PREBUILT+=" ${MY_DEST}/${libname}.${MY_SOVER}"
-
 	# Install the library with the correct SOVER
 	${action} ${MY_LIB}.${MY_SOVER} || \
 		die "failed to install ${libname}"
@@ -225,12 +230,15 @@ src_install() {
 		insinto /etc/modprobe.d
 		newins "${WORKDIR}"/nvidia nvidia.conf || die
 
+		local udevdir=/lib/udev
+		has_version sys-fs/udev && udevdir="$($(tc-getPKG_CONFIG) --variable=udevdir udev)"
+
 		# Ensures that our device nodes are created when not using X
-#		exeinto /lib/udev
+#		exeinto "${udevdir}"
 #		doexe "${FILESDIR}"/nvidia-udev.sh
 
-		insinto /lib/udev/rules.d
-		newins "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
+#		insinto "${udevdir}"/rules.d
+#		newins "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
 	elif use kernel_FreeBSD; then
 		if use x86-fbsd; then
 			insinto /boot/modules
@@ -271,6 +279,7 @@ src_install() {
 	if use kernel_linux; then
 		insinto /etc/OpenCL/vendors
 		doins nvidia.icd
+		donvidia ${NV_OBJ}/libnvidia-opencl.so ${NV_SOVER}
 	fi
 
 	# Documentation
@@ -296,13 +305,13 @@ src_install() {
 		doexe ${NV_OBJ}/nvidia-xconfig || die
 	fi
 
-	if use kernel_linux ; then
-		doexe ${NV_OBJ}/nvidia-debugdump || die
-		doexe ${NV_OBJ}/nvidia-cuda-proxy-control || die
-		doexe ${NV_OBJ}/nvidia-cuda-proxy-server || die
-		doexe ${NV_OBJ}/nvidia-smi || die
-		newinitd "${FILESDIR}/nvidia-smi.init" nvidia-smi
-	fi
+#	if use kernel_linux ; then
+#		doexe ${NV_OBJ}/nvidia-debugdump || die
+#		doexe ${NV_OBJ}/nvidia-cuda-proxy-control || die
+#		doexe ${NV_OBJ}/nvidia-cuda-proxy-server || die
+#		doexe ${NV_OBJ}/nvidia-smi || die
+#		newinitd "${FILESDIR}/nvidia-smi.init" nvidia-smi
+#	fi
 
 	if use tools; then
 		doexe ${NV_OBJ}/nvidia-settings || die
