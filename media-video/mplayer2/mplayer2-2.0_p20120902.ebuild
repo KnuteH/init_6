@@ -30,45 +30,44 @@ SLOT="0"
 if [[ ${PV} == *9999* ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="alpha amd64 arm hppa ia64 ppc ppc64 sparc x86 ~amd64-linux"
+	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux"
 fi
-IUSE="3dnow 3dnowext +a52 aalib +alsa altivec aqua bidi bindist bl
-bluray bs2b cddb +cdio cdparanoia cpudetection custom-cpuopts
-debug directfb doc +dts +dv dvb +dvd +dvdnav dxr3 +enca +faad fbcon ftp
-gif ggi +iconv ipv6 jack joystick jpeg kernel_linux ladspa +libass libcaca lirc
-mad md5sum +mmx mmxext mng +mp3 nas +network nut +opengl oss png pnm pulseaudio
-pvr +quicktime radio +rar +real +rtc samba +shm sdl +speex sse sse2 ssse3 tga
-+theora +truetype +unicode v4l vdpau +vorbis win32codecs +X xanim xinerama
-+xscreensaver +xv xvid"
+IUSE="+a52 aalib +alsa aqua bidi bindist bl bluray bs2b cddb +cdio
+	cpudetection debug directfb doc +dts +dv dvb +dvd +dvdnav dxr3 +enca +faad
+	fbcon ftp gif ggi +iconv ipv6 jack joystick jpeg kernel_linux ladspa
+	+libass libcaca lirc mad md5sum mng +mp3 nas +network nut +opengl oss png pnm
+	portaudio postproc pulseaudio pvr +quicktime radio +rar +real +rtc samba
+	sdl +speex tga +theora +truetype +unicode v4l vdpau +vorbis win32codecs +X
+	xanim xinerama +xscreensaver +xv xvid"
 IUSE+=" symlink"
 
-VIDEO_CARDS="s3virge mga tdfx vesa"
+CPU_FEATURES="3dnow 3dnowext altivec +mmx mmxext +shm sse sse2 ssse3"
+for x in ${CPU_FEATURES}; do
+	IUSE+=" ${x}"
+done
+
+VIDEO_CARDS="s3virge mga tdfx"
 for x in ${VIDEO_CARDS}; do
 	IUSE+=" video_cards_${x}"
 done
 
 # bindist does not cope with win32codecs, which are nonfree
-REQUIRED_USE="bindist? ( !win32codecs )
-	cdio? ( !cdparanoia )
-	cddb? ( || ( cdio cdparanoia ) network )
-	dvdnav? ( dvd )
+REQUIRED_USE="
 	libass? ( truetype )
-	truetype? ( iconv )
-	radio? ( || ( dvb v4l ) )
+	bindist? ( !win32codecs )
+	cddb? ( cdio network )
+	dvdnav? ( dvd )
 	dxr3? ( X )
 	ggi? ( X )
-	opengl? ( X )
+	opengl? ( || ( X aqua ) )
+	radio? ( || ( dvb v4l ) )
+	truetype? ( iconv )
 	vdpau? ( X )
 	xinerama? ( X )
 	xscreensaver? ( X )
 	xv? ( X )
 "
 
-FONT_RDEPS="
-	virtual/ttf-fonts
-	media-libs/fontconfig
-	>=media-libs/freetype-2.2.1:2
-"
 # Rar: althrought -gpl version is nice, it cant do most functions normal rars can
 #	nemesi? ( net-libs/libnemesi )
 RDEPEND+="
@@ -101,7 +100,6 @@ RDEPEND+="
 	bluray? ( media-libs/libbluray )
 	bs2b? ( media-libs/libbs2b )
 	cdio? ( dev-libs/libcdio )
-	cdparanoia? ( !cdio? ( media-sound/cdparanoia ) )
 	directfb? ( dev-libs/DirectFB )
 	dts? ( media-libs/libdca )
 	dv? ( media-libs/libdv )
@@ -127,6 +125,8 @@ RDEPEND+="
 	nut? ( >=media-libs/libnut-661 )
 	png? ( media-libs/libpng )
 	pnm? ( media-libs/netpbm )
+	portaudio? ( >=media-libs/portaudio-19_pre20111121 )
+	postproc? ( || ( media-libs/libpostproc <media-video/libav-0.8.2-r1 media-video/ffmpeg ) )
 	pulseaudio? ( media-sound/pulseaudio )
 	rar? (
 		|| (
@@ -138,18 +138,21 @@ RDEPEND+="
 	sdl? ( media-libs/libsdl )
 	speex? ( media-libs/speex )
 	theora? ( media-libs/libtheora )
-	truetype? ( ${FONT_RDEPS} )
+	truetype? (
+		media-libs/fontconfig
+		>=media-libs/freetype-2.2.1:2
+		virtual/ttf-fonts
+	)
 	vorbis? ( media-libs/libvorbis )
 	xanim? ( media-video/xanim )
 	xvid? ( media-libs/xvid )
-	|| ( media-libs/libpostproc <media-video/libav-0.8.2-r1 media-video/ffmpeg )
 	>=virtual/ffmpeg-0.10.2
 	symlink? ( !media-video/mplayer )
 "
 ASM_DEP="dev-lang/yasm"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	dev-lang/python
+	>=dev-lang/python-2.6
 	sys-devel/gettext
 	X? (
 		x11-proto/videoproto
@@ -166,6 +169,10 @@ DEPEND="${RDEPEND}
 	x86? ( ${ASM_DEP} )
 	x86-fbsd? ( ${ASM_DEP} )
 "
+
+PATCHES=(
+	"${FILESDIR}/${PN}-py2compat.patch"
+)
 
 pkg_setup() {
 	if [[ ${PV} == *9999* ]]; then
@@ -188,23 +195,6 @@ pkg_setup() {
 		ewarn "disabling this use flag."
 	fi
 
-	if use custom-cpuopts; then
-		ewarn
-		ewarn "You are using the custom-cpuopts flag which will"
-		ewarn "specifically allow you to enable / disable certain"
-		ewarn "CPU optimizations."
-		ewarn
-		ewarn "Most desktop users won't need this functionality, but it"
-		ewarn "is included for corner cases like cross-compiling and"
-		ewarn "certain profiles. If unsure, disable this flag and MPlayer"
-		ewarn "will automatically detect and use your available CPU"
-		ewarn "optimizations."
-		ewarn
-		ewarn "Using this flag means your build is unsupported, so"
-		ewarn "please make sure your CPU optimization use flags (3dnow"
-		ewarn "3dnowext mmx mmxext sse sse2 ssse3) are properly set."
-	fi
-
 	einfo "For various format support you need to enable the support on your ffmpeg package:"
 	einfo "    media-video/libav or media-video/ffmpeg"
 }
@@ -216,7 +206,7 @@ src_prepare() {
 		${bash_scripts} || die
 
 	if [[ -n ${NAMESUF} ]]; then
-		sed -e "/elif linux ; then/a\  _exesuf=\"${NAMESUF}\"" \
+		sed -e "/^EXESUF/s,= \$_exesuf$,= ${NAMESUF}\$_exesuf," \
 			-i configure || die
 		sed -e "\, -m 644 DOCS/man/en/mplayer,i\	mv DOCS/man/en/mplayer.1 DOCS/man/en/${PN}.1" \
 			-e "\, -m 644 DOCS/man/\$(lang)/mplayer,i\	mv DOCS/man/\$(lang)/mplayer.1 DOCS/man/\$(lang)/${PN}.1" \
@@ -245,12 +235,9 @@ src_configure() {
 	#Optional features#
 	###################
 	# disable svga since we don't want it
-	# disable arts since we don't have kde3
 	# disable tremor, it needs libvorbisidec and is for FPU-less systems only
 	myconf+="
 		--disable-svga
-		--disable-arts
-		--disable-kai
 		--disable-tremor
 		$(use_enable network networking)
 		$(use_enable joystick)
@@ -278,7 +265,6 @@ src_configure() {
 	########
 	use cddb || myconf+=" --disable-cddb"
 	use cdio || myconf+=" --disable-libcdio"
-	use cdparanoia || myconf+=" --disable-cdparanoia"
 
 	################################
 	# DVD read, navigation support #
@@ -289,14 +275,8 @@ src_configure() {
 	#
 	# use external libdvdcss, dvdread and dvdnav
 	myconf+=" --disable-dvdread-internal --disable-libdvdcss-internal"
-	if use dvd; then
-		use dvdnav || myconf+=" --disable-dvdnav"
-	else
-		myconf+="
-			--disable-dvdnav
-			--disable-dvdread
-		"
-	fi
+	use dvd || myconf+=" --disable-dvdread"
+	use dvdnav || myconf+=" --disable-dvdnav"
 
 	#############
 	# Subtitles #
@@ -304,15 +284,8 @@ src_configure() {
 	# SRT/ASS/SSA (subtitles) requires freetype support
 	# freetype support requires iconv
 	# iconv optionally can use unicode
-	if ! use truetype; then
-		myconf+=" --disable-freetype"
-		if ! use iconv; then
-			myconf+="
-				--disable-iconv
-				--charset=noconv
-			"
-		fi
-	fi
+	use truetype || myconf+=" --disable-freetype"
+	use iconv || myconf+=" --disable-iconv --charset=noconv"
 	use iconv && use unicode && myconf+=" --charset=UTF-8"
 
 	#####################################
@@ -404,6 +377,7 @@ src_configure() {
 	use fbcon || myconf+=" --disable-fbdev"
 	use fbcon && use video_cards_s3virge && myconf+=" --enable-s3fb"
 	use libcaca || myconf+=" --disable-caca"
+	use postproc || myconf+=" --disable-libpostproc"
 
 	if ! use kernel_linux || ! use video_cards_mga; then
 		 myconf+=" --disable-mga --disable-xmga"
@@ -429,8 +403,7 @@ src_configure() {
 	# Audio Output #
 	################
 	myconf+=" --disable-rsound" # media-sound/rsound is in pro-audio overlay only
-	myconf+=" --disable-esd"
-	uses="alsa jack ladspa nas"
+	uses="alsa jack ladspa nas portaudio"
 	for i in ${uses}; do
 		use ${i} || myconf+=" --disable-${i}"
 	done
@@ -446,16 +419,9 @@ src_configure() {
 	# Platform specific flags, hardcoded on amd64 (see below)
 	use cpudetection && myconf+=" --enable-runtime-cpudetection"
 
-	# Turning off CPU optimizations usually will break the build.
-	# However, this use flag, if enabled, will allow users to completely
-	# specify which ones to use. If disabled, mplayer will automatically
-	# enable all CPU optimizations that the host build supports.
-	if use custom-cpuopts; then
-		uses="3dnow 3dnowext altivec mmx mmxext shm sse sse2 ssse3"
-		for i in ${uses}; do
-			myconf+=" $(use_enable ${i})"
-		done
-	fi
+	for i in ${CPU_FEATURES}; do
+		myconf+=" $(use_enable ${i/+/})"
+	done
 
 	use debug && myconf+=" --enable-debug=3"
 
@@ -464,40 +430,16 @@ src_configure() {
 		append-ldflags -nopie
 	fi
 
-	is-flag -O? || append-flags -O2
-
-	# workaround bug, x86 just has too few registers, see c.f.
-	# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=402950#44
-	# and 32-bits OSX, bug 329861
-	if [[ ${CHOST} == i?86-* ]] ; then
-		use debug || append-flags -fomit-frame-pointer
-	fi
-
 	###########################
 	# X enabled configuration #
 	###########################
-	myconf+=" --disable-dga1 --disable-dga2"
-	if use X; then
-		uses="dxr3 ggi xinerama xv"
-		for i in ${uses}; do
-			use ${i} || myconf+=" --disable-${i}"
-		done
-		use opengl || myconf+=" --disable-gl"
-		use vdpau || myconf+=" --disable-vdpau"
-		use video_cards_vesa || myconf+=" --disable-vesa"
-		use xscreensaver || myconf+=" --disable-xss"
-	else
-		myconf+="
-			--disable-dxr3
-			--disable-ggi
-			--disable-gl
-			--disable-vdpau
-			--disable-xinerama
-			--disable-xss
-			--disable-xv
-			--disable-x11
-		"
-	fi
+	myconf+=" --disable-dga1 --disable-dga2 --disable-vesa"
+	uses="dxr3 ggi vdpau xinerama xv"
+	for i in ${uses}; do
+		use ${i} || myconf+=" --disable-${i}"
+	done
+	use opengl || myconf+=" --disable-gl"
+	use xscreensaver || myconf+=" --disable-xss"
 
 	############################
 	# OSX (aqua) configuration #
@@ -511,7 +453,6 @@ src_configure() {
 
 	./configure \
 		--cc="$(tc-getCC)" \
-		--host-cc="$(tc-getBUILD_CC)" \
 		--pkg-config="$(tc-getPKG_CONFIG)" \
 		--prefix="${EPREFIX}"/usr \
 		--bindir="${EPREFIX}"/usr/bin \
@@ -526,23 +467,7 @@ src_configure() {
 
 src_compile() {
 	base_src_compile
-	# Build only user-requested docs if they're available.
-	if use doc ; then
-		# select available languages from $LINGUAS
-		LINGUAS=${LINGUAS/zh/zh_CN}
-		local ALLOWED_LINGUAS="cs de en es fr hu it pl ru zh_CN"
-		local BUILT_DOCS=""
-		for i in ${LINGUAS} ; do
-			has ${i} ${ALLOWED_LINGUAS} && BUILT_DOCS+=" ${i}"
-		done
-		if [[ -z $BUILT_DOCS ]]; then
-			emake -j1 -C DOCS/xml html-chunked
-		else
-			for i in ${BUILT_DOCS}; do
-				emake -j1 -C DOCS/xml html-chunked-${i}
-			done
-		fi
-	fi
+	use doc && emake -j1 -C DOCS/xml html-chunked
 }
 
 src_install() {
