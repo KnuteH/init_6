@@ -13,8 +13,9 @@ bld_ver="${KMV}-rc4"
 ck_ver="${KMV}-ck3"
 imq_ver="3.3"
 rt_ver="${PV}-rt18"
+vserver_ver="2.3.3.7"
 
-SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm"
+SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus -pld reiser4 rt suse uksm vserver"
 
 inherit kernel-geek
 

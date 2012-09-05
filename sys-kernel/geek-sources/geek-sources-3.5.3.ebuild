@@ -13,8 +13,9 @@ ck_ver="${KMV}-ck1"
 #rt_ver="${PV}-rt13"
 rt_ver="3.4.10-rt18"
 OVERRIDE_rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/3.4/patch-${rt_ver}.patch.xz"
+vserver_ver="2.3.4.2"
 
-SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice mageia rt suse uksm zfs"
+SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice mageia rt suse uksm vserver zfs"
 
 inherit kernel-geek
 

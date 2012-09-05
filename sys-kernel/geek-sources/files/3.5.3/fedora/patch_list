@@ -2,11 +2,6 @@
 
 linux-2.6-makefile-after_link.patch
 
-#
-# misc small stuff to make things compile
-#
-linux-2.6-compile-fixes.patch
-
 taint-vbox.patch
 taint-rss.patch
 
@@ -103,7 +98,6 @@ drm-vgem.patch
 # Nouveau DRM
 
 # Intel DRM
-drm-intel-next.patch
 drm-i915-dp-stfu.patch
 
 linux-2.6-intel-iommu-igfx.patch
@@ -111,10 +105,6 @@ linux-2.6-intel-iommu-igfx.patch
 # silence the ACPI blacklist code
 linux-2.6-silence-acpi-blacklist.patch
 quite-apm.patch
-
-# Media (V4L/DVB/IR) updates/fixes/experimental drivers
-#  apply if non-empty
-drivers-media-update.patch
 
 # Patches headed upstream
 fs-proc-devtree-remove_proc_entry.patch

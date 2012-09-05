@@ -39,7 +39,7 @@ KV_FULL="${PVR}${EXTRAVERSION}"
 S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
 
-KNOWN_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus pld reiser4 rt suse uksm zfs"
+KNOWN_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice imq mageia pardus pld reiser4 rt suse uksm vserver zfs"
 
 SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.0/linux-${KMV}.tar.xz"
 
@@ -75,6 +75,9 @@ reiser4_src="mirror://kernel/linux/kernel/people/edward/reiser4/reiser4-for-2.6/
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/${KMV}/patch-${rt_ver/KMV/$KMV}.patch.xz"
 
 xenomai_src="http://download.gna.org/xenomai/stable/xenomai-${xenomai_ver/KVM/$KMV}.tar.bz2"
+
+# VServer
+vserver_src="http://vserver.13thfloor.at/Experimental/patch-${PV}-vs${vserver_ver}.diff"
 
 featureKnown() {
 	local feature="${1/-/}"
@@ -196,6 +199,15 @@ featureKnown() {
 			uksm_url="http://kerneldedup.org"
 			HOMEPAGE="${HOMEPAGE} ${uksm_url}"
 			;;
+		vserver)
+			if [ "${OVERRIDE_vserver_src}" != "" ]; then
+				vserver_src="${OVERRIDE_vserver_src}"
+			fi
+			vserver_url="http://linux-vserver.org"
+			HOMEPAGE="${HOMEPAGE} ${vserver_url}"
+			SRC_URI="${SRC_URI}
+				vserver?	( ${vserver_src} )"
+			;;
 		zfs)
 			zfs_url="http://zfsonlinux.org"
 			HOMEPAGE="${HOMEPAGE} ${zfs_url}"
@@ -300,6 +312,8 @@ kernel-geek_src_unpack() {
 }
 
 kernel-geek_src_prepare() {
+
+	use vserver && ApplyPatch "${DISTDIR}/patch-${PV}-vs${vserver_ver}.diff" "VServer - ${vserver_url}"
 
 	use bfq && ApplyPatch "${FILESDIR}/${PV}/bfq/patch_list" "Budget Fair Queueing Budget I/O Scheduler - ${bfq_url}"
 
