@@ -2,6 +2,11 @@
 
 linux-2.6-makefile-after_link.patch
 
+#
+# misc small stuff to make things compile
+#
+linux-2.6-compile-fixes.patch
+
 taint-vbox.patch
 taint-rss.patch
 

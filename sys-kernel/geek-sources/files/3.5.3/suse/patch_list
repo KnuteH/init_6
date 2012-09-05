@@ -39,6 +39,7 @@
 #patches.rpmify/geode-depends-on-x86_32
 #patches.rpmify/ubifs-remove-DATE-TIME.patch
 #patches.rpmify/chipidea-clean-up-dependencies
+#patches.rpmify/i2c-busses-fix-build-error-if-config_i2c_designware_platform-y-config_i2c_design
 
 ########################################################
 # kABI consistency patches
@@ -264,7 +265,6 @@ patches.suse/btrfs-use-correct-device-for-maps.patch
 # Reiserfs Patches
 ########################################################
 #patches.suse/reiser4-dependencies
-patches.fixes/reiserfs-fix-deadlock-in-quota-code
 patches.fixes/reiserfs-fix-deadlock-with-nfs-racing-on-create-lookup
 
 ########################################################
@@ -395,7 +395,6 @@ patches.fixes/misdn-add-support-for-group-membership-check
 ########################################################
 # I2C
 ########################################################
-patches.fixes/i2c-busses-fix-build-error-if-config_i2c_designware_platform-y-config_i2c_design
 
 ########################################################
 # Input & Console
