@@ -69,7 +69,7 @@ fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpa
 # Intermediate Queueing Device patches
 imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver/KMV/$KMV}.diff.xz"
 
-reiser4_src="mirror://kernel/linux/kernel/people/edward/reiser4/reiser4-for-2.6/reiser4-for-${REISER4_OKV}${REISER4_VER}.patch.bz2"
+reiser4_src="mirror://sourceforge/project/reiser4/reiser4-for-linux-3.x/reiser4-for-${PV}.patch.gz"
 
 # Ingo Molnar's realtime preempt patches
 rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/${KMV}/patch-${rt_ver/KMV/$KMV}.patch.xz"
@@ -181,6 +181,8 @@ featureKnown() {
 		reiser4)
 			reiser4_url="http://sourceforge.net/projects/reiser4"
 			HOMEPAGE="${HOMEPAGE} ${reiser4_url}"
+			SRC_URI="${SRC_URI}
+				reiser4?	( ${reiser4_src} )"
 			;;
 		rt)
 			if [ "${OVERRIDE_rt_src}" != "" ]; then
@@ -326,10 +328,8 @@ kernel-geek_src_prepare() {
 	use ice && ApplyPatch "${FILESDIR}/tuxonice-kernel-${PV}.patch.xz" "TuxOnIce - ${ice_url}"
 
 	use imq && ApplyPatch "${DISTDIR}/patch-imqmq-${imq_ver}.diff.xz" "Intermediate Queueing Device patches - ${imq_url}"
-#	use imq && ApplyPatch "$FILESDIR/${PV}/pld/kernel-imq.patch" "Intermediate Queueing Device patches - ${imq_url} ${pld_url}"
 
-	use reiser4 && ApplyPatch "${DISTDIR}/reiser4-for-${PV}.patch.bz2" "Reiser4 - ${reiser4_url}"
-#	use reiser4 && ApplyPatch "$FILESDIR/${PV}/pld/kernel-reiser4.patch" "Reiser4 - ${reiser4_url} ${pld_url}"
+	use reiser4 && ApplyPatch "${DISTDIR}/reiser4-for-${PV}.patch.gz" "Reiser4 - ${reiser4_url}"
 
 	use rt && ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz" "Ingo Molnar's realtime preempt patches - ${rt_url}"
 
