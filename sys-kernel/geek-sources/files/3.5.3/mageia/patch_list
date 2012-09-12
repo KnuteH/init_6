@@ -69,6 +69,36 @@ stable-acpi-export-symbol-acpi_get_table_with_size.patch
 stable-ath9k-stop-btcoex-on-device-suspend.patch
 stable-ath9k-fix-decrypt_error-initialization-in-ath_rx_tasklet.patch
 stable-pci-ehci-fix-crash-during-hibernation-on-asus-computers.patch
+stable-gma500-consider-crtc-initially-active.patch
+stable-block-replace-__getblk_slow-misfix-by-grow_dev_page-fix.patch
+stable-jbd-don-t-write-superblock-when-unmounting-an-ro-filesystem.patch
+stable-alsa-usb-audio-fix-scheduling-while-atomic-bug-in-pcm-capture-stream.patch
+stable-sched-cgroup-fix-up-task_groups-list.patch
+stable-sched-fix-divide-by-zero-at-thread_group-task-_times.patch
+stable-uvcvideo-reset-the-bytesused-field-when-recycling-an-erroneous-buffer.patch
+stable-rapidio-tsi721-fix-inbound-doorbell-interrupt-handling.patch
+stable-rapidio-tsi721-fix-unused-variable-compiler-warning.patch
+stable-regulator-twl-regulator-fix-up-vintana1-vintana2.patch
+stable-x32-use-compat-shims-for-g-s-etsockopt.patch
+stable-usb-spca506-remove-__devinit-from-the-struct.patch
+stable-usb-jl2005bcd-remove-__devinit-from-the-struct-usb_device_id-table.patch
+stable-usb-p54usb-remove-__devinit-from-the-struct-usb_device_id-table.patch
+stable-usb-rtl8187-remove-__devinit-from-the-struct-usb_device_id-table.patch
+stable-usb-smsusb-remove-__devinit-from-the-struct-usb_device_id-table.patch
+stable-usb-cdc-acm-fix-null-pointer-dereference.patch
+stable-alsa-snd-usb-fix-urb-cancellation-at-stream-start.patch
+stable-alsa-snd-usb-use-list_for_each_safe-for-endpoint-resources.patch
+stable-alsa-snd-usb-restore-delay-information.patch
+stable-alsa-snd-usb-fix-calls-to-next_packet_size.patch
+stable-alsa-snd-usb-fix-cross-interface-streaming-devices.patch
+stable-powerpc-update-dscr-on-all-cpus-when-writing-sysfs-dscr_default.patch
+stable-powerpc-keep-thread.dscr-and-thread.dscr_inherit-in-sync.patch
+stable-powerpc-fix-dscr-inheritance-in-copy_thread.patch
+stable-powerpc-restore-correct-dscr-in-context-switch.patch
+stable-powerpc-make-sure-ipi-handlers-see-data-written-by-ipi-senders.patch
+stable-remove-user-triggerable-bug-from-mpol_to_str.patch
+stable-fix-order-of-arguments-to-compat_put_time.patch
+stable-usbnet-fix-deadlock-in-resume.patch
 
 ###
 ### Arch x86
@@ -176,11 +206,24 @@ block-floppy-disable-pnp-modalias.patch
 ### File-system
 ###
 
-# unionfs (http://www.filesystems.org/project-unionfs.html)
-fs-unionfs-2.5.11_for_3.5.0.patch
-fs-unionfs-2.5.11_for_3.4.0-buildfix.patch
-fs-unionfs-2.5.11_for_3.5.0-buildfix.patch
-fs-unionfs-3.5.1-buildfix.patch
+# overlayfs patches "liberated" from ubuntu-quantal git repo
+fs-overlayfs.patch
+fs-overlayfs-add-statfs-support.patch
+fs-overlayfs-implement-show_options.patch
+fs-overlayfs-limit-filesystem-stacking-depth.patch
+fs-overlayfs-fix-possible-leak-in-ovl_new_inode.patch
+fs-overlayfs-create-new-inode-in-ovl_link.patch
+fs-overlayfs-switch-to-use-inode_only_permissions.patch
+fs-overlayfs-copy-up-i_uid-i_gid-from-the-underlying-inode.patch
+fs-overlayfs-vfs-introduce-clone_private_mount.patch
+fs-overlayfs-inode_only_permission-export-inode-level-permissions-checks.patch
+fs-overlayfs-vfs-pass-struct-path-to-__dentry_open.patch
+fs-overlayfs-vfs-add-i_op-open.patch
+fs-overlayfs-vfs-export-do_splice_direct.patch
+
+# fs corruption fixes
+fs-ext3-Fix-fdatasync-for-files-with-only-i_size-changes.patch
+fs-udf-Fix-data-corruption-for-files-in-ICB.patch
 
 ###
 ### FireWire

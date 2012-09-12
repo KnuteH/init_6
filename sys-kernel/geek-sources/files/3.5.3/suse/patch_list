@@ -159,8 +159,6 @@ patches.arch/cubox-configuration.patch
 # S/390
 ########################################################
 patches.arch/s390-message-catalog.diff
-patches.arch/s390-message-catalog-fix.diff
-patches.arch/s390-message-catalog-perl-fix.diff
 patches.arch/kmsg-fix-parameter-limitations
 
 ########################################################
@@ -224,6 +222,7 @@ patches.drivers/x86_acpi_cpufreq_autoload.patch
 # Suse specific stuff
 ########################################################
 patches.suse/suse-hv-Cleanup-the-guest-ID-computation.patch
+patches.suse/suse-hv-identify-virtual-pc-in-ata_piix.patch
 patches.fixes/hv-storvsc-reset-wait.patch
 
 ########################################################
@@ -539,33 +538,33 @@ patches.fixes/kvm-macos.patch
 #patches.xen/pci-guestdev
 #patches.xen/pci-reserve
 
-## bulk stuff, new files for xen
+# bulk stuff, new files for xen
 #patches.xen/xen3-auto-xen-arch.diff
 #patches.xen/xen3-auto-xen-drivers.diff
 #patches.xen/xen3-auto-include-xen-interface.diff
 #patches.xen/xen3-auto-blktap2-pvops.diff
 
-## kconfig bits for xen
+# kconfig bits for xen
 #patches.xen/xen3-auto-xen-kconfig.diff
 
-## common code changes
+# common code changes
 #patches.xen/xen3-auto-common.diff
 #patches.xen/xen3-auto-arch-x86.diff
 #patches.xen/xen3-auto-arch-i386.diff
 #patches.xen/xen3-auto-arch-x86_64.diff
 
-## fixups due to upstream Xen parts
+# fixups due to upstream Xen parts
 #patches.xen/xen3-fixup-xen
 
-## newer changeset backports
+# newer changeset backports
 
-## changes outside arch/{i386,x86_64}/xen
+# changes outside arch/{i386,x86_64}/xen
 #patches.xen/xen3-fixup-kconfig
 #patches.xen/xen3-fixup-common
 #patches.xen/xen3-fixup-arch-x86
 #patches.xen/xen3-fixup-blktap2-pvops
 
-## ports of other patches
+# ports of upstream patches
 #patches.xen/xen3-patch-2.6.18
 #patches.xen/xen3-patch-2.6.19
 #patches.xen/xen3-patch-2.6.20
@@ -594,11 +593,14 @@ patches.fixes/kvm-macos.patch
 #patches.xen/xen3-patch-3.3
 #patches.xen/xen3-patch-3.4
 #patches.xen/xen3-patch-3.5
+#patches.xen/xen3-patch-3.6-rc4
+
+# ports of other patches
 #patches.xen/xen3-acpi_implement_overriding_of_arbitrary_acpi_tables_via_initrd.patch
 #patches.xen/xen3-stack-unwind
 #patches.xen/xen3-x86_64-unwind-annotations
 
-## bugfixes and enhancements
+# bugfixes and enhancements
 #patches.xen/xen-kconfig-compat
 #patches.xen/xen-sys-suspend
 #patches.xen/xen-ipi-per-cpu-irq
