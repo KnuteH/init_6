@@ -45,7 +45,6 @@ x11-proto/xcmiscproto
 dev-util/intltool
 x11-proto/xf86bigfontproto
 x11-apps/sessreg
-x11-proto/fontcacheproto
 x11-apps/mkfontscale
 x11-libs/libdrm
 x11-libs/libxcb
@@ -92,7 +91,6 @@ x11-libs/libXxf86dga
 x11-libs/libXpm
 x11-libs/libXcomposite
 x11-libs/libXxf86misc
-x11-libs/libXfontcache
 x11-apps/xauth
 media-libs/mesa
 x11-libs/libXvMC
@@ -105,7 +103,6 @@ x11-apps/smproxy
 x11-apps/xinput
 x11-apps/xgamma
 x11-apps/xrandr
-x11-apps/xsetmode
 x11-apps/xvinfo
 x11-apps/xhost
 x11-apps/xset
@@ -159,7 +156,6 @@ media-fonts/font-isas-misc
 media-fonts/font-bitstream-type1
 media-fonts/font-bh-lucidatypewriter-75dpi
 x11-libs/libXft
-media-fonts/dejavu
 virtual/ttf-fonts
 x11-apps/x11perf
 x11-base/xorg-server

@@ -115,7 +115,7 @@ sys-devel/make
 sys-devel/patch
 sys-fs/e2fsprogs
 ##sys-fs/reiserfsprogs
-sys-fs/sysfsutils
+#sys-fs/sysfsutils
 sys-fs/udev
 sys-kernel/linux-headers
 sys-libs/cracklib
@@ -137,7 +137,6 @@ virtual/init
 virtual/libffi
 virtual/libiconv
 virtual/libintl
-virtual/pager
 virtual/perl-Archive-Tar
 virtual/perl-Compress-Raw-Bzip2
 virtual/perl-Compress-Raw-Zlib
