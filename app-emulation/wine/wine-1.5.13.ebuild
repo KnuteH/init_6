@@ -20,7 +20,7 @@ fi
 
 GV="1.7"
 MV="0.0.4"
-PULSE_PATCH="winepulse-2012.06.15.patch"
+#PULSE_PATCH="winepulse-2012.06.15.patch"
 DESCRIPTION="free implementation of Windows(tm) on Unix"
 HOMEPAGE="http://www.winehq.org/"
 SRC_URI="${SRC_URI}
@@ -28,8 +28,8 @@ SRC_URI="${SRC_URI}
 		mirror://sourceforge/${PN}/Wine%20Gecko/${GV}/wine_gecko-${GV}-x86.msi
 		win64? ( mirror://sourceforge/${PN}/Wine%20Gecko/${GV}/wine_gecko-${GV}-x86_64.msi )
 	)
-	mono? ( mirror://sourceforge/${PN}/Wine%20Mono/${MV}/wine-mono-${MV}.msi )
-	http://source.winehq.org/patches/data/87234 -> ${PULSE_PATCH}"
+	mono? ( mirror://sourceforge/${PN}/Wine%20Mono/${MV}/wine-mono-${MV}.msi )"
+#	http://source.winehq.org/patches/data/87234 -> ${PULSE_PATCH}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
