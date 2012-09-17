@@ -14,91 +14,6 @@
 ###
 ### Stable Queue
 ###
-stable-usb-vt6656-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-usb-emi62-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-alsa-hda-fix-copyright-debug-message.patch
-stable-arm-7483-1-vfp-only-advertise-vfpv4-in-hwcaps-if-config_vfpv3-is-enabled.patch
-stable-arm-7487-1-mm-avoid-setting-ng-bit-for-user-mappings-that-aren-t-present.patch
-stable-arm-7488-1-mm-use-5-bits-for-swapfile-type-encoding.patch
-stable-arm-7489-1-errata-fix-workaround-for-erratum-720789-on-up-systems.patch
-stable-arm-omap2-fix-dmtimer-set-source-clock-failure.patch
-stable-arm-s3c24xx-add-missing-dmach_dt_prop.patch
-stable-arm-s3c24xx-fix-s3c2410_dma_enqueue-parameters.patch
-stable-xen-p2m-reuse-existing-p2m-leafs-if-they-are-filled-with-1-1-pfns-or-invalid.patch
-stable-xen-setup-fix-one-off-error-when-adding-for-balloon-pfns-to-the-p2m.patch
-stable-arm-imx6-spin-the-cpu-until-hardware-takes-it-down.patch
-stable-arm-imx-build-pm-imx5-code-only-when-pm-is-enabled.patch
-stable-arm-imx-select-cpu_freq_table-when-needed.patch
-stable-arm-imx-build-i.mx6-functions-only-when-needed.patch
-stable-mips-pci-ar724x-avoid-data-bus-error-due-to-a-missing-pcie-module.patch
-stable-asoc-wm9712-fix-microphone-source-selection.patch
-stable-asoc-omap-mcbsp-fix-6pin-mux-configuration.patch
-stable-vfs-missed-source-of-f_pos-races.patch
-stable-vfs-canonicalize-create-mode-in-build_open_flags.patch
-stable-alpha-fix-fpu.h-usage-in-userspace.patch
-stable-alpha-don-t-export-sock_nonblock-to-user-space.patch
-stable-usb-winbond-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-mm-hugetlbfs-correctly-populate-shared-pmd.patch
-stable-alsa-hda-don-t-create-dysfunctional-mixer-controls-for-ca0132.patch
-stable-alsa-hda-fix-leftover-codec-power_transition.patch
-stable-target-fix-null-pointer-dereference-bug-alloc_page-fails-to-get-memory.patch
-stable-nfsv3-ensure-that-do_proc_get_root-reports-errors-correctly.patch
-stable-pnfs-defer-release-of-pages-in-layoutget.patch
-stable-nfs-tear-down-caches-in-nfs_init_writepagecache-when-allocation-fails.patch
-stable-nfsv4.1-remove-a-bogus-bug_on-in-nfs4_layoutreturn_done.patch
-stable-nfs-clear-key-construction-data-if-the-idmap-upcall-fails.patch
-stable-nfs-return-enokey-when-the-upcall-fails-to-map-the-name.patch
-stable-nfsd4-fix-security-flavor-of-nfsv4.0-callback.patch
-stable-ubifs-fix-crash-on-error-path.patch
-stable-ubifs-fix-complaints-about-too-small-debug-buffer-size.patch
-stable-bluetooth-fix-using-null-inquiry-entry.patch
-stable-bluetooth-fix-using-a-null-inquiry-cache-entry.patch
-stable-bluetooth-set-name_state-to-unknown-when-entry-name-is-empty.patch
-stable-bluetooth-fix-legacy-pairing-with-some-devices.patch
-stable-nfs-alias-the-nfs-module-to-nfs4.patch
-stable-audit-don-t-free_chunk-after-fsnotify_add_mark.patch
-stable-audit-fix-refcounting-in-audit-tree.patch
-stable-drm-stop-vmgfx-driver-explosion.patch
-stable-revert-drm-radeon-fix-bo-creation-retry-path.patch
-stable-btrfs-revert-checksum-error-statistic-which-can-cause-a-bug.patch
-stable-svcrpc-fix-bug-in-svc_tcp_clear_pages.patch
-stable-svcrpc-fix-svc_xprt_enqueue-svc_recv-busy-looping.patch
-stable-svcrpc-sends-on-closed-socket-should-stop-immediately.patch
-stable-cciss-fix-incorrect-scsi-status-reporting.patch
-stable-acpi-export-symbol-acpi_get_table_with_size.patch
-stable-ath9k-stop-btcoex-on-device-suspend.patch
-stable-ath9k-fix-decrypt_error-initialization-in-ath_rx_tasklet.patch
-stable-pci-ehci-fix-crash-during-hibernation-on-asus-computers.patch
-stable-gma500-consider-crtc-initially-active.patch
-stable-block-replace-__getblk_slow-misfix-by-grow_dev_page-fix.patch
-stable-jbd-don-t-write-superblock-when-unmounting-an-ro-filesystem.patch
-stable-alsa-usb-audio-fix-scheduling-while-atomic-bug-in-pcm-capture-stream.patch
-stable-sched-cgroup-fix-up-task_groups-list.patch
-stable-sched-fix-divide-by-zero-at-thread_group-task-_times.patch
-stable-uvcvideo-reset-the-bytesused-field-when-recycling-an-erroneous-buffer.patch
-stable-rapidio-tsi721-fix-inbound-doorbell-interrupt-handling.patch
-stable-rapidio-tsi721-fix-unused-variable-compiler-warning.patch
-stable-regulator-twl-regulator-fix-up-vintana1-vintana2.patch
-stable-x32-use-compat-shims-for-g-s-etsockopt.patch
-stable-usb-spca506-remove-__devinit-from-the-struct.patch
-stable-usb-jl2005bcd-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-usb-p54usb-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-usb-rtl8187-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-usb-smsusb-remove-__devinit-from-the-struct-usb_device_id-table.patch
-stable-usb-cdc-acm-fix-null-pointer-dereference.patch
-stable-alsa-snd-usb-fix-urb-cancellation-at-stream-start.patch
-stable-alsa-snd-usb-use-list_for_each_safe-for-endpoint-resources.patch
-stable-alsa-snd-usb-restore-delay-information.patch
-stable-alsa-snd-usb-fix-calls-to-next_packet_size.patch
-stable-alsa-snd-usb-fix-cross-interface-streaming-devices.patch
-stable-powerpc-update-dscr-on-all-cpus-when-writing-sysfs-dscr_default.patch
-stable-powerpc-keep-thread.dscr-and-thread.dscr_inherit-in-sync.patch
-stable-powerpc-fix-dscr-inheritance-in-copy_thread.patch
-stable-powerpc-restore-correct-dscr-in-context-switch.patch
-stable-powerpc-make-sure-ipi-handlers-see-data-written-by-ipi-senders.patch
-stable-remove-user-triggerable-bug-from-mpol_to_str.patch
-stable-fix-order-of-arguments-to-compat_put_time.patch
-stable-usbnet-fix-deadlock-in-resume.patch
 
 ###
 ### Arch x86
@@ -220,10 +135,6 @@ fs-overlayfs-inode_only_permission-export-inode-level-permissions-checks.patch
 fs-overlayfs-vfs-pass-struct-path-to-__dentry_open.patch
 fs-overlayfs-vfs-add-i_op-open.patch
 fs-overlayfs-vfs-export-do_splice_direct.patch
-
-# fs corruption fixes
-fs-ext3-Fix-fdatasync-for-files-with-only-i_size-changes.patch
-fs-udf-Fix-data-corruption-for-files-in-ICB.patch
 
 ###
 ### FireWire
@@ -432,3 +343,4 @@ kbuild_firmware_install.patch
 ### Tools
 ###
 tools-perf-fix-strerror_r-usage.patch
+

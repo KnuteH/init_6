@@ -179,6 +179,9 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${pld_url}"
 			;;
 		reiser4)
+			if [ "${OVERRIDE_reiser4_src}" != "" ]; then
+				reiser4_src="${OVERRIDE_reiser4_src}"
+			fi
 			reiser4_url="http://sourceforge.net/projects/reiser4"
 			HOMEPAGE="${HOMEPAGE} ${reiser4_url}"
 			SRC_URI="${SRC_URI}
