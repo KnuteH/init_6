@@ -14,7 +14,7 @@ vmbugon-warnon.patch
 # ARM
 #
 #arm-omap-dt-compat.patch
-#arm-smsc-support-reading-mac-address-from-device-tree.patch
+# arm-smsc-support-reading-mac-address-from-device-tree.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
 #arm-beagle-usb-init.patch
@@ -89,7 +89,6 @@ linux-2.6-e1000-ich9-montevina.patch
 # crypto/
 
 # Assorted Virt Fixes
-fix_xen_guest_on_old_EC2.patch
 
 # DRM core
 #drm-edid-try-harder-to-fix-up-broken-headers.patch
@@ -145,9 +144,6 @@ efifb-skip-DMI-checks-if-bootloader-knows.patch
 #Fix FIPS for aesni hardare
 crypto-testmgr-allow-aesni-intel-and-ghash_clmulni-intel.patch
 crypto-aesni-intel-fix-wrong-kfree-pointer.patch
-
-#rhbz 836742
-uvcvideo-Reset-bytesused-field-when-recycling-erroneous-buffer.patch
 
 #rhbz 714271
 CPU-hotplug-cpusets-suspend-Dont-modify-cpusets-during.patch

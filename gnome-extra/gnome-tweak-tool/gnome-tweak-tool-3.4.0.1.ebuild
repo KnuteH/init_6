@@ -18,8 +18,8 @@ IUSE=""
 KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="
-	>=gnome-base/gsettings-desktop-schemas-3
-	>=dev-python/pygobject-2.90.0:3
+	>=gnome-base/gsettings-desktop-schemas-3.4
+	>=dev-python/pygobject-3.2.1:3
 	gnome-base/gconf:2"
 # g-s-d, gnome-shell etc. needed at runtime for the gsettings schemas
 RDEPEND="${COMMON_DEPEND}
@@ -32,8 +32,8 @@ RDEPEND="${COMMON_DEPEND}
 	x11-wm/metacity"
 DEPEND="${COMMON_DEPEND}
 	>=dev-util/intltool-0.40.0
-	>=dev-util/pkgconfig-0.9
-	>=sys-devel/gettext-0.17"
+	>=sys-devel/gettext-0.17
+	virtual/pkgconfig"
 
 pkg_setup() {
 	DOCS="AUTHORS NEWS README"
@@ -46,20 +46,10 @@ src_prepare() {
 	# Add contents of Gentoo's cursor theme directory to cursor theme list
 	epatch "${FILESDIR}/${PN}-3.0.4-gentoo-cursor-themes.patch"
 
-	# Patch from upstream git master; user theme extension ID changed in 3.2.2
-	epatch "${FILESDIR}/${PN}-3.2.2-user-theme-ext-id.patch"
-
-	# From upstream git master; fix gnome-shell-3.2.1-r2 compat (bug #398385)
-	epatch "${FILESDIR}/${PN}-3.2.2-gnome-shell-3.2.1-r2.patch"
-
-	# From upstream git master; more useful error on missing schemas
-	epatch "${FILESDIR}/${PN}-3.2.2-missing-schemas-error.patch"
-
 	# Now main window is resizable
 	epatch "${FILESDIR}/${PN}-3.2.2-resizable-window.patch"
 
-	# disable pyc compiling
-	echo > py-compile
+	python_clean_py-compile_files
 
 	gnome2_src_prepare
 }
