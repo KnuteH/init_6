@@ -44,7 +44,7 @@ dev-perl/Locale-gettext
 #dev-perl/Net-SSLeay
 #dev-perl/YAML-Tiny
 dev-util/gtk-doc-am
-dev-util/pkgconfig
+dev-util/pkgconf #dev-util/pkgconfig
 dev-vcs/git
 net-dns/openresolv
 net-misc/curl
