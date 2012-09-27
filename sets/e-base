@@ -1,0 +1,10 @@
+dev-libs/eina
+dev-libs/eet
+media-libs/evas
+dev-libs/ecore
+dev-libs/efreet
+dev-libs/embryo
+media-libs/edje
+dev-libs/e_dbus
+dev-libs/eeze
+x11-wm/enlightenment
