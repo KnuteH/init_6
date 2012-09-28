@@ -6,19 +6,20 @@ EAPI="4"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
-inherit eutils gnome2 multilib
+inherit eutils gnome2 multilib toolchain-funcs user
 
 DESCRIPTION="Fork of bluez-gnome focused on integration with GNOME"
 HOMEPAGE="http://live.gnome.org/GnomeBluetooth"
 
-LICENSE="GPL-2 LGPL-2.1"
+LICENSE="GPL-2+ LGPL-2.1+ FDL-1.1+"
 SLOT="2"
 IUSE="doc +introspection sendto"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 COMMON_DEPEND=">=dev-libs/glib-2.29.90:2
 	>=x11-libs/gtk+-2.91.3:3[introspection?]
 	>=x11-libs/libnotify-0.7.0
+	sys-fs/udev
 
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
 	sendto? ( >=gnome-extra/nautilus-sendto-2.91 )
@@ -26,14 +27,13 @@ COMMON_DEPEND=">=dev-libs/glib-2.29.90:2
 RDEPEND="${COMMON_DEPEND}
 	>=net-wireless/bluez-4.34
 	app-mobilephone/obexd
-	sys-fs/udev
 	x11-themes/gnome-icon-theme-symbolic"
 DEPEND="${COMMON_DEPEND}
 	!net-wireless/bluez-gnome
 	app-text/docbook-xml-dtd:4.1.2
 	app-text/gnome-doc-utils
 	app-text/scrollkeeper
-	dev-libs/libxml2
+	dev-libs/libxml2:2
 	>=dev-util/intltool-0.40.0
 	dev-util/gdbus-codegen
 	>=sys-devel/gettext-0.17
@@ -62,10 +62,17 @@ pkg_setup() {
 	enewgroup plugdev
 }
 
+src_prepare() {
+	# Regenerate gdbus-codegen files to allow using any glib version; bug #436236
+	rm -v lib/bluetooth-client-glue.{c,h} || die
+	gnome2_src_prepare
+}
+
 src_install() {
 	gnome2_src_install
 
-	insinto /$(get_libdir)/udev/rules.d
+	local udevdir="$($(tc-getPKG_CONFIG) --variable=udevdir udev)"
+	insinto "${udevdir}"/rules.d
 	doins "${FILESDIR}"/80-rfkill.rules
 	doins "${FILESDIR}"/61-gnome-bluetooth-rfkill.rules || die "udev rules installation failed"
 }
