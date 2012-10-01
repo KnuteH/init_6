@@ -11,29 +11,32 @@ If you've never worked with a overlay, please read http://www.gentoo.org/proj/en
 In this overlay you will find:
 	app-emulation/wine with desktop and icon files and with pulsaudio support
 	app-misc/mc with desktop and icon files
-	dev-util/metro live 9999 git ebuild
 	media-video/mplayer with desktop and icon files
+	media-video/mplayer2 with desktop and icon files
 	net-irc/irssi with desktop and icon files
 	sys-kernel/vanilla-sources live 9999 git ebuild
 	sys-kernel/geek-sources Full sources for the Linux kernel including:
-		aufs - AnotherUnionFS.
-		bfq - Budget Fair Queueing Budget I/O Scheduler.
-		bld - Alternate CPU load distribution technique for Linux kernel scheduler.
+		aufs - AnotherUnionFS --> git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
+		bfq - Budget Fair Queueing Budget I/O Scheduler --> http://algo.ing.unimo.it/people/paolo/disk_sched/sources.php
+		bld - Alternate CPU load distribution technique for Linux kernel scheduler --> http://code.google.com/p/bld
 		backports - Use backports patches.
 		branding - Enable Gentoo specific branding.
-		deblob - Remove binary blobs from kernel sources to provide libre license compliance.
-		ck - Enable Con Kolivas' high performance patchset.
-		fbcondecor - Use Spock's fbsplash patch.
-		fedora - Use Fedora kernel patches.
-		grsecurity - Use grsecurity patches.
-		ice - Use TuxOnIce patches.
-		imq - Use Intermediate Queueing Device patches.
-		mageia - Use Mandriva/Mageia patches.
-		pardus - Use Pardus patches.
-		reiser4 - Use Reiser4 FS patches.
-		rt - Use Ingo Molnar's realtime preempt patches.
-		suse - Use OpenSuSE patches.
-		uksm - Use Ultra Kernel Samepage Merging patches.
+		ck - Enable Con Kolivas' high performance patchset --> http://users.on.net/~ckolivas/kernel
+		deblob - Remove binary blobs from kernel sources to provide libre license compliance --> http://linux-libre.fsfla.org/pub/linux-libre
+		fbcondecor - Use Spock's fbsplash patch --> http://dev.gentoo.org/~spock/projects/fbcondecor
+		fedora - Use Fedora kernel patches --> git://pkgs.fedoraproject.org/kernel.git
+		grsecurity - Use grsecurity patches --> git://git.overlays.gentoo.org/proj/hardened-patchset.git + http://dev.gentoo.org/~mpagano/genpatches/trunk/
+		ice - Use TuxOnIce patches --> git://github.com/NigelCunningham/tuxonice-kernel.git
+		imq - Use Intermediate Queueing Device patches --> http://www.linuximq.net
+		mageia - Use Mandriva/Mageia patches --> svn://svn.mageia.org/svn/packages/cauldron/kernel
+		pardus - Use Pardus patches --> https://svn.pardus.org.tr/pardus/playground/kaan.aksit/2011/kernel/default
+		pld - USE PLD-Linux patches --> git://github.com/pld-linux/kernel.git
+		reiser4 - Use Reiser4 FS patches --> http://sourceforge.net/projects/reiser4
+		rt - Use Ingo Molnar's realtime preempt patches --> http://www.kernel.org/pub/linux/kernel/projects/rt
+		suse - Use OpenSuSE patches --> git://kernel.opensuse.org/kernel-source.git
+		uksm - Use Ultra Kernel Samepage Merging patches --> http://kerneldedup.org
+		vserver - VServer provides virtualization for GNU/Linux systems --> http://linux-vserver.org/Welcome_to_Linux-VServer.org
+		zfs - The native Linux kernel port of the ZFS filesystem --> http://zfsonlinux.org
 	sys-kernel/rh-sources Full sources including the Red Hat Enterprise Linux sources patchset for the 2.6 kernel tree
 and many fixes and patches…
 

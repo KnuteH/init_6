@@ -21,9 +21,12 @@
     <flag name='imq'>Use Intermediate Queueing Device patches.</flag>
     <flag name='mageia'>Use Mandriva/Mageia patches.</flag>
     <flag name='pardus'>Use Pardus patches.</flag>
+    <flag name='pld'>USE PLD-Linux patches.</flag>
     <flag name='reiser4'>Use Reiser4 FS patches.</flag>
     <flag name='rt'>Use Ingo Molnar's realtime preempt patches.</flag>
     <flag name='suse'>Use OpenSuSE patches.</flag>
     <flag name='uksm'>Use Ultra Kernel Samepage Merging patches.</flag>
+    <flag name='vserver'>VServer provides virtualization for GNU/Linux systems.</flag>
+    <flag name='zfs'>The native Linux kernel port of the ZFS filesystem.</flag>
   </use>
 </pkgmetadata>
