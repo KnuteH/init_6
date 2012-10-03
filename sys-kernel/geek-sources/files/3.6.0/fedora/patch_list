@@ -145,4 +145,3 @@ virtio-scsi-Initialize-scatterlist-structure.patch
 selinux-Fix-sel_netnode_insert-suspicious-rcu-dereference.patch
 
 # END OF PATCH APPLICATIONS
-

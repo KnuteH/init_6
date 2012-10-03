@@ -46,7 +46,7 @@ x86-increase-default-minimum-vmalloc-area-by-64MB-to-192MB.patch
 ### PCI core
 ###
 
-pci-pciprobe-CardBusNo.patch
+#pci-pciprobe-CardBusNo.patch
 
 # http://lkml.org/lkml/2008/9/12/52
 pci-add-ALI-M5229-ide-compatibility-mode-quirk.patch
