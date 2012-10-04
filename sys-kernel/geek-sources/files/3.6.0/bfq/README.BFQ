@@ -1,22 +1,29 @@
 Budget Fair Queueing I/O Scheduler
 ==================================
 
-This patchset introduces BFQ-v4 into Linux 3.5.0.
+This patchset introduces BFQ-v5 into Linux 3.6.0.
 For further information: http://algo.ing.unimo.it/people/paolo/disk_sched/.
 
 The overall diffstat is the following:
 
  block/Kconfig.iosched         |   26 +
  block/Makefile                |    1 +
- block/bfq-cgroup.c            |  833 +++++++++++++++++++++++++++++
+ block/bfq-cgroup.c            |  833 ++++++++++++++++++++++++++++
  block/bfq-ioc.c               |   34 ++
- block/bfq-iosched.c           | 2914 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- block/bfq-sched.c             | 1070 +++++++++++++++++++++++++++++++++++++
- block/bfq.h                   |  596 +++++++++++++++++++++
+ block/bfq-iosched.c           | 2999 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ block/bfq-sched.c             | 1070 ++++++++++++++++++++++++++++++++++++
+ block/bfq.h                   |  599 ++++++++++++++++++++
  include/linux/cgroup_subsys.h |    6 +
- 8 files changed, 5480 insertions(+)
+ 8 files changed, 5568 insertions(+)
 
 CHANGELOG
+
+v5:
+- Added an heuristic that, if the tunable raising_max_time is set to
+  0, automatically computes the duration of the weight raising
+  according to the estimated peak rate of the device. This enables
+  flash-based devices to reach maximum throughput as soon as possible,
+  without sacrificing latency.
 
 v4:
 - Throughput-boosting for flash-based devices: improved version of commits

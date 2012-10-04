@@ -100,7 +100,7 @@ handle-efi-roms.patch
 
 # DRM core
 #drm-edid-try-harder-to-fix-up-broken-headers.patch
-drm-vgem.patch
+#drm-vgem.patch
 
 # Nouveau DRM
 
