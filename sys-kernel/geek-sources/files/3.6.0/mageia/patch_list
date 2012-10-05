@@ -193,10 +193,10 @@ kbuild-compress-kernel-modules-on-installation.patch
 net-sis190-fix-list-usage.patch
 
 # netfilter IFWLOG support
-net-netfilter-IFWLOG.patch
-net-netfilter-IFWLOG-mdv.patch
-net-netfilter-IFWLOG-2.6.35-buildfix.patch
-net-netfilter-IFWLOG-2.6.37-buildfix.patch
+#net-netfilter-IFWLOG.patch
+#net-netfilter-IFWLOG-mdv.patch
+#net-netfilter-IFWLOG-2.6.35-buildfix.patch
+#net-netfilter-IFWLOG-2.6.37-buildfix.patch
 
 # netfilter psd support
 net-netfilter-psd.patch
