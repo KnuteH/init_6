@@ -7,4 +7,4 @@
 
 # Andrey Ovcharov <sudormrfhalt@gmail.com>
 # kernel mainline
-=sys-kernel/geek-sources-3.6.0
+=sys-kernel/geek-sources-3.6.1
