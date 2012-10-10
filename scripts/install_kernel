@@ -100,13 +100,12 @@ ebegin "Beginning installation procedure for \"${FULLVER}\""
 
 	if [[ -e "/etc/boot.conf" ]]; then
 		ebegin " Grub template found, Editing kernel entry in GRUB"
-			#mount /boot;
-			#dracut --xz --hostonly --stdlog 5 --verbose --force /boot/initramfs-${FULLVER}-${BUILDNO} ${FULLVER}
-			#dracut --xz --hostonly --force /boot/initramfs-${FULLVER}-${BUILDNO} ${FULLVER}
-#			boot-update;
-			grub2-mkconfig -o /boot/grub2/grub.cfg;
-			#umount /boot;
+			boot-update;
 		eend $?
 	fi
+
+	mount /boot;
+	grub2-mkconfig -o /boot/grub2/grub.cfg;
+	umount /boot;
 
 eend $?
