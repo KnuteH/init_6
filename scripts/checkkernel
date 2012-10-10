@@ -1,0 +1,71 @@
+#!/bin/bash
+#This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+usage(){
+  echo -e "Usage: \ncheckkernel [options] "
+  echo -e " -lk  Latest Kernel\t\t\t-glk  Download latest full kernel \t\t\t\t  -lp  Latest patch\t\t\t-glt  Download the latest patch"
+  exit 0
+}
+if [ "$#" -eq "0" ]
+then
+  usage
+  exit 0
+fi
+##REMOVE OLD DATA
+if [ -f /tmp/kernel ] ;
+then
+  rm -f /tmp/kernel
+fi
+
+##GET KERNEL INFO
+`wget -q -O /tmp/kernel "http://www.kernel.org"`
+lk=`cat /tmp/kernel | awk 'NR == 69' | sed -e 's|<td><a href="/pub/linux/kernel/v2.6/linux-||' | sed -e 's|.tar.bz2">F</a></td>||'`
+lp=`cat /tmp/kernel | awk 'NR == 70' | sed -e 's|<td><a href="/diff/diffview.cgi?file=%2Fpub%2Flinux%2Fkernel%2Fv2.6%2Fpatch-||' | sed -e 's|.bz2">V</a></td>||'`
+##Download Full Kernel
+glk(){
+  echo "http://www.kernel.org`cat /tmp/kernel | awk 'NR == 69' | sed -e 's|<td><a href="||' | sed -e 's|">F</a></td>||'`" > /tmp/download 
+  url=`cat /tmp/download`
+  `wget $url`
+ `rm -f /tmp/download`
+ exit 0
+  }
+## Download Kernel Patch
+glp(){
+  echo "http://www.kernel.org`cat /tmp/kernel | awk 'NR == 67' | sed -e 's|<td><b><a href="||' | sed -e 's|">2.6.30.4</a></b></td>||'`" > /tmp/download
+  url=`cat /tmp/download`
+  `wget $url`
+  `rm -f /tmp/download`
+  exit 0
+ }
+  if [[ "$1" == "lk" || "$1" == "-lk" || "$1" == "" ]] ;
+  then
+    echo "The latest kernel is: $lk"
+  fi
+
+  if [[ "$1" == "lp" || "$1" == "-lp" || "$1" == "" ]] ;
+  then
+    echo "The latest patch is: $lp"
+  fi
+  
+  if [[ "$1" == "glk" || "$1" == "-glk" || "$1" == "" ]] ;
+  then
+  glk
+fi
+if  [[ "$1" == "glp" || "$1" == "-glp" || "$1" == "" ]] ;
+then
+  glp
+fi

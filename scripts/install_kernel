@@ -32,6 +32,10 @@ fi
 rm -fr /tmp/installkernel &>/dev/null
 mkdir /tmp/installkernel &>/dev/null
 
+echo
+echo "tail -f /tmp/installkernel/{bzImage.log,modules.log} | ccze -A"
+echo
+
 ebegin "Beginning installation procedure for \"${FULLVER}\""
 	if [[ ${ISNEWER} == "noconfig" ]]; then
 		ebegin " No kernel config found, searching for best availiable config"
@@ -96,7 +100,12 @@ ebegin "Beginning installation procedure for \"${FULLVER}\""
 
 	if [[ -e "/etc/boot.conf" ]]; then
 		ebegin " Grub template found, Editing kernel entry in GRUB"
-			boot-update;
+			#mount /boot;
+			#dracut --xz --hostonly --stdlog 5 --verbose --force /boot/initramfs-${FULLVER}-${BUILDNO} ${FULLVER}
+			#dracut --xz --hostonly --force /boot/initramfs-${FULLVER}-${BUILDNO} ${FULLVER}
+#			boot-update;
+			grub2-mkconfig -o /boot/grub2/grub.cfg;
+			#umount /boot;
 		eend $?
 	fi
 

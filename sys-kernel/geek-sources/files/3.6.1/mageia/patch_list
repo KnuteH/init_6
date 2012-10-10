@@ -122,19 +122,19 @@ block-floppy-disable-pnp-modalias.patch
 ###
 
 # overlayfs patches "liberated" from ubuntu-quantal git repo
-fs-overlayfs.patch
-fs-overlayfs-add-statfs-support.patch
-fs-overlayfs-implement-show_options.patch
-fs-overlayfs-limit-filesystem-stacking-depth.patch
-fs-overlayfs-fix-possible-leak-in-ovl_new_inode.patch
-fs-overlayfs-create-new-inode-in-ovl_link.patch
-fs-overlayfs-switch-to-use-inode_only_permissions.patch
-fs-overlayfs-copy-up-i_uid-i_gid-from-the-underlying-inode.patch
-fs-overlayfs-vfs-introduce-clone_private_mount.patch
-fs-overlayfs-inode_only_permission-export-inode-level-permissions-checks.patch
-fs-overlayfs-vfs-pass-struct-path-to-__dentry_open.patch
-fs-overlayfs-vfs-add-i_op-open.patch
-fs-overlayfs-vfs-export-do_splice_direct.patch
+#fs-overlayfs.patch
+#fs-overlayfs-add-statfs-support.patch
+#fs-overlayfs-implement-show_options.patch
+#fs-overlayfs-limit-filesystem-stacking-depth.patch
+#fs-overlayfs-fix-possible-leak-in-ovl_new_inode.patch
+#fs-overlayfs-create-new-inode-in-ovl_link.patch
+#fs-overlayfs-switch-to-use-inode_only_permissions.patch
+#fs-overlayfs-copy-up-i_uid-i_gid-from-the-underlying-inode.patch
+#fs-overlayfs-vfs-introduce-clone_private_mount.patch
+#fs-overlayfs-inode_only_permission-export-inode-level-permissions-checks.patch
+#fs-overlayfs-vfs-pass-struct-path-to-__dentry_open.patch
+#fs-overlayfs-vfs-add-i_op-open.patch
+#fs-overlayfs-vfs-export-do_splice_direct.patch
 
 ###
 ### FireWire

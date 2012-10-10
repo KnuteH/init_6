@@ -3,6 +3,7 @@
 linux-2.6-makefile-after_link.patch
 
 taint-vbox.patch
+taint-rss.patch
 
 vmbugon-warnon.patch
 
@@ -12,11 +13,12 @@ vmbugon-warnon.patch
 #
 # ARM
 #
-arm-read_current_timer.patch
-arm-fix_radio_shark.patch
+#arm-omap-dt-compat.patch
+#arm-smsc-support-reading-mac-address-from-device-tree.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
-arm-tegra-sdhci-module-fix.patch
+#arm-beagle-usb-init.patch
+#arm-omap-drm-register.patch
 
 #
 # bugfixes to drivers and filesystems
@@ -27,6 +29,7 @@ arm-tegra-sdhci-module-fix.patch
 # xfs
 
 # btrfs
+
 
 # eCryptfs
 
@@ -84,24 +87,19 @@ linux-2.6-crash-driver.patch
 linux-2.6-e1000-ich9-montevina.patch
 
 # crypto/
-modsign-post-KS-jwb.patch
-
-# secure boot
-secure-boot-20120924.patch
-
-# Improved PCI support for UEFI
-handle-efi-roms.patch
 
 # Assorted Virt Fixes
 
 # DRM core
 #drm-edid-try-harder-to-fix-up-broken-headers.patch
-#drm-vgem.patch
+drm-vgem.patch
 
 # Nouveau DRM
 
 # Intel DRM
 drm-i915-dp-stfu.patch
+
+linux-2.6-intel-iommu-igfx.patch
 
 # silence the ACPI blacklist code
 linux-2.6-silence-acpi-blacklist.patch
@@ -117,27 +115,28 @@ dmar-disable-when-ricoh-multifunction.patch
 
 efi-dont-map-boot-services-on-32bit.patch
 
-# FIXME: REBASE
-#hibernate-freeze-filesystems.patch
-
 lis3-improve-handling-of-null-rate.patch
+
+ips-noirq.patch
 
 power-x86-destdir.patch
 
 #rhbz 754518
 scsi-sd_revalidate_disk-prevent-NULL-ptr-deref.patch
 
-unhandled-irqs-switch-to-polling.patch
-
 weird-root-dentry-name-debug.patch
+
+#Highbank clock functions
+# highbank-export-clock-functions.patch
 
 #selinux ptrace child permissions
 selinux-apply-different-permission-to-ptrace-child.patch
 
-#rhbz 847548
-virtio-scsi-Initialize-scatterlist-structure.patch
+efifb-skip-DMI-checks-if-bootloader-knows.patch
 
-#rhbz 846037
-selinux-Fix-sel_netnode_insert-suspicious-rcu-dereference.patch
+#rhbz 857324
+net-tcp-bz857324.patch
+
+3.6.2-stable-queue.patch
 
 # END OF PATCH APPLICATIONS
