@@ -77,7 +77,7 @@ rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/${KMV}/patch-${rt_ver
 xenomai_src="http://download.gna.org/xenomai/stable/xenomai-${xenomai_ver/KVM/$KMV}.tar.bz2"
 
 # VServer
-vserver_src="http://vserver.13thfloor.at/Experimental/patch-${PV}-vs${vserver_ver}.diff"
+vserver_src="http://vserver.13thfloor.at/Experimental/patch-${vserver_ver}.diff"
 
 featureKnown() {
 	local feature="${1/-/}"
@@ -427,7 +427,7 @@ And may the Force be with you…"
 					ApplyPatch "${FILESDIR}/${PV}/uksm/patch_list" "Ultra Kernel Samepage Merging - ${uksm_url}";
 					;;
 				vserver)
-					ApplyPatch "${DISTDIR}/patch-${PV}-vs${vserver_ver}.diff" "VServer - ${vserver_url}";
+					ApplyPatch "${DISTDIR}/patch-${vserver_ver}.diff" "VServer - ${vserver_url}";
 					;;
 				zfs)
 					ApplyPatch "$FILESDIR/${PV}/zfs/patch_list" "zfs - ${zfs_url}";
