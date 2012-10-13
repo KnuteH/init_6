@@ -1,3 +1,4 @@
+
 ### BRANCH APPLY ###
 
 linux-2.6-makefile-after_link.patch
@@ -14,7 +15,7 @@ vmbugon-warnon.patch
 # ARM
 #
 #arm-omap-dt-compat.patch
-#arm-smsc-support-reading-mac-address-from-device-tree.patch
+# arm-smsc-support-reading-mac-address-from-device-tree.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
 #arm-beagle-usb-init.patch
