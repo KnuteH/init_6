@@ -11,11 +11,17 @@ Think of Wine as a compatibility layer for running Windows programs. Wine does n
 	<flag name='capi'>Enable ISDN support via CAPI</flag>
 	<flag name='custom-cflags'>Bypass strip-flags; use are your own peril</flag>
 	<flag name='gecko'>Add support for the Gecko engine when using iexplore</flag>
+	<flag name='mono'>Add support for .NET using Wine's Mono add-on</flag>
 	<flag name='opencl'>Enable OpenCL support</flag>
+	<flag name='osmesa'>Add support for OpenGL in bitmaps using libOSMesa</flag>
+	<flag name='osmesa-multilib'>Enable libOSMesa support for Win32 on amd64.
+		WARNING: you must install an appropriate version of 32-bit libOSMesa manually
+		or from an overlay; see bug #430268</flag>
 	<flag name='perl'>Install helpers written in perl (winedump/winemaker)</flag>
 	<flag name='samba'>Add support for NTLM auth. see
 		http://wiki.winehq.org/NtlmAuthSetupGuide and
 		http://wiki.winehq.org/NtlmSigningAndSealing</flag>
+	<flag name='udisks'>Support dynamic storage devices using <pkg>sys-fs/udisks</pkg></flag>
 	<flag name='win32'>Build a 32bit version of Wine (won't run Win64 binaries)</flag>
 	<flag name='win64'>Build a 64bit version of Wine (won't run Win32 binaries)</flag>
 </use>
