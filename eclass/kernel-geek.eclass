@@ -217,7 +217,7 @@ featureKnown() {
 			zfs_url="http://zfsonlinux.org"
 			HOMEPAGE="${HOMEPAGE} ${zfs_url}"
 			RDEPEND="${RDEPEND}
-				zfs?	( >=sys-fs/zfs-0.6.0_rc9-r6 )"
+				zfs?	( sys-fs/zfs[kernel-builtin] )"
 			;;
 	esac
 }
