@@ -1,5 +1,5 @@
 From: Anthony G. Basile <blueness@gentoo.org>
-Updated patch for the new Kconfig system for >=3.4.4
+Updated patch for the new Kconfig system in grsec 2.9.1
 
 ---
 From: Kerin Millar <kerframil@gmail.com>
@@ -13,10 +13,10 @@ attention to the finer points of kernel configuration, it is probably
 wise to specify some reasonable defaults so as to stop careless users
 from shooting themselves in the foot.
 
-diff -Nuar a/grsecurity/Kconfig b/Kconfig
---- a/grsecurity/Kconfig	2012-07-01 12:54:58.000000000 -0400
-+++ b/grsecurity/Kconfig	2012-07-01 13:00:04.000000000 -0400
-@@ -521,7 +521,7 @@
+diff -Naur a/grsecurity/Kconfig b/grsecurity/Kconfig
+--- a/grsecurity/Kconfig	2012-10-13 09:51:35.000000000 -0400
++++ b/grsecurity/Kconfig	2012-10-13 09:52:32.000000000 -0400
+@@ -522,7 +522,7 @@
  config GRKERNSEC_AUDIT_GID
  	int "GID for auditing"
  	depends on GRKERNSEC_AUDIT_GROUP
@@ -25,25 +25,25 @@ diff -Nuar a/grsecurity/Kconfig b/Kconfig
  
  config GRKERNSEC_EXECLOG
  	bool "Exec logging"
-@@ -736,7 +736,7 @@
- config GRKERNSEC_TPE_GID
- 	int "GID for untrusted users"
+@@ -742,7 +742,7 @@
+ config GRKERNSEC_TPE_UNTRUSTED_GID
+ 	int "GID for TPE-untrusted users"
  	depends on GRKERNSEC_TPE && !GRKERNSEC_TPE_INVERT
 -	default 1005
 +	default 100
  	help
  	  Setting this GID determines what group TPE restrictions will be
  	  *enabled* for.  If the sysctl option is enabled, a sysctl option
-@@ -745,7 +745,7 @@
- config GRKERNSEC_TPE_GID
- 	int "GID for trusted users"
+@@ -751,7 +751,7 @@
+ config GRKERNSEC_TPE_TRUSTED_GID
+ 	int "GID for TPE-trusted users"
  	depends on GRKERNSEC_TPE && GRKERNSEC_TPE_INVERT
 -	default 1005
 +	default 10
  	help
  	  Setting this GID determines what group TPE restrictions will be
  	  *disabled* for.  If the sysctl option is enabled, a sysctl option
-@@ -820,7 +820,7 @@
+@@ -826,7 +826,7 @@
  config GRKERNSEC_SOCKET_ALL_GID
  	int "GID to deny all sockets for"
  	depends on GRKERNSEC_SOCKET_ALL
@@ -52,7 +52,7 @@ diff -Nuar a/grsecurity/Kconfig b/Kconfig
  	help
  	  Here you can choose the GID to disable socket access for. Remember to
  	  add the users you want socket access disabled for to the GID
-@@ -841,7 +841,7 @@
+@@ -847,7 +847,7 @@
  config GRKERNSEC_SOCKET_CLIENT_GID
  	int "GID to deny client sockets for"
  	depends on GRKERNSEC_SOCKET_CLIENT
@@ -61,7 +61,7 @@ diff -Nuar a/grsecurity/Kconfig b/Kconfig
  	help
  	  Here you can choose the GID to disable client socket access for.
  	  Remember to add the users you want client socket access disabled for to
-@@ -859,7 +859,7 @@
+@@ -865,7 +865,7 @@
  config GRKERNSEC_SOCKET_SERVER_GID
  	int "GID to deny server sockets for"
  	depends on GRKERNSEC_SOCKET_SERVER
@@ -71,8 +71,8 @@ diff -Nuar a/grsecurity/Kconfig b/Kconfig
  	  Here you can choose the GID to disable server socket access for.
  	  Remember to add the users you want server socket access disabled for to
 diff -Nuar a/security/Kconfig b/security/Kconfig
---- a/security/Kconfig	2012-07-01 12:51:41.000000000 -0400
-+++ b/security/Kconfig	2012-07-01 13:00:23.000000000 -0400
+--- a/security/Kconfig	2012-10-13 09:51:35.000000000 -0400
++++ b/security/Kconfig	2012-10-13 09:52:59.000000000 -0400
 @@ -191,7 +191,7 @@
  
  config GRKERNSEC_PROC_GID
@@ -82,3 +82,30 @@ diff -Nuar a/security/Kconfig b/security/Kconfig
  	help
  	  Setting this GID determines which group will be exempted from
  	  grsecurity's /proc restrictions, allowing users of the specified
+@@ -202,7 +202,7 @@
+ config GRKERNSEC_TPE_UNTRUSTED_GID
+         int "GID for TPE-untrusted users"
+         depends on GRKERNSEC_CONFIG_SERVER && GRKERNSEC_TPE && !GRKERNSEC_TPE_INVERT
+-        default 1005
++        default 100
+         help
+ 	  Setting this GID determines which group untrusted users should
+ 	  be added to.  These users will be placed under grsecurity's Trusted Path
+@@ -214,7 +214,7 @@
+ config GRKERNSEC_TPE_TRUSTED_GID
+         int "GID for TPE-trusted users"
+         depends on GRKERNSEC_CONFIG_SERVER && GRKERNSEC_TPE && GRKERNSEC_TPE_INVERT
+-        default 1005
++        default 10
+         help
+           Setting this GID determines what group TPE restrictions will be
+           *disabled* for.  If the sysctl option is enabled, a sysctl option
+@@ -223,7 +223,7 @@
+ config GRKERNSEC_SYMLINKOWN_GID
+         int "GID for users with kernel-enforced SymlinksIfOwnerMatch"
+         depends on GRKERNSEC_CONFIG_SERVER
+-        default 1006
++        default 100
+         help
+           Setting this GID determines what group kernel-enforced
+           SymlinksIfOwnerMatch will be enabled for.  If the sysctl option

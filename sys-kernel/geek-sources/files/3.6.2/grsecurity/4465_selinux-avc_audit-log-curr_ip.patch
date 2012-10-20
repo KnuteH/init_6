@@ -28,7 +28,7 @@ Signed-off-by: Lorenzo Hernandez Garcia-Hierro <lorenzo@gnu.org>
 diff -Naur a/grsecurity/Kconfig b/grsecurity/Kconfig
 --- a/grsecurity/Kconfig	2011-04-17 19:25:54.000000000 -0400
 +++ b/grsecurity/Kconfig	2011-04-17 19:32:53.000000000 -0400
-@@ -918,6 +918,27 @@
+@@ -924,6 +924,27 @@
  menu "Logging Options"
  depends on GRKERNSEC
  

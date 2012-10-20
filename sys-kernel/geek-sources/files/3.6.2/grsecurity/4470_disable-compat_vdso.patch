@@ -26,7 +26,7 @@ Closes bug: http://bugs.gentoo.org/show_bug.cgi?id=210138
 diff -urp a/arch/x86/Kconfig b/arch/x86/Kconfig
 --- a/arch/x86/Kconfig	2009-07-31 01:36:57.323857684 +0100
 +++ b/arch/x86/Kconfig	2009-07-31 01:51:39.395749681 +0100
-@@ -1681,17 +1681,8 @@
+@@ -1683,17 +1683,8 @@
  
  config COMPAT_VDSO
  	def_bool n
