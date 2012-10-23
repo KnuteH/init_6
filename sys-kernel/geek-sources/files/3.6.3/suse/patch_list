@@ -136,7 +136,7 @@ patches.arch/arm-thermal-build-error.patch
 ########################################################
 # S/390
 ########################################################
-patches.arch/s390-message-catalog.diff
+#patches.arch/s390-message-catalog.diff
 patches.arch/kmsg-fix-parameter-limitations
 
 ########################################################
