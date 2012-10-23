@@ -15,12 +15,10 @@ vmbugon-warnon.patch
 # ARM
 #
 linux-3.6-arm-build-fixup.patch
-#arm-omap-dt-compat.patch
-#arm-smsc-support-reading-mac-address-from-device-tree.patch
 arm-tegra-nvec-kconfig.patch
 arm-tegra-usb-no-reset-linux33.patch
-#arm-beagle-usb-init.patch
-#arm-omap-drm-register.patch
+arm-highbank-sata-fix.patch
+arm-linux-3.6-revert-missaligned-access-check-on-put_user.patch
 
 arm-smdk310-regulator-fix.patch
 arm-origen-regulator-fix.patch
@@ -152,5 +150,14 @@ mac80211_local_deauth_v3.6.patch
 
 #rhbz 866013
 mac80211-connect-with-HT20-if-HT40-is-not-permitted.patch
+
+#rhbz 856863
+rt2x00-usb-fix-reset-resume.patch
+
+#rhbz 862877 864824 CVE-2012-0957
+fix-stack-memory-content-leak-via-UNAME26.patch
+
+#rhbz 867344
+dont-call-cifs_lookup-on-hashed-negative-dentry.patch
 
 # END OF PATCH APPLICATIONS

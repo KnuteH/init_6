@@ -47,38 +47,6 @@ if  [ "${SUBLEVEL}" != "0" ]; then
 	SRC_URI="${SRC_URI} http://www.kernel.org/pub/linux/kernel/v3.0/patch-${PV}.xz"
 fi
 
-# bfq
-#bfq_src_1="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${bfq_ver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfq_ver}-${KVM}.patch"
-#bfq_src_2="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${bfq_ver}/0002-block-introduce-the-BFQ-${bfq_ver}-I-O-sched-for-${KVM}.patch"
-
-# Alternate CPU load distribution technique for Linux kernel scheduler
-bld_src="http://bld.googlecode.com/files/bld-${bld_ver/KMV/$KMV}.tar.bz2"
-
-# Con Kolivas' high performance patchset
-ck_src="http://ck.kolivas.org/patches/3.0/${KMV}/${ck_ver/KMV/$KMV}/patch-${ck_ver/KMV/$KMV}.bz2"
-
-# deblob
-deblob_src="http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-${KMV} http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-check"
-
-# Spock's fbsplash patch
-fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/${KMV}/4200_fbcondecor-0.9.6.patch"
-
-# grsecurity security patches
-#grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver/KMV/$KMV}.patch"
-
-# Intermediate Queueing Device patches
-imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver/KMV/$KMV}.diff.xz"
-
-reiser4_src="mirror://sourceforge/project/reiser4/reiser4-for-linux-3.x/reiser4-for-${reiser4_ver/PV/$PV}.patch.gz"
-
-# Ingo Molnar's realtime preempt patches
-rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/${KMV}/patch-${rt_ver/KMV/$KMV}.patch.xz"
-
-xenomai_src="http://download.gna.org/xenomai/stable/xenomai-${xenomai_ver/KVM/$KMV}.tar.bz2"
-
-# VServer
-vserver_src="http://vserver.13thfloor.at/Experimental/patch-${vserver_ver}.diff"
-
 featureKnown() {
 	local feature="${1/-/}"
 	feature="${feature/+/}"
@@ -93,6 +61,9 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${aufs_url}"
 			;;
 		bfq)
+			# bfq
+			#bfq_src_1="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${bfq_ver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfq_ver}-${KVM}.patch"
+			#bfq_src_2="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${bfq_ver}/0002-block-introduce-the-BFQ-${bfq_ver}-I-O-sched-for-${KVM}.patch"
 			if [ "${OVERRIDE_bfq_src}" != "" ]; then
 				bfq_src="${OVERRIDE_bfq_src}"
 			fi
@@ -100,6 +71,8 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${bfq_url}"
 			;;
 		bld)
+			# Alternate CPU load distribution technique for Linux kernel scheduler
+			bld_src="http://bld.googlecode.com/files/bld-${bld_ver/KMV/$KMV}.tar.bz2"
 			if [ "${OVERRIDE_bld_src}" != "" ]; then
 				bld_src="${OVERRIDE_bld_src}"
 			fi
@@ -109,6 +82,8 @@ featureKnown() {
 				bld?		( ${bld_src} )"
 			;;
 		ck)
+			# Con Kolivas' high performance patchset
+			ck_src="http://ck.kolivas.org/patches/3.0/${KMV}/${ck_ver/KMV/$KMV}/patch-${ck_ver/KMV/$KMV}.bz2"
 			if [ "${OVERRIDE_ck_src}" != "" ]; then
 				ck_src="${OVERRIDE_ck_src}"
 			fi
@@ -118,6 +93,8 @@ featureKnown() {
 				ck?		( ${ck_src} )"
 			;;
 		deblob)
+			# deblob
+			deblob_src="http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-${KMV} http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-check"
 			if [ "${OVERRIDE_deblob_src}" != "" ]; then
 				deblob_src="${OVERRIDE_deblob_src}"
 			fi
@@ -127,6 +104,8 @@ featureKnown() {
 				deblob?		( ${deblob_src} )"
 			;;
 		fbcondecor)
+			# Spock's fbsplash patch
+			fbcondecor_src="http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/${KMV}/4200_fbcondecor-0.9.6.patch"
 			if [ "${OVERRIDE_fbcondecor_src}" != "" ]; then
 				fbcondecor_src="${OVERRIDE_fbcondecor_src}"
 			fi
@@ -140,6 +119,8 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${fedora_url}"
 			;;
 		grsecurity)
+			# grsecurity security patches
+			#grsecurity_src="http://grsecurity.net/test/grsecurity-${grsecurity_ver/KMV/$KMV}.patch"
 #			if [ "${OVERRIDE_grsecurity_src}" != "" ]; then
 #				grsecurity_src="${OVERRIDE_grsecurity_src}"
 #			fi
@@ -158,6 +139,8 @@ featureKnown() {
 						( || ( >=sys-power/hibernate-script-2.0 sys-power/pm-utils ) ) )"
 			;;
 		imq)
+			# Intermediate Queueing Device patches
+			imq_src="http://www.linuximq.net/patches/patch-imqmq-${imq_ver/KMV/$KMV}.diff.xz"
 			if [ "${OVERRIDE_imq_src}" != "" ]; then
 				imq_src="${OVERRIDE_imq_src}"
 			fi
@@ -179,6 +162,7 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${pld_url}"
 			;;
 		reiser4)
+			reiser4_src="mirror://sourceforge/project/reiser4/reiser4-for-linux-3.x/reiser4-for-${reiser4_ver/PV/$PV}.patch.gz"
 			if [ "${OVERRIDE_reiser4_src}" != "" ]; then
 				reiser4_src="${OVERRIDE_reiser4_src}"
 			fi
@@ -188,6 +172,8 @@ featureKnown() {
 				reiser4?	( ${reiser4_src} )"
 			;;
 		rt)
+			# Ingo Molnar's realtime preempt patches
+			rt_src="http://www.kernel.org/pub/linux/kernel/projects/rt/${KMV}/patch-${rt_ver/KMV/$KMV}.patch.xz"
 			if [ "${OVERRIDE_rt_src}" != "" ]; then
 				rt_src="${OVERRIDE_rt_src}"
 			fi
@@ -205,6 +191,8 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${uksm_url}"
 			;;
 		vserver)
+			# VServer
+			vserver_src="http://vserver.13thfloor.at/Experimental/patch-${vserver_ver}.diff"
 			if [ "${OVERRIDE_vserver_src}" != "" ]; then
 				vserver_src="${OVERRIDE_vserver_src}"
 			fi
@@ -279,14 +267,14 @@ kernel-geek_ApplyPatch() {
 	patch_list) # list of patches
 		while read -r line
 		do
-			# skip comments
-			[[ $line =~ ^\ {0,}# ]] && continue
 			# skip empty lines
 			[[ -z "$line" ]] && continue
-				ebegin "Applying $line"
-					dir=`dirname "$patch"`
-					Handler "$dir/$line"
-				eend $?
+			# skip comments
+			[[ $line =~ ^\ {0,}# ]] && continue
+			ebegin "Applying $line"
+				dir=`dirname "$patch"`
+				Handler "$dir/$line"
+			eend $?
 		done < "$patch"
 	;;
 	*) # else is patch
