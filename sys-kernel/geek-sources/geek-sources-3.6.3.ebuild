@@ -18,7 +18,6 @@ SUPPORTED_FEATURES="aufs bfq branding ck deblob fbcondecor fedora grsecurity ice
 
 inherit kernel-geek
 
-#KEYWORDS="~amd64 ~x86"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 
 DESCRIPTION="Full sources for the Linux kernel including: fedora, grsecurity, mageia and other patches"
