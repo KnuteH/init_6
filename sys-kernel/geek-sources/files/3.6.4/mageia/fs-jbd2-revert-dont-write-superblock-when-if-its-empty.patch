@@ -1,0 +1,32 @@
+This reverts commit eeecef0af5ea4efd763c9554cf2bd80fc4a0efd3.
+
+Two users have reported an increased number of file system corruptions
+after v3.6.2 (which had this patch backported).  The instances of
+corruptions seem to be related to unclean shutdowns as the file system
+was being unmounted or by the unexpected disconnection of external
+disks.  So let's back out this change while do more investigation...
+
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+Reported-by: Nix <nix@esperi.org.uk>
+Reported-by: Toralf Förster <toralf.foerster@gmx.de>
+Cc: stable@vger.kernel.org
+---
+ fs/jbd2/journal.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+  index 0f16edd..bd23f2e 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1354,11 +1354,6 @@ static void jbd2_mark_journal_empty(jour
+ 
+ 	BUG_ON(!mutex_is_locked(&journal->j_checkpoint_mutex));
+ 	read_lock(&journal->j_state_lock);
+-	/* Is it already empty? */
+-	if (sb->s_start == 0) {
+-		read_unlock(&journal->j_state_lock);
+-		return;
+-	}
+ 	jbd_debug(1, "JBD2: Marking journal as empty (seq %d)\n",
+ 		  journal->j_tail_sequence);
+ 
