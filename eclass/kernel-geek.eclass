@@ -237,12 +237,12 @@ ExtractApply() {
 Handler() {
 	local patch=$1
 	shift
-	if [ ! -f $patch ]; then
+	if [ ! -f "$patch" ]; then
 		ewarn "Patch $patch does not exist."
-		exit 1
+		#exit 1 # why exit ?
 	fi
 	# don't apply patch if it's empty
-	local C=$(wc -l $patch | awk '{print $1}')
+	local C=$(wc -l "$patch" | awk '{print $1}')
 	if [ "$C" -gt 9 ]; then
 		# test argument to patch
 		patch_command='patch -p1 --dry-run'
@@ -251,8 +251,12 @@ Handler() {
 			patch_command='patch -p1 -F1 -s'
 			ExtractApply "$patch" &>/dev/null
 		else
-			ewarn "Skipping patch --> $(basename $patch)"
+			patch_base_name=$(basename "$patch")
+			ewarn "Skipping patch --> $patch_base_name"
 		fi
+	else
+		patch_base_name=$(basename "$patch")
+		ewarn "Skipping empty patch --> $patch_base_name"
 	fi
 }
 
@@ -263,7 +267,9 @@ kernel-geek_ApplyPatch() {
 	shift
 	echo
 	einfo "${msg}"
-	case `basename "$patch"` in
+	patch_base_name=$(basename "$patch")
+	patch_dir_name=$(dirname "$patch")
+	case $patch_base_name in
 	patch_list) # list of patches
 		while read -r line
 		do
@@ -272,14 +278,13 @@ kernel-geek_ApplyPatch() {
 			# skip comments
 			[[ $line =~ ^\ {0,}# ]] && continue
 			ebegin "Applying $line"
-				dir=`dirname "$patch"`
-				Handler "$dir/$line"
+				Handler "$patch_dir_name/$line";
 			eend $?
 		done < "$patch"
 	;;
 	*) # else is patch
-		ebegin "Applying $(basename $patch)"
-			Handler "$patch"
+		ebegin "Applying $patch_base_name"
+			Handler "$patch";
 		eend $?
 	;;
 	esac
@@ -431,7 +436,8 @@ And may the Force be with you…"
 	ApplyPatch "${FILESDIR}/fixes/gpio-ich_share_ownership_of_GPIO_groups_3.6.patch" "gpio-ich: Share ownership of GPIO groups http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=patch;h=4f600ada70beeb1dfe08e11e871bf31015aa0a3d";
 	ApplyPatch "${FILESDIR}/fixes/zram_pagealloc_fix.patch" "zram pagealloc fix http://code.google.com/p/compcache/issues/detail?id=102"
 	# CK fixes for 3.6
-	use ck && if [ ${PATCHLEVEL} = 6 ]; then ApplyPatch "${FILESDIR}/fixes/Fix_boot_issue_with_BFS_and_linux-3.6.patch" "http://ck.kolivas.org/patches/bfs/3.0/3.6/Fix%20boot%20issue%20with%20BFS%20and%20linux-3.6.patch"; fi;
+	use ck && if [ ${PATCHLEVEL} = 6 ]; then ApplyPatch "${FILESDIR}/fixes/Fix boot issue with BFS and linux-3.6.patch" "http://ck.kolivas.org/patches/bfs/3.0/3.6/Fix boot issue with BFS and linux-3.6.patch"; fi;
+
 	# fix module initialisation https://bugs.archlinux.org/task/32122
 	ApplyPatch "${FILESDIR}/fixes/module-symbol-waiting-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122"
 	ApplyPatch "${FILESDIR}/fixes/module-init-wait-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
