@@ -151,14 +151,8 @@ mac80211_local_deauth_v3.6.patch
 #rhbz 866013
 mac80211-connect-with-HT20-if-HT40-is-not-permitted.patch
 
-#rhbz 862877 864824 CVE-2012-0957
-fix-stack-memory-content-leak-via-UNAME26.patch
-
 #rhbz 867344
 dont-call-cifs_lookup-on-hashed-negative-dentry.patch
-
-#rhbz 852210
-drm-i915-Use-cpu-relocations-if-the-object-is-in-the.patch
 
 #rhbz 869904 869909 CVE-2012-4508
 0001-ext4-ext4_inode_info-diet.patch
@@ -173,6 +167,7 @@ drm-i915-Use-cpu-relocations-if-the-object-is-in-the.patch
 0010-ext4-fix-ext_remove_space-for-punch_hole-case.patch
 0011-ext4-fix-ext4_flush_completed_IO-wait-semantics.patch
 0012-ext4-serialize-fallocate-with-ext4_convert_unwritten.patch
-0013-ext4-race-condition-protection-for-ext4_convert_unwr.patch
+
+uprobes-upstream-backport.patch
 
 # END OF PATCH APPLICATIONS
