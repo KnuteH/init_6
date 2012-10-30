@@ -432,15 +432,18 @@ And may the Force be with you…"
 
 	# Fixes
 	ApplyPatch "${FILESDIR}/fixes/acpi-ec-add-delay-before-write.patch" "Oops: ACPI: EC: input buffer is not empty, aborting transaction - 2.6.32 regression https://bugzilla.kernel.org/show_bug.cgi?id=14733#c41";
+	# fix for 3.5 kernel
 	((${PATCHLEVEL} < 6)) && ApplyPatch "${FILESDIR}/fixes/lpc_ich_3.5.1.patch" "Oops: lpc_ich: Resource conflict(s) found affecting iTCO_wdt https://bugzilla.kernel.org/show_bug.cgi?id=44991";
-	ApplyPatch "${FILESDIR}/fixes/gpio-ich_share_ownership_of_GPIO_groups_3.6.patch" "gpio-ich: Share ownership of GPIO groups http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=patch;h=4f600ada70beeb1dfe08e11e871bf31015aa0a3d";
-	ApplyPatch "${FILESDIR}/fixes/zram_pagealloc_fix.patch" "zram pagealloc fix http://code.google.com/p/compcache/issues/detail?id=102"
 	# CK fixes for 3.6
 	use ck && if [ ${PATCHLEVEL} = 6 ]; then ApplyPatch "${FILESDIR}/fixes/Fix boot issue with BFS and linux-3.6.patch" "http://ck.kolivas.org/patches/bfs/3.0/3.6/Fix boot issue with BFS and linux-3.6.patch"; fi;
-
-	# fix module initialisation https://bugs.archlinux.org/task/32122
-	ApplyPatch "${FILESDIR}/fixes/module-symbol-waiting-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122"
-	ApplyPatch "${FILESDIR}/fixes/module-init-wait-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
+	# fixes for 3.6 kernel
+	if [ ${PATCHLEVEL} < 7 ]; then
+		ApplyPatch "${FILESDIR}/fixes/zram_pagealloc_fix.patch" "zram pagealloc fix http://code.google.com/p/compcache/issues/detail?id=102"
+		ApplyPatch "${FILESDIR}/fixes/gpio-ich_share_ownership_of_GPIO_groups_3.6.patch" "gpio-ich: Share ownership of GPIO groups http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=patch;h=4f600ada70beeb1dfe08e11e871bf31015aa0a3d";
+		# fix module initialisation https://bugs.archlinux.org/task/32122
+		ApplyPatch "${FILESDIR}/fixes/module-symbol-waiting-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
+		ApplyPatch "${FILESDIR}/fixes/module-init-wait-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
+	fi;
 
 ### END OF PATCH APPLICATIONS ###
 
