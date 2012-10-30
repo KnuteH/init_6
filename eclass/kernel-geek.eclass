@@ -437,13 +437,11 @@ And may the Force be with you…"
 	# CK fixes for 3.6
 	use ck && if [ ${PATCHLEVEL} = 6 ]; then ApplyPatch "${FILESDIR}/fixes/Fix boot issue with BFS and linux-3.6.patch" "http://ck.kolivas.org/patches/bfs/3.0/3.6/Fix boot issue with BFS and linux-3.6.patch"; fi;
 	# fixes for 3.6 kernel
-	if [ ${PATCHLEVEL} < 7 ]; then
-		ApplyPatch "${FILESDIR}/fixes/zram_pagealloc_fix.patch" "zram pagealloc fix http://code.google.com/p/compcache/issues/detail?id=102"
-		ApplyPatch "${FILESDIR}/fixes/gpio-ich_share_ownership_of_GPIO_groups_3.6.patch" "gpio-ich: Share ownership of GPIO groups http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=patch;h=4f600ada70beeb1dfe08e11e871bf31015aa0a3d";
+	((${PATCHLEVEL} < 7)) && ApplyPatch "${FILESDIR}/fixes/zram_pagealloc_fix.patch" "zram pagealloc fix http://code.google.com/p/compcache/issues/detail?id=102";
+	((${PATCHLEVEL} < 7)) && ApplyPatch "${FILESDIR}/fixes/gpio-ich_share_ownership_of_GPIO_groups_3.6.patch" "gpio-ich: Share ownership of GPIO groups http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=patch;h=4f600ada70beeb1dfe08e11e871bf31015aa0a3d";
 		# fix module initialisation https://bugs.archlinux.org/task/32122
-		ApplyPatch "${FILESDIR}/fixes/module-symbol-waiting-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
-		ApplyPatch "${FILESDIR}/fixes/module-init-wait-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
-	fi;
+	((${PATCHLEVEL} < 7)) && ApplyPatch "${FILESDIR}/fixes/module-symbol-waiting-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
+	((${PATCHLEVEL} < 7)) && ApplyPatch "${FILESDIR}/fixes/module-init-wait-3.6.patch" "Fix module initialisation https://bugs.archlinux.org/task/32122";
 
 ### END OF PATCH APPLICATIONS ###
 
