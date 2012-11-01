@@ -9,7 +9,7 @@ DEBLOB_AVAILABLE="1"
 KMV="$(echo $PV | cut -f 1-2 -d .)"
 
 ck_ver="${KMV}-ck1"
-reiser4_ver="${PV}"
+reiser4_ver="3.6.4"
 OVERRIDE_reiser4_src="mirror://sourceforge/project/reiser4/reiser4-for-linux-3.x/reiser4-for-${reiser4_ver}.patch.gz"
 rt_ver="3.6.4-rt12"
 vserver_ver="3.6-vs2.3.4.3-noxfs-nocow"
