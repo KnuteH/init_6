@@ -246,7 +246,7 @@ patches.suse/btrfs-use-correct-device-for-maps.patch
 ########################################################
 # Reiserfs Patches
 ########################################################
-+needs_updating-39patches.suse/reiser4-dependencies
+#needs_updating-39patches.suse/reiser4-dependencies
 patches.fixes/reiserfs-fix-deadlock-with-nfs-racing-on-create-lookup
 
 ########################################################
@@ -282,7 +282,7 @@ patches.suse/0011-richacl-Check-if-an-acl-is-equivalent-to-a-file-mode.patch
 patches.suse/0012-richacl-Automatic-Inheritance.patch
 patches.suse/0013-richacl-Restrict-access-check-algorithm.patch
 patches.suse/0014-richacl-xattr-mapping-functions.patch
-patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
+#patches.suse/0016-ext4-Implement-richacl-support-in-ext4.patch
 
 ########################################################
 # other filesystem stuff
