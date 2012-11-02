@@ -14,8 +14,8 @@
     <flag name='branding'>Enable Gentoo specific branding.</flag>
     <flag name='ck'>Enable Con Kolivas' high performance patchset.</flag>
     <flag name='deblob'>Remove binary blobs from kernel sources to provide libre license compliance.</flag>
-    <flag name='fbcondecor'>Use Spock's fbsplash patch.</flag>
     <flag name='fedora'>Use Fedora kernel patches.</flag>
+    <flag name='genpatches'>Use Gentoo kernel patches.</flag>
     <flag name='grsecurity'>Use grsecurity patches.</flag>
     <flag name='ice'>Use TuxOnIce patches.</flag>
     <flag name='imq'>Use Intermediate Queueing Device patches.</flag>

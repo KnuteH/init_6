@@ -23,8 +23,8 @@ In this overlay you will find:
 		branding - Enable Gentoo specific branding.
 		ck - Enable Con Kolivas' high performance patchset --> http://users.on.net/~ckolivas/kernel
 		deblob - Remove binary blobs from kernel sources to provide libre license compliance --> http://linux-libre.fsfla.org/pub/linux-libre
-		fbcondecor - Use Spock's fbsplash patch --> http://dev.gentoo.org/~spock/projects/fbcondecor
 		fedora - Use Fedora kernel patches --> git://pkgs.fedoraproject.org/kernel.git
+		genpatches - Use Gentoo kernel patches including Spock's fbsplash patch --> http://dev.gentoo.org/~mpagano/genpatches http://dev.gentoo.org/~spock/projects/fbcondecor
 		grsecurity - Use grsecurity patches --> git://git.overlays.gentoo.org/proj/hardened-patchset.git + http://dev.gentoo.org/~mpagano/genpatches/trunk/
 		ice - Use TuxOnIce patches --> git://github.com/NigelCunningham/tuxonice-kernel.git
 		imq - Use Intermediate Queueing Device patches --> http://www.linuximq.net

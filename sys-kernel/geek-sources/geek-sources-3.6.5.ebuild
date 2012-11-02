@@ -14,8 +14,8 @@ OVERRIDE_reiser4_src="mirror://sourceforge/project/reiser4/reiser4-for-linux-3.x
 rt_ver="3.6.4-rt12"
 vserver_ver="3.6-vs2.3.4.3-noxfs-nocow"
 
-#SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fbcondecor fedora grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
-SUPPORTED_FEATURES="aufs bfq branding ck deblob fbcondecor fedora grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
+#SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fedora genpatches grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
+SUPPORTED_FEATURES="aufs bfq branding ck deblob fedora genpatches grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
 
 inherit kernel-geek
 
