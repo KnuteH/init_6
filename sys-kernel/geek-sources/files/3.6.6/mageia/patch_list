@@ -14,19 +14,19 @@
 ###
 ### Stable Queue
 ###
-stable-blkcg-fix-use-after-free-of-q-root_blkg-and-q-root_rl.blkg.patch
-stable-gpio-timberdale-fix-a-potential-wrapping-issue.patch
-stable-gpiolib-don-t-return-eprobe_defer-to-sysfs-or-for-invalid-gpios.patch
-stable-md-raid1-fix-assembling-of-arrays-containing-replacements.patch
-stable-floppy-don-t-call-alloc_ordered_workqueue-inside-the-alloc_disk-loop.patch
-stable-floppy-do-put_disk-on-current-dr-if-blk_init_queue-fails.patch
-stable-floppy-properly-handle-failure-on-add_disk-loop.patch
-stable-rbd-reset-backoff-if-unable-to-re-queue.patch
-stable-libceph-avoid-null-kref_put-when-osd-reset-races-with-alloc_msg.patch
-stable-ceph-fix-dentry-reference-leak-in-encode_fh.patch
-stable-ceph-fix-oops-when-handling-mdsmap-that-decreases-max_mds.patch
-stable-libceph-check-for-invalid-mapping.patch
-stable-ceph-avoid-32-bit-page-index-overflow.patch
+#stable-blkcg-fix-use-after-free-of-q-root_blkg-and-q-root_rl.blkg.patch
+#stable-gpio-timberdale-fix-a-potential-wrapping-issue.patch
+#stable-gpiolib-don-t-return-eprobe_defer-to-sysfs-or-for-invalid-gpios.patch
+#stable-md-raid1-fix-assembling-of-arrays-containing-replacements.patch
+#stable-floppy-don-t-call-alloc_ordered_workqueue-inside-the-alloc_disk-loop.patch
+#stable-floppy-do-put_disk-on-current-dr-if-blk_init_queue-fails.patch
+#stable-floppy-properly-handle-failure-on-add_disk-loop.patch
+#stable-rbd-reset-backoff-if-unable-to-re-queue.patch
+#stable-libceph-avoid-null-kref_put-when-osd-reset-races-with-alloc_msg.patch
+#stable-ceph-fix-dentry-reference-leak-in-encode_fh.patch
+#stable-ceph-fix-oops-when-handling-mdsmap-that-decreases-max_mds.patch
+#stable-libceph-check-for-invalid-mapping.patch
+#stable-ceph-avoid-32-bit-page-index-overflow.patch
 
 ###
 ### Arch x86
