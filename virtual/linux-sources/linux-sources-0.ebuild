@@ -10,7 +10,7 @@ SRC_URI=""
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 s390 sh sparc x86"
 IUSE="hardened"
 
 DEPEND=""
@@ -31,6 +31,8 @@ RDEPEND="|| (
 		sys-kernel/mm-sources
 		sys-kernel/openvz-sources
 		sys-kernel/pf-sources
+		sys-kernel/rsbac-sources
+		sys-kernel/rt-sources
 		sys-kernel/tuxonice-sources
 		sys-kernel/usermode-sources
 		sys-kernel/vserver-sources
