@@ -15,7 +15,7 @@ rt_ver="3.6.5-rt15"
 vserver_ver="3.6.6-vs2.3.4.3.1-noxfs-nocow"
 
 #SUPPORTED_FEATURES="aufs bfq bld branding ck deblob fedora genpatches grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
-SUPPORTED_FEATURES="aufs bfq branding ck deblob fedora genpatches grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
+SUPPORTED_FEATURES="aufs bfq branding ck debian deblob fedora genpatches grsecurity ice mageia reiser4 rt suse uksm vserver zfs"
 
 inherit kernel-geek
 

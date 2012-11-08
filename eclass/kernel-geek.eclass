@@ -39,7 +39,7 @@ KV_FULL="${PVR}${EXTRAVERSION}"
 S="${WORKDIR}"/linux-"${KV_FULL}"
 SLOT="${PV}"
 
-KNOWN_FEATURES="aufs bfq bld branding ck deblob fedora genpatches grsecurity ice imq mageia pardus pld reiser4 rt suse uksm vserver zfs"
+KNOWN_FEATURES="aufs bfq bld branding ck debian deblob fedora genpatches grsecurity ice imq mageia pardus pld reiser4 rt suse uksm vserver zfs"
 
 SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.0/linux-${KMV}.tar.xz"
 
@@ -82,6 +82,9 @@ featureKnown() {
 			HOMEPAGE="${HOMEPAGE} ${ck_url}"
 			SRC_URI="${SRC_URI}
 				ck?		( ${ck_src} )"
+			;;
+		debian) debian_url="http://anonscm.debian.org/viewvc/kernel/dists/trunk/linux/debian/patches";
+			HOMEPAGE="${HOMEPAGE} ${debian_url}"
 			;;
 		deblob) deblob_src="http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-${KMV} http://linux-libre.fsfla.org/pub/linux-libre/releases/LATEST-${KMV}.N/deblob-check"
 			if [ "${OVERRIDE_deblob_src}" != "" ]; then
@@ -305,7 +308,7 @@ kernel-geek_src_prepare() {
 		source "$config_file"
 		ewarn "GEEKSOURCES_PATCHING_ORDER=\"${GEEKSOURCES_PATCHING_ORDER}\""
 	else
-		GEEKSOURCES_PATCHING_ORDER="vserver bfq ck genpatches grsecurity ice imq reiser4 rt bld uksm aufs mageia fedora suse pardus pld zfs branding";
+		GEEKSOURCES_PATCHING_ORDER="vserver bfq ck genpatches grsecurity ice imq reiser4 rt bld uksm aufs mageia fedora suse debian pardus pld zfs branding";
 		ewarn "The order of patching is defined in file $config_file with the variable GEEKSOURCES_PATCHING_ORDER is its default value:
 GEEKSOURCES_PATCHING_ORDER=\"${GEEKSOURCES_PATCHING_ORDER}\"
 You are free to choose any order of patching.
@@ -336,6 +339,9 @@ And may the Force be with you…"
 					;;
 				ck)	ApplyPatch "$DISTDIR/patch-${ck_ver}.bz2" "Con Kolivas high performance patchset - ${ck_url}";
 					;;
+				debian) ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list" "Debian - ${debian_url}";
+					use rt && ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list_rt" "Debian rt - ${debian_url}";
+					;;
 				fedora) ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list" "Fedora - ${fedora_url}";
 					;;
 				genpatches) ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list" "Gentoo patches - ${genpatches_url}";
@@ -355,6 +361,9 @@ And may the Force be with you…"
 				reiser4) ApplyPatch "${DISTDIR}/reiser4-for-${reiser4_ver}.patch.gz" "Reiser4 - ${reiser4_url}";
 					;;
 				rt)	ApplyPatch "${DISTDIR}/patch-${rt_ver}.patch.xz" "Ingo Molnar's realtime preempt patches - ${rt_url}";
+#					if [ -e "${FILESDIR}/${PV}/$Current_Patch/patch_list" ]
+#						then ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list" "Debian rt - ${debian_url}";
+#					fi
 					;;
 				suse)	ApplyPatch "${FILESDIR}/${PV}/$Current_Patch/patch_list" "OpenSuSE - ${suse_url}";
 					;;
